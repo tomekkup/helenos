@@ -22,6 +22,9 @@
         <webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
         <jetty.version>8.1.1.v20120215</jetty.version>
         <spring.version>3.1.0.RELEASE</spring.version>
+        <jsonrpc4j.version>0.23</jsonrpc4j.version>
+        <jackson.version>1.7.5</jackson.version>
+        <hector.version>3.1-05</hector.version>
     </properties>
 
     <dependencies>
@@ -46,14 +49,18 @@
         <dependency>
             <groupId>com.googlecode</groupId>
             <artifactId>jsonrpc4j</artifactId>
-            <version>0.23</version>
+            <version>${jsonrpc4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
-            <version>1.7.5</version>
+            <version>${jackson.version}</version>
         </dependency>
-    
+        <dependency>
+            <groupId>org.hectorclient</groupId>
+            <artifactId>hector-core</artifactId>
+            <version>${hector.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
