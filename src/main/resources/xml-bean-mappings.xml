@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+    <configuration>
+        <wildcard>false</wildcard>
+    </configuration>
+
+    <mapping type="one-way">
+        <class-a>me.prettyprint.cassandra.service.ThriftKsDef</class-a>
+        <class-b>com.kuprowski.helenos.types.JsonKeyspaceDefinition</class-b>
+        <field>
+            <a>name</a>
+            <b>name</b>
+        </field>
+        <field>
+            <a>strategyClass</a>
+            <b>strategyClass</b>
+        </field>
+        <field copy-by-reference="true">
+            <a>strategyOptions</a>
+            <b>strategyOptions</b>
+        </field>
+        <field>
+            <a>replicationFactor</a>
+            <b>replicationFactor</b>
+        </field>
+        <field>
+            <a>cfDefs</a>
+            <b>cfDefs</b>
+        </field>
+    </mapping>
+        
+    <mapping type="one-way">
+        <class-a>me.prettyprint.cassandra.service.ThriftCfDef</class-a>
+        <class-b>com.kuprowski.helenos.types.JsonColumnFamilyDefinition</class-b>
+        <field>
+            <a>keyspaceName</a>
+            <b>keyspaceName</b>
+        </field>
+        <field>
+            <a>comment</a>
+            <b>comment</b>
+        </field>
+        <field>
+            <a>columnType.value</a>
+            <b>ColumnType</b>
+        </field>
+        <field>
+            <a>comparatorType</a>
+            <b>comparatorType</b>
+        </field>
+        <field>
+            <a>subComparatorType</a>
+            <b>subComparatorType</b>
+        </field>
+        <field>
+            <a>rowCacheSize</a>
+            <b>rowCacheSize</b>
+        </field>
+        <field>
+            <a>rowCacheSavePeriodInSeconds</a>
+            <b>rowCacheSavePeriodInSeconds</b>
+        </field>
+        <field>
+            <a>keyCacheSize</a>
+            <b>keyCacheSize</b>
+        </field>
+        <field>
+            <a>readRepairChance</a>
+            <b>readRepairChance</b>
+        </field>
+        <field>
+            <a>gcGraceSeconds</a>
+            <b>gcGraceSeconds</b>
+        </field>
+        <field>
+            <a>keyValidationClass</a>
+            <b>keyValidationClass</b>
+        </field>
+        <field>
+            <a>defaultValidationClass</a>
+            <b>defaultValidationClass</b>
+        </field>
+        <field>
+            <a>id</a>
+            <b>id</b>
+        </field>
+        <field>
+            <a>maxCompactionThreshold</a>
+            <b>maxCompactionThreshold</b>
+        </field>
+        <field>
+            <a>minCompactionThreshold</a>
+            <b>minCompactionThreshold</b>
+        </field>
+        <field>
+            <a>memtableOperationsInMillions</a>
+            <b>memtableOperationsInMillions</b>
+        </field>
+        <field>
+            <a>memtableThroughputInMb</a>
+            <b>memtableThroughputInMb</b>
+        </field>
+        <field>
+            <a>memtableFlushAfterMins</a>
+            <b>memtableFlushAfterMins</b>
+        </field>
+        <field>
+            <a>keyCacheSavePeriodInSeconds</a>
+            <b>keyCacheSavePeriodInSeconds</b>
+        </field>
+        <field>
+            <a>replicateOnWrite</a>
+            <b>replicateOnWrite</b>
+        </field>
+        <field>
+            <a>compactionStrategy</a>
+            <b>compactionStrategy</b>
+        </field>
+        <field>
+            <a>mergeShardsChance</a>
+            <b>mergeShardsChance</b>
+        </field>
+        <field>
+            <a>rowCacheProvider</a>
+            <b>rowCacheProvider</b>
+        </field>
+        <field>
+            <a>rowCacheKeysToSave</a>
+            <b>rowCacheKeysToSave</b>
+        </field>
+        <field>
+            <a>columnMetadata</a>
+            <b>columnMetadata</b>
+        </field>
+        <field copy-by-reference="true">
+            <a>compactionStrategyOptions</a>
+            <b>compactionStrategyOptions</b>
+        </field>
+        <field copy-by-reference="true">
+            <a>compressionOptions</a>
+            <b>compressionOptions</b>
+        </field>
+    </mapping>
+    
+    <mapping type="one-way">
+        <class-a>me.prettyprint.hector.api.ddl.ComparatorType</class-a>
+        <class-b>com.kuprowski.helenos.types.JsonComparatorType</class-b>
+        <field>
+            <a>className</a>
+            <b>className</b>
+        </field>
+        <field>
+            <a>typeName</a>
+            <b>typeName</b>
+        </field>
+    </mapping>
+    
+    <mapping type="one-way">
+        <class-a>me.prettyprint.hector.api.ddl.ColumnDefinition</class-a>
+        <class-b>com.kuprowski.helenos.types.JsonColumnDefinition</class-b>
+        <field>
+            <a>name</a>
+            <b>name</b>
+        </field>
+        <field>
+            <a>validationClass</a>
+            <b>validationClass</b>
+        </field>
+        <field>
+            <a>indexType</a>
+            <b>indexType</b>
+        </field>
+        <field>
+            <a>indexName</a>
+            <b>indexName</b>
+        </field>
+    </mapping>
+    
+    
+</mappings>

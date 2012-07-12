@@ -23,8 +23,8 @@
         <jetty.version>8.1.1.v20120215</jetty.version>
         <spring.version>3.1.0.RELEASE</spring.version>
         <jsonrpc4j.version>0.23</jsonrpc4j.version>
-        <jackson.version>1.7.5</jackson.version>
-        <hector.version>3.1-05</hector.version>
+        <jackson.version>1.9.7</jackson.version>
+        <hector.version>1.1-0</hector.version>
     </properties>
 
     <dependencies>
@@ -45,6 +45,11 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-jcl</artifactId>
             <version>1.6.4</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer</artifactId>
+            <version>5.3.2</version>
         </dependency>
         <dependency>
             <groupId>com.googlecode</groupId>

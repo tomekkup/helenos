@@ -6,10 +6,9 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
 
     <context:annotation-config />
-    
-    <bean id="userService" class="com.mycompany.UserServiceImpl">
-    </bean>
-
+    <context:component-scan base-package="com.kuprowski.helenos.service"/>
+    <context:property-placeholder system-properties-mode="OVERRIDE" location="WEB-INF/application.properties"/>
+        
     <!--
     <mvc:resources mapping="/resources/**" location="/, classpath:/META-INF/public-web-resources/"/>
     
@@ -19,4 +18,11 @@
     <bean id="multiActionMethodNameResolver" class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver"
               p:paramName="action" />
     -->
+    <bean id="mapper" class="org.dozer.DozerBeanMapper" scope="singleton">
+        <property name="mappingFiles">
+            <list>
+                <value>xml-bean-mappings.xml</value>
+            </list>
+        </property>
+    </bean>
 </beans>
