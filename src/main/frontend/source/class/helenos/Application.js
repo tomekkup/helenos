@@ -10,14 +10,14 @@
 
 /* ************************************************************************
 
-#asset(com/kuprowski/helenos/*)
+#asset(helenos/*)
 
 ************************************************************************ */
 
 /**
  * This is the main application class of your custom application "helenos"
  */
-qx.Class.define("com.kuprowski.helenos.Application",
+qx.Class.define("helenos.Application",
 {
   extend : qx.application.Standalone,
 
@@ -54,7 +54,7 @@ qx.Class.define("com.kuprowski.helenos.Application",
       // Document is the application root
       var doc = this.getRoot();
 
-      var pane = new com.kuprowski.helenos.components.MainPane;
+      var pane = new helenos.components.MainPane;
       doc.add(pane, {left: 100, top: 50});
     }
   }

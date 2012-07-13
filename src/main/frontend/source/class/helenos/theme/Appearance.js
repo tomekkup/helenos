@@ -8,11 +8,11 @@
 
 ************************************************************************ */
 
-qx.Theme.define("com.kuprowski.helenos.theme.Decoration",
+qx.Theme.define("helenos.theme.Appearance",
 {
-  extend : qx.theme.modern.Decoration,
+  extend : qx.theme.modern.Appearance,
 
-  decorations :
+  appearances :
   {
   }
 });

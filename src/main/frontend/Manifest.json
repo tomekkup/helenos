@@ -1,0 +1,34 @@
+{
+    "info" : 
+    {
+        "name" : "helenos",
+
+        "summary" : "Helenos - Cassandra web console",
+        "description" : "Web application to manage your data stored in Cassandra",
+    
+        "homepage" : "http://tomekkup.github.com/helenos/",
+
+        "license" : "GPLv2: http://www.gnu.org/licences/gpl.html",
+        "authors" : 
+        [
+        {
+            "name" : "Tomek Kuprowski",
+            "email" : "tomekkuprowski@gmail.com"
+        }
+        ],
+
+        "version" : "trunk",
+        "qooxdoo-versions": ["2.0.1"]
+    },
+  
+    "provides" : 
+    {
+        "namespace"   : "helenos",
+        "encoding"    : "utf-8",
+        "class"       : "source/class",
+        "resource"    : "source/resource",
+        "translation" : "source/translation",
+        "type"        : "application"
+    }
+}
+

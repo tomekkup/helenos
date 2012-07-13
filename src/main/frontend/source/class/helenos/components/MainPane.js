@@ -10,14 +10,14 @@
 
 /* ************************************************************************
 
-#asset(com/kuprowski/helenos/*)
+#asset(helenos/*)
 
 ************************************************************************ */
 
 /**
  * This is the main application class of your custom application "helenos"
  */
-qx.Class.define("com.kuprowski.helenos.components.MainPane",
+qx.Class.define("helenos.components.MainPane",
 {
   extend : qx.ui.splitpane.Pane,
 

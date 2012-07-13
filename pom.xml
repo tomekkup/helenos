@@ -34,13 +34,6 @@
             <version>1.0</version>
             <scope>runtime</scope>
         </dependency>
-        <!--
-        <dependency>
-            <groupId>xerces</groupId>
-            <artifactId>xercesImpl</artifactId>
-            <version>2.9.1</version>
-        </dependency>
-        -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-jcl</artifactId>
@@ -88,8 +81,6 @@
                         </goals>
                         <configuration>
                             <outputDirectory>${webappDirectory}/WEB-INF/lib</outputDirectory>
-                            <!--<includeScope>provided</includeScope>-->
-                            
                         </configuration>
                     </execution>
                 </executions>
@@ -169,7 +160,6 @@
                         <version>3.0.1</version>
                         <scope>runtime</scope>
                     </dependency>
-                    <!-- koniec extra dodawania -->
                     <dependency>
                         <groupId>org.eclipse.jetty.aggregate</groupId>
                         <artifactId>jetty-all</artifactId>
@@ -179,11 +169,45 @@
                 </dependencies>
             </plugin>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <executions>
+                    <execution>
+                        <id>clean-frontend</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>python</executable>
+                            <workingDirectory>src/main/frontend</workingDirectory>
+                            <commandlineArgs>generate.py clean</commandlineArgs>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>build-frontend</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>python</executable>
+                            <workingDirectory>src/main/frontend</workingDirectory>
+                            <commandlineArgs>generate.py build</commandlineArgs>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>2.4.3</version>
                 <executions>
                     <execution>
+                        <id>copy-webapp-resources</id>
                         <phase>compile</phase>
                         <goals>
                             <goal>copy-resources</goal>
@@ -196,6 +220,27 @@
                             <resources>
                                 <resource>
                                     <directory>src/main/webapp</directory>
+                                    <includes>
+                                        <include>**/*.*</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-frontend-resources</id>
+                        <phase>build-frontend</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${webappDirectory}/helenos</outputDirectory>
+                            <encoding>${project.build.sourceEncoding}</encoding>
+                            <includeEmptyDirs>true</includeEmptyDirs>
+                            <overwrite>true</overwrite>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/frontend/build</directory>
                                     <includes>
                                         <include>**/*.*</include>
                                     </includes>

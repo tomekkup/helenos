@@ -15,7 +15,7 @@
  * 
  * @lint ignoreUndefined(simulator)
  */
-qx.Class.define("com.kuprowski.helenos.simulation.DemoSimulation", {
+qx.Class.define("helenos.simulation.DemoSimulation", {
 
   extend : simulator.unit.TestCase,
   

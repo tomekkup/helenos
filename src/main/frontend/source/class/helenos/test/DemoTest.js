@@ -20,7 +20,7 @@
  * i.e. using deeper namespaces and a corresponding file structure within the 
  * <tt>test</tt> folder.
  */
-qx.Class.define("com.kuprowski.helenos.test.DemoTest",
+qx.Class.define("helenos.test.DemoTest",
 {
   extend : qx.dev.unit.TestCase,
 

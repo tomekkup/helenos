@@ -8,7 +8,7 @@
 
 ************************************************************************ */
 
-qx.Theme.define("com.kuprowski.helenos.theme.Font",
+qx.Theme.define("helenos.theme.Font",
 {
   extend : qx.theme.modern.Font,
 
