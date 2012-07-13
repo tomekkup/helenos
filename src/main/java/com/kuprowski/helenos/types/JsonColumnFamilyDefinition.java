@@ -17,6 +17,8 @@ public class JsonColumnFamilyDefinition {
 
     public JsonColumnFamilyDefinition() {
     }
+    
+    private String name;
     private String keyspaceName;
     private String comment;
     private String columnType;
@@ -45,6 +47,14 @@ public class JsonColumnFamilyDefinition {
     private String rowCacheProvider;
     private int rowCacheKeysToSave;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    
     public String getKeyspaceName() {
         return keyspaceName;
     }

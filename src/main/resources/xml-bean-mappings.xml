@@ -35,6 +35,11 @@
     <mapping type="one-way">
         <class-a>me.prettyprint.cassandra.service.ThriftCfDef</class-a>
         <class-b>com.kuprowski.helenos.types.JsonColumnFamilyDefinition</class-b>
+        
+        <field>
+            <a>name</a>
+            <b>name</b>
+        </field>
         <field>
             <a>keyspaceName</a>
             <b>keyspaceName</b>

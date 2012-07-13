@@ -6,9 +6,10 @@ License:
 Authors:
   Tomek Kuprowski (tomekkuprowski at gmail dot com)
  ************************************************************************ */
-qx.Class.define("helenos.components.MainPane",
+
+qx.Class.define("helenos.components.RightContentPane",
 {
-    extend : qx.ui.splitpane.Pane,
+    extend : qx.ui.tabview.TabView,
 
     /*
   *****************************************************************************
@@ -19,26 +20,12 @@ qx.Class.define("helenos.components.MainPane",
     construct : function()
     {
         this.base(arguments);
-        this.setOrientation("horizontal");
-    
-        this.__createLeftPane();
-        this.__createRightPane();
-    
-        this.add(this.__treePane, 0);
-        this.add(this.__contentPane, 1);
+        
+        
     },
 
     members :
     {
-        __treePane : null,
-        __contentPane : null,
-    
-        __createLeftPane : function() {
-            this.__treePane = new helenos.components.ClusterPane();
-        },
-    
-        __createRightPane : function() {
-            this.__contentPane = new helenos.components.RightContentPane();
-        }
+        
     }
 });
