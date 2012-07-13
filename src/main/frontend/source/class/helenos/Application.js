@@ -1,61 +1,51 @@
 /* ************************************************************************
-
-   Copyright:
-
-   License:
-
-   Authors:
-
-************************************************************************ */
-
+Copyright:
+  2012 Tomek Kuprowski
+License:
+  GPLv2: http://www.gnu.org/licences/gpl.html
+Authors:
+  Tomek Kuprowski (tomekkuprowski at gmail dot com)
+ ************************************************************************ */
 /* ************************************************************************
-
 #asset(helenos/*)
-
 ************************************************************************ */
-
 /**
  * This is the main application class of your custom application "helenos"
  */
 qx.Class.define("helenos.Application",
 {
-  extend : qx.application.Standalone,
+    extend : qx.application.Standalone,
 
-
-
-  /*
+    /*
   *****************************************************************************
      MEMBERS
   *****************************************************************************
   */
 
-  members :
-  {
-    /**
-     * This method contains the initial application code and gets called 
-     * during startup of the application
-     * 
-     * @lint ignoreDeprecated(alert)
-     */
-    main : function()
+    members :
     {
-      // Call super class
-      this.base(arguments);
+    
+        __getTopComposite : function() {
+            return new helenos.components.TopComposite();
+        },
+        
+        main : function()
+        {
+            // Call super class
+            this.base(arguments);
 
-      // Enable logging in debug variant
-      if (qx.core.Environment.get("qx.debug"))
-      {
-        // support native logging capabilities, e.g. Firebug for Firefox
-        qx.log.appender.Native;
-        // support additional cross-browser console. Press F7 to toggle visibility
-        qx.log.appender.Console;
-      }
-
-      // Document is the application root
-      var doc = this.getRoot();
-
-      var pane = new helenos.components.MainPane;
-      doc.add(pane, {left: 100, top: 50});
+            // Enable logging in debug variant
+            if (qx.core.Environment.get("qx.debug"))
+            {
+                // support native logging capabilities, e.g. Firebug for Firefox
+                qx.log.appender.Native;
+                // support additional cross-browser console. Press F7 to toggle visibility
+                qx.log.appender.Console;
+            }
+      
+            this.getRoot().add(this.__getTopComposite(), {
+                edge : 0
+            });
+        }
     }
-  }
 });
