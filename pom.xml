@@ -135,7 +135,7 @@
                 <configuration>
                     <stopPort>9966</stopPort>
                     <stopKey>foo</stopKey>
-                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <scanIntervalSeconds>0</scanIntervalSeconds>
                     <contextPath>/</contextPath>
                     
                     <webAppSourceDirectory>${project.build.directory}/${project.build.finalName}</webAppSourceDirectory>

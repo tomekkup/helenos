@@ -50,7 +50,8 @@ qx.Class.define("helenos.components.ClusterPane",
         __createButtons : function() {
             this.__btnToolbar = new qx.ui.toolbar.ToolBar();
             
-            var refreshButton = new qx.ui.toolbar.Button("", "qx/icon/Tango/16/actions/view-refresh.png");
+            var refreshButton = new qx.ui.toolbar.Button("Refresh", "qx/icon/Tango/16/actions/view-refresh.png");
+            refreshButton.addListener('execute', this.refreshClusterTree);
             
             this.__btnToolbar.add(refreshButton);
         },
@@ -62,7 +63,7 @@ qx.Class.define("helenos.components.ClusterPane",
         },
         
         refreshClusterTree : function() {
-            this.__clusterTree.resetRoot(); // ?
+            this.__clusterTree.resetSelection(); // ?
           
             var rpc = new helenos.util.Rpc('Cluster');
           
@@ -79,14 +80,20 @@ qx.Class.define("helenos.components.ClusterPane",
                 
                 var ksItem = new qx.ui.tree.TreeFolder(def.name);
                 ksItem.set({
-                    open: true,
-                    icon : 'helenos/keyspace.png'
+                    open: def.name != 'system',
+                    icon : 'helenos/keyspace.png',
+                    contextMenu: new helenos.components.menu.KeyspaceContextMenu()
                 });
                 this.__clusterTree.getRoot().add(ksItem);
                 
                 for (var j = 0; j < def.cfDefs.length; j++) {
                     var cf = def.cfDefs[j];
                     var cfItem = new qx.ui.tree.TreeFile(cf.name);
+                    cfItem.set({
+                        icon : cf.columnType == 'Super' ? 'helenos/supercf.png' : 'helenos/standardcf.png',
+                        toolTip : this.__createColumnFamilyToolTip(cf),
+                        contextMenu: new helenos.components.menu.ColumnFamilyContextMenu()
+                    });
                     cfItem.setIcon(cf.columnType == 'Super' ? 'helenos/supercf.png' : 'helenos/standardcf.png');
                     cfItem.setToolTip(this.__createColumnFamilyToolTip(cf));
                     ksItem.add(cfItem);
