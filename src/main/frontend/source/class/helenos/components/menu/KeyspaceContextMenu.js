@@ -7,27 +7,30 @@ Authors:
   Tomek Kuprowski (tomekkuprowski at gmail dot com)
  ************************************************************************ */
 /*
-#asset(qx/icon/Tango/16/status/dialog-information.png)
-#asset(qx/icon/Tango/16/actions/list-add.png)
+#asset(qx/icon/${qx.icontheme}/16/status/dialog-information.png)
+#asset(qx/icon/${qx.icontheme}/16/actions/list-add.png)
  */
 qx.Class.define("helenos.components.menu.KeyspaceContextMenu",
 {
     extend : qx.ui.menu.Menu,
-
-    /*
-  *****************************************************************************
-     MEMBERS
-  *****************************************************************************
-  */
  
-    construct : function()
+    construct : function(ksName)
     {
         this.base(arguments);
         
-        var propsButton = new qx.ui.menu.Button("Properties", "qx/icon/Tango/16/status/dialog-information.png");
+        var propsButton = new qx.ui.menu.Button("Properties", "qx/icon/Oxygen/16/status/dialog-information.png");
+        propsButton.setUserData('KSNAME', ksName);
+        propsButton.addListener("execute", this.__showProperties);
         this.add(propsButton);
         
-        var addCFButton = new qx.ui.menu.Button("Add column family", "qx/icon/Tango/16/actions/list-add.png");
+        var addCFButton = new qx.ui.menu.Button("Add column family", "qx/icon/Oxygen/16/actions/list-add.png");
         this.add(addCFButton);
+    },
+    
+    members : {
+        __showProperties : function(e) {
+            var ksName = e.getTarget().getUserData('KSNAME');
+            helenos.util.GuiObserver.showKeyspaceInfoTab(ksName);
+        }
     }
 });

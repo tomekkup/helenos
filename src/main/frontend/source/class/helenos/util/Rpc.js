@@ -20,15 +20,6 @@ qx.Class.define('helenos.util.Rpc',
         members : {
             __getRemoteUri : function(serviceName) {
                 return window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/' + serviceName + '.json';
-                //return "http://localhost:8080/" + serviceName + ".json";
-            },
-            
-            callSync : function(methodName) {
-                try {
-                    return this.base(arguments, methodName);
-                } catch (e) {
-                    helenos.util.ExceptionReporter.report(e);
-                }
             }
         }
     });

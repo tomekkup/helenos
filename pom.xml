@@ -225,6 +225,7 @@
                             </resources>
                         </configuration>
                     </execution>
+                    <!--
                     <execution>
                         <id>copy-frontend-resources</id>
                         <phase>prepare-package</phase>
@@ -246,6 +247,7 @@
                             </resources>
                         </configuration>
                     </execution>
+                    -->
                 </executions>
             </plugin>
         </plugins>

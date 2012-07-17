@@ -39,10 +39,12 @@
         "APPLICATION"  : "helenos",
         "QOOXDOO_PATH" : "../../../../../../tools/qooxdoo",
         "QXTHEME"      : "helenos.theme.Theme",
+        "QXICONTHEME"  : ["Oxygen"],
         "API_EXCLUDE"  : ["qx.test.*", "${APPLICATION}.theme.*", "${APPLICATION}.test.*", "${APPLICATION}.simulation.*"],
         "LOCALES"      : [ "en" ],
         "CACHE"        : "${TMPDIR}/qx${QOOXDOO_VERSION}/cache",
-        "ROOT"         : "."
+        "ROOT"         : ".",
+        "BUILD_PATH"   : "../webapp/helenos"
     },
 
     "jobs" :

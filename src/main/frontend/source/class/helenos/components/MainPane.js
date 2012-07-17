@@ -25,20 +25,21 @@ qx.Class.define("helenos.components.MainPane",
         this.__createRightPane();
     
         this.add(this.__treePane, 0);
-        this.add(this.__contentPane, 1);
+        this.add(this.__rightPane, 1);
     },
 
     members :
     {
         __treePane : null,
-        __contentPane : null,
+        __rightPane : null,
     
         __createLeftPane : function() {
             this.__treePane = new helenos.components.ClusterPane();
         },
     
         __createRightPane : function() {
-            this.__contentPane = new helenos.components.RightContentPane();
+            this.__rightPane = new helenos.components.RightContentPane();
+            helenos.util.GuiObserver.registerTabbedPane(this.__rightPane);
         }
     }
 });

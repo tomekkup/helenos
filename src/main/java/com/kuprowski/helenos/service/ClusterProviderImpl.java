@@ -4,9 +4,11 @@
  */
 package com.kuprowski.helenos.service;
 
+import com.kuprowski.helenos.types.JsonColumnFamilyDefinition;
 import com.kuprowski.helenos.types.JsonKeyspaceDefinition;
 import java.util.ArrayList;
 import java.util.List;
+import me.prettyprint.hector.api.ddl.ColumnFamilyDefinition;
 import me.prettyprint.hector.api.ddl.KeyspaceDefinition;
 import org.springframework.stereotype.Component;
 
@@ -30,5 +32,24 @@ public class ClusterProviderImpl extends AbstractProvider implements ClusterProv
             y.add(mapper.map(kd, JsonKeyspaceDefinition.class));
         }
         return y;
+    }
+    
+    @Override
+    public JsonKeyspaceDefinition describeKeyspace(String keyspaceName) {
+        KeyspaceDefinition def = cluster.describeKeyspace(keyspaceName);
+        return mapper.map(def, JsonKeyspaceDefinition.class);
+    }
+    
+    @Override
+    public JsonColumnFamilyDefinition describeColumnFamily(String keyspaceName, String columnFamilyName) {
+        KeyspaceDefinition def = cluster.describeKeyspace(keyspaceName);
+        JsonColumnFamilyDefinition jsonDef = null;
+        for(ColumnFamilyDefinition thriftDef : def.getCfDefs()) {
+            if (thriftDef.getName().equals(columnFamilyName)) {
+                jsonDef = mapper.map(thriftDef, JsonColumnFamilyDefinition.class);
+                continue;
+            }
+        }
+        return jsonDef;
     }
 }

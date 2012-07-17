@@ -7,31 +7,41 @@ Authors:
   Tomek Kuprowski (tomekkuprowski at gmail dot com)
  ************************************************************************ */
 /*
-#asset(qx/icon/16/Tango/status/dialog-information.png)
-#asset(qx/icon/Tango/16/places/user-trash.png)
-#asset(qx/icon/Tango/16/apps/office-spreadsheet.png)
+#asset(qx/icon/${qx.icontheme}/16/status/dialog-information.png)
+#asset(qx/icon/${qx.icontheme}/16/places/user-trash.png)
+#asset(qx/icon/${qx.icontheme}/16/apps/office-spreadsheet.png)
  */
 qx.Class.define("helenos.components.menu.ColumnFamilyContextMenu",
 {
     extend : qx.ui.menu.Menu,
-
-    /*
-  *****************************************************************************
-     MEMBERS
-  *****************************************************************************
-  */
  
-    construct : function()
+    construct : function(ksName, cfName)
     {
         this.base(arguments);
         
-        var propsButton = new qx.ui.menu.Button("Properties", "qx/icon/Tango/16/status/dialog-information.png");
+        var propsButton = new qx.ui.menu.Button("Properties", "qx/icon/Oxygen/16/status/dialog-information.png");
+        propsButton.setUserData('KSNAME', ksName);
+        propsButton.setUserData('CFNAME', cfName);
+        propsButton.addListener("execute", this.__showProperties);
         this.add(propsButton);
         
-        var viewDataButton = new qx.ui.menu.Button("View data", "qx/icon/Tango/16/apps/office-spreadsheet.png");
+        var viewDataButton = new qx.ui.menu.Button("View data", "qx/icon/Oxygen/16/apps/office-spreadsheet.png");
+        viewDataButton.setUserData('KSNAME', ksName);
+        viewDataButton.setUserData('CFNAME', cfName);
         this.add(viewDataButton);
         
-        var removeButton = new qx.ui.menu.Button("Remove column family", "qx/icon/Tango/16/places/user-trash.png");
+        var removeButton = new qx.ui.menu.Button("Remove column family", "qx/icon/Oxygen/16/places/user-trash.png");
+        removeButton.setUserData('KSNAME', ksName);
+        removeButton.setUserData('CFNAME', cfName);
         this.add(removeButton);
+    },
+    
+    members : {
+        __showProperties : function(e) {
+            var ksName = e.getTarget().getUserData('KSNAME');
+            var cfName = e.getTarget().getUserData('CFNAME');
+            
+            helenos.util.GuiObserver.showColumnFamilyInfoTab(ksName, cfName);
+        }
     }
 });

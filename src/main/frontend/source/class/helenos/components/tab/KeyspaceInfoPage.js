@@ -7,8 +7,8 @@ Authors:
   Tomek Kuprowski (tomekkuprowski at gmail dot com)
  ************************************************************************ */
 /*
-#asset(qx/icon/Tango/16/status/dialog-information.png)
-#asset(qx/icon/Tango/64/status/dialog-information.png)
+#asset(helenos/keyspace.png)
+#asset(qx/icon/${qx.icontheme}/64/status/dialog-information.png)
 */
 qx.Class.define("helenos.components.tab.KeyspaceInfoPage",
 {
@@ -20,33 +20,33 @@ qx.Class.define("helenos.components.tab.KeyspaceInfoPage",
   *****************************************************************************
   */
  
-    construct : function(ksDef)
+    construct : function(ksName)
     {
         this.base(arguments);
-        set({
-            title: ksDef.name,
-            icon: 'qx/icon/Tango/16/status/dialog-information.png',
-            layout: new qx.ui.layout.VBox()
+        this.set({
+            label: ksName,
+            icon: 'helenos/keyspace.png',
+            layout: new qx.ui.layout.VBox(3, 'top')
         });
         
-        this.__showInformation(ksDef);
+        var rpc = new helenos.util.Rpc('Cluster');
+        var ksDef = rpc.callSync('describeKeyspace', ksName);
+        
+        this.__addNameAtom(ksDef);
+        this.__addBasicInfoGroup(ksDef);
+        this.__addCFTable(ksDef);
     },
 
     members :
     {
-        __showInformation : function(ksDef) {
-            this.__addNameAtom(ksDef);
-            this.__addBasicInfoGroup(ksDef);
-        },
-        
         __addNameAtom : function(ksDef) {
-            var atom = new qx.ui.basic.Atom(ksDef.name, "qx/icon/Tango/64/status/dialog-information.png");
+            var atom = new qx.ui.basic.Atom('Keyspace: ' + ksDef.name, "qx/icon/Oxygen/64/status/dialog-information.png");
             atom.setFont(new qx.bom.Font(22, ["OpenSansRegular", "Helvetica Neue", "Helvetica", "Arial", "sans-serif"]));
             this.add(atom);
         },
         
         __addBasicInfoGroup : function(ksDef) {
-            var gb = new qx.ui.groupbox.GroupBox('Info');
+            var gb = new qx.ui.groupbox.GroupBox('Basic');
             gb.setLayout(new qx.ui.layout.VBox());
             
             var a1 = new helenos.ui.RichAtom('Strategy class: <b>' + ksDef.strategyClass + '</b>');
@@ -55,6 +55,33 @@ qx.Class.define("helenos.components.tab.KeyspaceInfoPage",
             gb.add(a1);
             gb.add(a2);
             this.add(gb);
+        },
+        
+        __addCFTable : function(ksDef) {
+            var tableModel = new qx.ui.table.model.Simple();
+            tableModel.setColumns(['Id','Name','Type', 'Comparator', 'Sub comparator', 'Key validation','Default validation','Row cache', 'Key cache', 'GC grace sec'],['id','name','columnType','comparatorType_typeName', 'subComparatorType_typeName', 'keyValidationClass_normalized','defaultValidationClass_normalized','rowCacheSize', 'keyCacheSize', 'gcGraceSeconds']);
+            
+           // qx.lang.Core.arrayForEach(this.__convertCF, ksDef.cfDefs);
+            
+            tableModel.setDataAsMapArray(ksDef.cfDefs.map(this.__convertCF));
+            //alert(qx.lang.Object.getKeysAsString(ksDef.cfDefs[0]));
+            var table = new qx.ui.table.Table(tableModel);
+            
+            var gb = new qx.ui.groupbox.GroupBox('Column families');
+            gb.setLayout(new qx.ui.layout.VBox());
+            
+            gb.add(table, {flex : 1});
+            
+            this.add(gb, {flex : 1});
+        },
+        
+        __convertCF : function(obj ) {
+            obj['comparatorType_typeName'] = obj.comparatorType.typeName;
+            obj['subComparatorType_typeName'] = obj.subComparatorType ? obj.subComparatorType.typeName : '';
+            obj['keyValidationClass_normalized'] = obj.keyValidationClass.replace('org.apache.cassandra.db.marshal.','');
+            obj['defaultValidationClass_normalized'] = obj.defaultValidationClass.replace('org.apache.cassandra.db.marshal.','');
+            
+            return obj;
         }
         
     }

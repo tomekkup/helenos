@@ -8,8 +8,8 @@ Authors:
  ************************************************************************ */
 
 /*
-#asset(qx/icon/Tango/16/actions/view-refresh.png)
-#asset(qx/icon/Tango/16/devices/computer.png)
+#asset(qx/icon/${qx.icontheme}/16/actions/view-refresh.png)
+#asset(qx/icon/${qx.icontheme}/16/devices/computer.png)
 #asset(helenos/keyspace.png)
 #asset(helenos/supercf.png)
 #asset(helenos/standardcf.png)
@@ -50,7 +50,7 @@ qx.Class.define("helenos.components.ClusterPane",
         __createButtons : function() {
             this.__btnToolbar = new qx.ui.toolbar.ToolBar();
             
-            var refreshButton = new qx.ui.toolbar.Button("Refresh", "qx/icon/Tango/16/actions/view-refresh.png");
+            var refreshButton = new qx.ui.toolbar.Button("Refresh", "qx/icon/Oxygen/16/actions/view-refresh.png");
             refreshButton.addListener('execute', this.refreshClusterTree);
             
             this.__btnToolbar.add(refreshButton);
@@ -76,23 +76,23 @@ qx.Class.define("helenos.components.ClusterPane",
         
         __renderKeyspaces : function(ksDefs) {
             for (var i = 0; i < ksDefs.length; i++) {
-                var def = ksDefs[i];
+                var ks = ksDefs[i];
                 
-                var ksItem = new qx.ui.tree.TreeFolder(def.name);
+                var ksItem = new qx.ui.tree.TreeFolder(ks.name);
                 ksItem.set({
-                    open: def.name != 'system',
+                    open: ks.name != 'system',
                     icon : 'helenos/keyspace.png',
-                    contextMenu: new helenos.components.menu.KeyspaceContextMenu()
+                    contextMenu: new helenos.components.menu.KeyspaceContextMenu(ks.name)
                 });
                 this.__clusterTree.getRoot().add(ksItem);
                 
-                for (var j = 0; j < def.cfDefs.length; j++) {
-                    var cf = def.cfDefs[j];
+                for (var j = 0; j < ks.cfDefs.length; j++) {
+                    var cf = ks.cfDefs[j];
                     var cfItem = new qx.ui.tree.TreeFile(cf.name);
                     cfItem.set({
                         icon : cf.columnType == 'Super' ? 'helenos/supercf.png' : 'helenos/standardcf.png',
                         toolTip : this.__createColumnFamilyToolTip(cf),
-                        contextMenu: new helenos.components.menu.ColumnFamilyContextMenu()
+                        contextMenu: new helenos.components.menu.ColumnFamilyContextMenu(ks.name, cf.name)
                     });
                     cfItem.setIcon(cf.columnType == 'Super' ? 'helenos/supercf.png' : 'helenos/standardcf.png');
                     cfItem.setToolTip(this.__createColumnFamilyToolTip(cf));
@@ -118,7 +118,7 @@ qx.Class.define("helenos.components.ClusterPane",
         __setRootItem : function(clusterName) {
             var rootItem = new qx.ui.tree.TreeFolder(clusterName);
             rootItem.setOpen(true);
-            rootItem.setIcon("qx/icon/Tango/16/devices/computer.png");
+            rootItem.setIcon("qx/icon/Oxygen/16/devices/computer.png");
             this.__clusterTree.setRoot(rootItem);
         }
     }

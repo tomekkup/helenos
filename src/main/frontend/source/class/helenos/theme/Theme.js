@@ -1,12 +1,4 @@
-/* ************************************************************************
 
-   Copyright:
-
-   License:
-
-   Authors:
-
-************************************************************************ */
 
 qx.Theme.define("helenos.theme.Theme",
 {
@@ -15,7 +7,7 @@ qx.Theme.define("helenos.theme.Theme",
     color : helenos.theme.Color,
     decoration : helenos.theme.Decoration,
     font : helenos.theme.Font,
-    icon : qx.theme.icon.Tango,
+    icon : qx.theme.icon.Oxygen,
     appearance : helenos.theme.Appearance
   }
 });

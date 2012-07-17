@@ -6,20 +6,15 @@ License:
 Authors:
   Tomek Kuprowski (tomekkuprowski at gmail dot com)
  ************************************************************************ */
-
 qx.Class.define("helenos.components.tab.AbstractCloseablePage",
 {
     extend : qx.ui.tabview.Page,
-
-    /*
-  *****************************************************************************
-     MEMBERS
-  *****************************************************************************
-  */
  
     construct : function()
     {
         this.base(arguments);
-        set({ showCloseButton: true });
+        this.set({
+            showCloseButton: true
+        });
     }
 });

@@ -8,7 +8,7 @@ Authors:
  ************************************************************************ */
 
 /*
-#asset(qx/icon/Tango/32/status/dialog-warning.png)
+#asset(qx/icon/${qx.icontheme}/32/status/dialog-warning.png)
 */
 qx.Class.define('helenos.components.ExceptionWindow',
 {
@@ -20,7 +20,7 @@ qx.Class.define('helenos.components.ExceptionWindow',
             caption: 'Error occured', modal: true});
         this.setLayout(new qx.ui.layout.VBox(10, 'top'));
 
-        this._label = new qx.ui.basic.Atom('<b>Remote server returned an error!', 'qx/icon/Tango/32/status/dialog-warning.png');
+        this._label = new qx.ui.basic.Atom('<b>Remote server returned an error!', 'qx/icon/Oxygen/32/status/dialog-warning.png');
         this._textArea = new qx.ui.form.TextArea();
         this._textArea.setMinHeight(200);
 

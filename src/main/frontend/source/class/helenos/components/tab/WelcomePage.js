@@ -6,10 +6,13 @@ License:
 Authors:
   Tomek Kuprowski (tomekkuprowski at gmail dot com)
  ************************************************************************ */
-
-qx.Class.define("helenos.components.RightContentPane",
+/*
+#asset(welcome.html)
+#asset(qx/icon/${qx.icontheme}/16/places/user-home.png)
+ */
+qx.Class.define("helenos.components.tab.WelcomePage",
 {
-    extend : qx.ui.tabview.TabView,
+    extend : helenos.components.tab.AbstractCloseablePage,
 
     /*
   *****************************************************************************
@@ -20,8 +23,13 @@ qx.Class.define("helenos.components.RightContentPane",
     construct : function()
     {
         this.base(arguments);
+        this.set({
+            label: 'Welcome',
+            icon: 'qx/icon/Oxygen/16/places/user-home.png',
+            layout: new qx.ui.layout.VBox(3, 'top')
+        });
         
-        var welcomePage = new helenos.components.tab.WelcomePage();
-        this.add(welcomePage);
+        var iframe = new qx.ui.embed.ThemedIframe('resource/welcome.html');
+        this.add(iframe, {flex : 1});
     }
 });
