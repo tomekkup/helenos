@@ -4,6 +4,7 @@
  */
 package com.kuprowski.helenos.types;
 
+import java.nio.ByteBuffer;
 import me.prettyprint.hector.api.ddl.ColumnIndexType;
 
 /**
@@ -24,7 +25,7 @@ public class JsonColumnDefinition {
     }
 
     public void setName(String name) {
-        this.name = name == null ? name : name.toString();
+        this.name = name == null ? name : name;
     }
 
     public String getValidationClass() {

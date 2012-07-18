@@ -10,9 +10,6 @@ Authors:
 /*
 #asset(qx/icon/${qx.icontheme}/16/actions/view-refresh.png)
 #asset(qx/icon/${qx.icontheme}/16/devices/computer.png)
-#asset(helenos/keyspace.png)
-#asset(helenos/supercf.png)
-#asset(helenos/standardcf.png)
 */
 
 qx.Class.define("helenos.components.ClusterPane",
