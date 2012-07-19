@@ -1,0 +1,52 @@
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: you@your.org\n"
+"POT-Creation-Date: 2011-07-21 20:11+0100\n"
+"PO-Revision-Date: 2011-07-22 01:44+0100\n"
+"Last-Translator: Apertio SAS <contact@apertio.fr>\n"
+"Language-Team: Team <yourteam@your.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: dialog/Confirm.js:156
+msgid "yes"
+msgstr "Oui"
+
+#: dialog/Confirm.js:166
+msgid "no"
+msgstr "Non"
+
+#: dialog/Dialog.js:494
+msgid "OK"
+msgstr "OK"
+
+#: dialog/Dialog.js:508
+msgid "Cancel"
+msgstr "Annuler"
+
+#: dialog/Login.js:171
+msgid "Name"
+msgstr "Identifiant"
+
+#: dialog/Login.js:171
+msgid "Password"
+msgstr "Mot de passe"
+
+#: dialog/Login.js:214
+msgid "Login"
+msgstr "Se connecter"
+
+#: dialog/Wizard.js:183
+msgid "Back"
+msgstr "Précédent"
+
+#: dialog/Wizard.js:192
+msgid "Next"
+msgstr "Suivant"
+
+#: dialog/Wizard.js:206
+msgid "Finish"
+msgstr "Terminer"

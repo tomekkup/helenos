@@ -59,7 +59,7 @@ qx.Class.define("helenos.components.ClusterPane",
             this.refreshClusterTree();
         },
         
-        refreshClusterTree : function() {
+        refreshSchemaTree : function() {
             this.__clusterTree.resetSelection(); // ?
           
             var rpc = new helenos.util.Rpc('Cluster');

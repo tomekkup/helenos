@@ -53,7 +53,9 @@
         {
             "library" : 
             [
-            
+            {
+                "manifest" : "contribs/dialog/Manifest.json"
+            }
             ]
         }
     }

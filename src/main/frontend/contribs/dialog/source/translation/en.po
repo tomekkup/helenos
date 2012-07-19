@@ -1,0 +1,52 @@
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: you@your.org\n"
+"POT-Creation-Date: 2011-07-21 20:11+0100\n"
+"PO-Revision-Date: 2011-07-21 20:11+0100\n"
+"Last-Translator: you <you@your.org>\n"
+"Language-Team: Team <yourteam@your.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: dialog/Confirm.js:156
+msgid "yes"
+msgstr ""
+
+#: dialog/Confirm.js:166
+msgid "no"
+msgstr ""
+
+#: dialog/Dialog.js:494
+msgid "OK"
+msgstr ""
+
+#: dialog/Dialog.js:508
+msgid "Cancel"
+msgstr ""
+
+#: dialog/Login.js:171
+msgid "Name"
+msgstr ""
+
+#: dialog/Login.js:171
+msgid "Password"
+msgstr ""
+
+#: dialog/Login.js:214
+msgid "Login"
+msgstr ""
+
+#: dialog/Wizard.js:183
+msgid "Back"
+msgstr ""
+
+#: dialog/Wizard.js:192
+msgid "Next"
+msgstr ""
+
+#: dialog/Wizard.js:206
+msgid "Finish"
+msgstr ""

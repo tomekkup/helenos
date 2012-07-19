@@ -30,11 +30,12 @@ qx.Class.define("helenos.components.MainPane",
 
     members :
     {
-        __treePane : null,
+        __schemaPane : null,
         __rightPane : null,
     
         __createLeftPane : function() {
-            this.__treePane = new helenos.components.ClusterPane();
+            this.__schemaPane = new helenos.components.SchemaPane();
+            helenos.util.GuiObserver.registerSchemaPane(this.__schemaPane);
         },
     
         __createRightPane : function() {

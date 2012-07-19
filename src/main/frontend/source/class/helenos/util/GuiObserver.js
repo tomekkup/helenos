@@ -20,9 +20,14 @@ qx.Class.define("helenos.util.GuiObserver",
     statics :
     {
         __tabbedPane : null,
+        __schemaPane : null,
         
         registerTabbedPane : function(pane) {
             this.__tabbedPane = pane;
+        },
+        
+        registerSchemaPane : function(pane) {
+            this.__schemaPane = pane;
         },
 		
         showKeyspaceInfoTab : function(keyspaceName) {
@@ -39,6 +44,11 @@ qx.Class.define("helenos.util.GuiObserver",
             var cfPage = new helenos.components.tab.ColumnFamilyInfoPage(keyspaceName, columnFamilyName);
             this.__tabbedPane.add(cfPage);
             this.__tabbedPane.setSelection([cfPage]);
+        },
+        
+        refreshSchemaTree : function() {
+            qx.core.Assert.assertNotNull(this.__schemaPane,'cluster pane not registered yet');
+            this.__schemaPane.refreshSchemaTree();
         }
     }
 });
