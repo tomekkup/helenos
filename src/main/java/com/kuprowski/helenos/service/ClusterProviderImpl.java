@@ -18,12 +18,12 @@ import org.springframework.stereotype.Component;
  */
 @Component("clusterProvider")
 public class ClusterProviderImpl extends AbstractProvider implements ClusterProvider {
-    
+
     @Override
     public String describeClusterName() {
         return cluster.describeClusterName();
     }
-    
+
     @Override
     public List<JsonKeyspaceDefinition> describeKeyspaces() {
         List<KeyspaceDefinition> x = cluster.describeKeyspaces();
@@ -33,33 +33,33 @@ public class ClusterProviderImpl extends AbstractProvider implements ClusterProv
         }
         return y;
     }
-    
+
     @Override
     public void dropKeyspace(String keyspaceName) {
         cluster.dropKeyspace(keyspaceName, true);
     }
-    
+
     @Override
     public void dropColumnFamily(String keyspaceName, String columnFamily) {
         cluster.dropColumnFamily(keyspaceName, columnFamily, true);
     }
-    
+
     @Override
     public void truncateColumnFamily(String keyspaceName, String columnFamily) {
         cluster.truncate(keyspaceName, columnFamily);
     }
-    
+
     @Override
     public JsonKeyspaceDefinition describeKeyspace(String keyspaceName) {
         KeyspaceDefinition def = cluster.describeKeyspace(keyspaceName);
         return mapper.map(def, JsonKeyspaceDefinition.class);
     }
-    
+
     @Override
     public JsonColumnFamilyDefinition describeColumnFamily(String keyspaceName, String columnFamilyName) {
         KeyspaceDefinition def = cluster.describeKeyspace(keyspaceName);
         JsonColumnFamilyDefinition jsonDef = null;
-        for(ColumnFamilyDefinition thriftDef : def.getCfDefs()) {
+        for (ColumnFamilyDefinition thriftDef : def.getCfDefs()) {
             if (thriftDef.getName().equals(columnFamilyName)) {
                 jsonDef = mapper.map(thriftDef, JsonColumnFamilyDefinition.class);
                 continue;

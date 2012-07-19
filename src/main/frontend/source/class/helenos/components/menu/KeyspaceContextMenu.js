@@ -27,6 +27,8 @@ qx.Class.define("helenos.components.menu.KeyspaceContextMenu",
         this.add(new qx.ui.menu.Separator());
         
         var addCFButton = new qx.ui.menu.Button("Add column family", "qx/icon/Oxygen/16/actions/list-add.png");
+        addCFButton.setUserData('KSNAME', ksName);
+        addCFButton.addListener("execute", this.__addColumnFamily);
         this.add(addCFButton);
         
         var dropButton = new qx.ui.menu.Button("Remove", "qx/icon/Oxygen/16/actions/edit-delete.png");
@@ -49,6 +51,76 @@ qx.Class.define("helenos.components.menu.KeyspaceContextMenu",
                     helenos.util.GuiObserver.refreshSchemaTree();
                 }
             }, this);
+        },
+        
+        __addColumnFamily : function(e) {
+            var ksName = e.getTarget().getUserData('KSNAME');
+            var formData = {
+                'name' : {
+                    'type'  : "TextField",
+                    'label' : "Name", 
+                    'value' : "",
+                    "validation" : {
+                        "required" : true
+                    }
+                },
+                'column' : {
+                    'type'  : "SelectBox", 
+                    'label' : "Column",
+                    'value' : 1,
+                    'options' : helenos.util.CassandraTypes.columnTypes,
+                    "validation" : {
+                        "required" : true
+                    }
+                },
+                'comparator' : {
+                    'type'  : "SelectBox", 
+                    'label' : "Comparator",
+                    'value' : 1,
+                    'options' : helenos.util.CassandraTypes.comparatorTypes,
+                    "validation" : {
+                        "required" : true
+                    }
+                },
+                'subComparator' : {
+                    'type'  : "SelectBox", 
+                    'label' : "Subcomparator",
+                    'value' : 1,
+                    'options' : helenos.util.CassandraTypes.comparatorTypes,
+                    "validation" : {
+                        "required" : true
+                    }
+                }
+                ,
+                'keyValidationclass' : {
+                    'type'  : "SelectBox", 
+                    'label' : "Key validation class",
+                    'value' : 1,
+                    'options' : helenos.util.CassandraTypes.validationClasses,
+                    "validation" : {
+                        "required" : true
+                    }
+                },
+                'defaultValidationclass' : {
+                    'type'  : "SelectBox", 
+                    'label' : "Default validation class",
+                    'value' : 1,
+                    'options' : helenos.util.CassandraTypes.validationClasses,
+                    "validation" : {
+                        "required" : true
+                    }
+                },
+                'comment' :
+                {
+                    'type'  : "TextArea",
+                    'label' : "Comment",
+                    'lines' : 4,
+                    'value' : ""
+                }
+            };
+            dialog.Dialog.form('<b>Create new column family</b>', formData, function(result) {
+                
+                });
         }
     }
 });
