@@ -12,7 +12,7 @@ Authors:
 #asset(qx/icon/${qx.icontheme}/16/devices/computer.png)
 */
 
-qx.Class.define("helenos.components.ClusterPane",
+qx.Class.define("helenos.components.SchemaPane",
 {
     extend : qx.ui.container.Composite,
 
