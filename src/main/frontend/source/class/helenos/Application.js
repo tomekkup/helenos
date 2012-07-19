@@ -23,12 +23,7 @@ qx.Class.define("helenos.Application",
   */
 
     members :
-    {
-    
-        __getTopComposite : function() {
-            return new helenos.components.TopComposite();
-        },
-        
+    {       
         main : function()
         {
             // Call super class
@@ -42,8 +37,10 @@ qx.Class.define("helenos.Application",
                 // support additional cross-browser console. Press F7 to toggle visibility
                 qx.log.appender.Console;
             }
+            
+            qx.locale.Manager.getInstance().setLocale("en");
       
-            this.getRoot().add(this.__getTopComposite(), {
+            this.getRoot().add(new helenos.components.TopComposite(), {
                 edge : 0
             });
         }

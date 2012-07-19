@@ -11,7 +11,7 @@ Authors:
 #asset(qx/icon/${qx.icontheme}/16/actions/edit-delete.png)
 #asset(qx/icon/${qx.icontheme}/16/actions/edit-clear.png)
 #asset(qx/icon/${qx.icontheme}/16/apps/office-spreadsheet.png)
- */
+*/
 qx.Class.define("helenos.components.menu.ColumnFamilyContextMenu",
 {
     extend : qx.ui.menu.Menu,
