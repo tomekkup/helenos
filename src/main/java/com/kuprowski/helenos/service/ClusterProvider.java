@@ -6,6 +6,7 @@ package com.kuprowski.helenos.service;
 
 import com.kuprowski.helenos.types.JsonColumnFamilyDefinition;
 import com.kuprowski.helenos.types.JsonKeyspaceDefinition;
+import com.kuprowski.helenos.types.qx.QxJsonColumnFamilyDefinition;
 import java.util.List;
 
 /**
@@ -27,4 +28,6 @@ public interface ClusterProvider {
     JsonKeyspaceDefinition describeKeyspace(String keyspaceName);
     
     JsonColumnFamilyDefinition describeColumnFamily(String keyspaceName, String columnFamilyName);
+    
+    void createColumnFamily(QxJsonColumnFamilyDefinition qxDef);
 }

@@ -31,7 +31,7 @@ qx.Class.define("helenos.components.menu.KeyspaceContextMenu",
         addCFButton.addListener("execute", this.__addColumnFamily);
         this.add(addCFButton);
         
-        var dropButton = new qx.ui.menu.Button("Remove", "qx/icon/Oxygen/16/actions/edit-delete.png");
+        var dropButton = new qx.ui.menu.Button("Drop", "qx/icon/Oxygen/16/actions/edit-delete.png");
         dropButton.setUserData('KSNAME', ksName);
         dropButton.addListener("execute", this.__dropKeyspace);
         this.add(dropButton);
@@ -64,7 +64,7 @@ qx.Class.define("helenos.components.menu.KeyspaceContextMenu",
                         "required" : true
                     }
                 },
-                'column' : {
+                'columnType' : {
                     'type'  : "SelectBox", 
                     'label' : "Column",
                     'value' : 1,
@@ -73,7 +73,7 @@ qx.Class.define("helenos.components.menu.KeyspaceContextMenu",
                         "required" : true
                     }
                 },
-                'comparator' : {
+                'comparatorType' : {
                     'type'  : "SelectBox", 
                     'label' : "Comparator",
                     'value' : 1,
@@ -82,14 +82,11 @@ qx.Class.define("helenos.components.menu.KeyspaceContextMenu",
                         "required" : true
                     }
                 },
-                'subComparator' : {
+                'subComparatorType' : {
                     'type'  : "SelectBox", 
                     'label' : "Subcomparator",
                     'value' : 1,
-                    'options' : helenos.util.CassandraTypes.comparatorTypes,
-                    "validation" : {
-                        "required" : true
-                    }
+                    'options' : helenos.util.CassandraTypes.comparatorTypes
                 }
                 ,
                 'keyValidationclass' : {
@@ -110,6 +107,15 @@ qx.Class.define("helenos.components.menu.KeyspaceContextMenu",
                         "required" : true
                     }
                 },
+                'gcGraceSeconds' : {
+                    'type'  : "TextField",
+                    'label' : "GC grace seconds", 
+                    'value' : '86400',
+                    "validation" : {
+                        "required" : true
+                        //,"validator" : qx.util.Validate.number()
+                    }
+                },
                 'comment' :
                 {
                     'type'  : "TextArea",
@@ -119,8 +125,10 @@ qx.Class.define("helenos.components.menu.KeyspaceContextMenu",
                 }
             };
             dialog.Dialog.form('<h4>Create new column family</h4>', formData, function(result) {
-                
-                });
+                result['keyspaceName'] = ksName;
+                helenos.util.RpcActionsProvider.createColumnFamily(result);
+                helenos.util.GuiObserver.refreshSchemaTree();
+            });
         }
     }
 });

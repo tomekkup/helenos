@@ -33,11 +33,11 @@ qx.Class.define("helenos.components.menu.ColumnFamilyContextMenu",
         
         this.add(new qx.ui.menu.Separator());
         
-        var removeButton = new qx.ui.menu.Button("Remove", "qx/icon/Oxygen/16/actions/edit-delete.png");
-        removeButton.setUserData('KSNAME', ksName);
-        removeButton.setUserData('CFNAME', cfName);
-        removeButton.addListener("execute", this.__removeColumnFamily);
-        this.add(removeButton);
+        var dropButton = new qx.ui.menu.Button("Drop", "qx/icon/Oxygen/16/actions/edit-delete.png");
+        dropButton.setUserData('KSNAME', ksName);
+        dropButton.setUserData('CFNAME', cfName);
+        dropButton.addListener("execute", this.__dropColumnFamily);
+        this.add(dropButton);
         
         var truncateButton = new qx.ui.menu.Button("Truncate", "qx/icon/Oxygen/16/actions/edit-clear.png");
         truncateButton.setUserData('KSNAME', ksName);
@@ -65,12 +65,12 @@ qx.Class.define("helenos.components.menu.ColumnFamilyContextMenu",
             }, this);
         },
         
-        __removeColumnFamily : function(e) {
+        __dropColumnFamily : function(e) {
             var ksName = e.getTarget().getUserData('KSNAME');
             var cfName = e.getTarget().getUserData('CFNAME');
             dialog.Dialog.confirm(this.tr('loss.data.alert'), function(ret) {
                 if (ret == true) {
-                    helenos.util.RpcActionsProvider.removeColumnFamily(ksName, cfName);
+                    helenos.util.RpcActionsProvider.dropColumnFamily(ksName, cfName);
                     helenos.util.GuiObserver.refreshSchemaTree();
                 }
             }, this);

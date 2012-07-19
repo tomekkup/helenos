@@ -32,7 +32,16 @@ qx.Class.define('helenos.util.RpcActionsProvider', {
         truncateColumnFamily  : function(keyspaceName, columnFamily) {
             var rpc = new helenos.util.Rpc('Cluster');
             return rpc.callSync('truncateColumnFamily', keyspaceName, columnFamily);
-        }
+        },
         
+        dropColumnFamily  : function(keyspaceName, columnFamily) {
+            var rpc = new helenos.util.Rpc('Cluster');
+            return rpc.callSync('dropColumnFamily', keyspaceName, columnFamily);
+        },
+        
+        createColumnFamily  : function(formData) {
+            var rpc = new helenos.util.Rpc('Cluster');
+            return rpc.callSync('createColumnFamily', formData);
+        }
     }
 });
