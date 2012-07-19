@@ -11,7 +11,6 @@ Authors:
 #asset(qx/icon/${qx.icontheme}/16/actions/view-refresh.png)
 #asset(qx/icon/${qx.icontheme}/16/devices/computer.png)
 */
-
 qx.Class.define("helenos.components.SchemaPane",
 {
     extend : qx.ui.container.Composite,
@@ -47,7 +46,7 @@ qx.Class.define("helenos.components.SchemaPane",
         __createButtons : function() {
             this.__btnToolbar = new qx.ui.toolbar.ToolBar();
             
-            var refreshButton = new qx.ui.toolbar.Button("Refresh", "qx/icon/Oxygen/16/actions/view-refresh.png");
+            var refreshButton = new qx.ui.toolbar.Button("Refresh", "icon/16/actions/view-refresh.png");
             refreshButton.addListener('execute', this.refreshSchemaTree, this);
             
             this.__btnToolbar.add(refreshButton);
@@ -114,7 +113,7 @@ qx.Class.define("helenos.components.SchemaPane",
         __setRootItem : function(clusterName) {
             var rootItem = new qx.ui.tree.TreeFolder(clusterName);
             rootItem.setOpen(true);
-            rootItem.setIcon("qx/icon/Oxygen/16/devices/computer.png");
+            rootItem.setIcon("icon/16/devices/computer.png");
             this.__schemaTree.setRoot(rootItem);
         }
     }

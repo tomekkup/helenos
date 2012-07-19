@@ -6,15 +6,6 @@ License:
 Authors:
   Tomek Kuprowski (tomekkuprowski at gmail dot com)
  ************************************************************************ */
-
-/*
-#asset(qx/icon/Tango/16/actions/view-refresh.png)
-#asset(qx/icon/Tango/16/devices/computer.png)
-#asset(helenos/keyspace.png)
-#asset(helenos/supercf.png)
-#asset(helenos/standardcf.png)
-*/
-
 qx.Class.define("helenos.util.GuiObserver",
 {
     statics :

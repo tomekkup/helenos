@@ -40,7 +40,7 @@ qx.Class.define("helenos.components.tab.KeyspaceInfoPage",
     members :
     {
         __addNameAtom : function(ksDef) {
-            var atom = new qx.ui.basic.Atom('Keyspace: ' + ksDef.name, "qx/icon/Oxygen/64/status/dialog-information.png");
+            var atom = new helenos.ui.RichAtom('Keyspace: <b>' + ksDef.name + '</b>', "icon/64/status/dialog-information.png");
             atom.setFont(new qx.bom.Font(22, ["OpenSansRegular", "Helvetica Neue", "Helvetica", "Arial", "sans-serif"]));
             this.add(atom);
         },
@@ -75,6 +75,7 @@ qx.Class.define("helenos.components.tab.KeyspaceInfoPage",
             this.add(gb, {flex : 1});
         },
         
+        //TODO move 'replace' code to some helper obj
         __convertCF : function(obj ) {
             obj['comparatorType_typeName'] = obj.comparatorType.typeName;
             obj['subComparatorType_typeName'] = obj.subComparatorType ? obj.subComparatorType.typeName : '';

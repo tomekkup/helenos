@@ -7,6 +7,7 @@ package com.kuprowski.helenos.types;
 import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.Map;
+import me.prettyprint.cassandra.constants.CFMetaDataDefaults;
 import me.prettyprint.hector.api.ddl.ColumnDefinition;
 
 /**
@@ -17,7 +18,6 @@ public class JsonColumnFamilyDefinition {
 
     public JsonColumnFamilyDefinition() {
     }
-    
     private String name;
     private String keyspaceName;
     private String comment;
@@ -30,6 +30,9 @@ public class JsonColumnFamilyDefinition {
     private double readRepairChance;
     private List<JsonColumnDefinition> columnMetadata;
     private int gcGraceSeconds;
+    private int keyCacheSavePeriodInSeconds;
+    private String rowCacheProvider;
+    private int rowCacheKeysToSave;
     private String keyValidationClass;
     private String defaultValidationClass;
     private int id;
@@ -38,14 +41,12 @@ public class JsonColumnFamilyDefinition {
     private double memtableOperationsInMillions;
     private int memtableThroughputInMb;
     private int memtableFlushAfterMins;
-    private int keyCacheSavePeriodInSeconds;
     private boolean replicateOnWrite;
     private String compactionStrategy;
     private Map<String, String> compactionStrategyOptions;
     private Map<String, String> compressionOptions;
     private double mergeShardsChance;
-    private String rowCacheProvider;
-    private int rowCacheKeysToSave;
+    
 
     public String getName() {
         return name;
@@ -54,7 +55,7 @@ public class JsonColumnFamilyDefinition {
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public String getKeyspaceName() {
         return keyspaceName;
     }

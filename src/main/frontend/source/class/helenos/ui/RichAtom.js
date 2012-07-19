@@ -10,12 +10,11 @@ qx.Class.define("helenos.ui.RichAtom",
 {
     extend : qx.ui.basic.Atom,
 
-    construct : function(label)
+    construct : function(label, icon)
     {
-        this.base(arguments);
+        this.base(arguments, label, icon);
         this.set({
-            rich: true,
-            label: label
+            rich: true
         });
     }
 });
