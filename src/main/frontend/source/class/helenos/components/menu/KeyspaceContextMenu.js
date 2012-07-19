@@ -9,6 +9,7 @@ Authors:
 /*
 #asset(qx/icon/${qx.icontheme}/16/status/dialog-information.png)
 #asset(qx/icon/${qx.icontheme}/16/actions/list-add.png)
+#asset(qx/icon/${qx.icontheme}/16/actions/edit-delete.png)
  */
 qx.Class.define("helenos.components.menu.KeyspaceContextMenu",
 {
@@ -23,14 +24,27 @@ qx.Class.define("helenos.components.menu.KeyspaceContextMenu",
         propsButton.addListener("execute", this.__showProperties);
         this.add(propsButton);
         
+        this.add(new qx.ui.menu.Separator());
+        
         var addCFButton = new qx.ui.menu.Button("Add column family", "qx/icon/Oxygen/16/actions/list-add.png");
         this.add(addCFButton);
+        
+        var dropButton = new qx.ui.menu.Button("Remove", "qx/icon/Oxygen/16/actions/edit-delete.png");
+        dropButton.setUserData('KSNAME', ksName);
+        dropButton.addListener("execute", this.__dropKeyspace);
+        this.add(dropButton);
     },
     
     members : {
         __showProperties : function(e) {
             var ksName = e.getTarget().getUserData('KSNAME');
             helenos.util.GuiObserver.showKeyspaceInfoTab(ksName);
+        },
+        
+        __dropKeyspace : function(e) {
+            var ksName = e.getTarget().getUserData('KSNAME');
+            helenos.util.RpcActionsProvider.dropKeyspace(ksName);
+            //TODO odswiez tree pane
         }
     }
 });

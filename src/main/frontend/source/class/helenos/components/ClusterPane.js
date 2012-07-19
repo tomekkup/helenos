@@ -64,10 +64,10 @@ qx.Class.define("helenos.components.ClusterPane",
           
             var rpc = new helenos.util.Rpc('Cluster');
           
-            var clusterName = rpc.callSync('describeClusterName');
+            var clusterName = helenos.util.RpcActionsProvider.describeClusterName();
             this.__setRootItem(clusterName);
           
-            var ksDefs = rpc.callSync('describeKeyspaces');
+            var ksDefs = helenos.util.RpcActionsProvider.describeKeyspaces();
             this.__renderKeyspaces(ksDefs);
         },
         

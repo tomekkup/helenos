@@ -6,7 +6,6 @@ package com.kuprowski.helenos.service;
 
 import com.kuprowski.helenos.types.JsonColumnFamilyDefinition;
 import com.kuprowski.helenos.types.JsonKeyspaceDefinition;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,6 +15,12 @@ import java.util.List;
 public interface ClusterProvider {
     
     String describeClusterName();
+    
+    void dropKeyspace(String keyspaceName);
+    
+    void truncateColumnFamily(String keyspaceName, String columnFamily);
+    
+    void dropColumnFamily(String keyspaceName, String columnFamily);
     
     List<JsonKeyspaceDefinition> describeKeyspaces();
     

@@ -23,8 +23,7 @@ qx.Class.define("helenos.components.tab.ColumnFamilyInfoPage",
             layout: new qx.ui.layout.VBox(3, 'top')
         });
         
-        var rpc = new helenos.util.Rpc('Cluster');
-        var cfDef = rpc.callSync('describeColumnFamily', ksName, cfName);
+        var cfDef = helenos.util.RpcActionsProvider.describeColumnFamily(ksName, cfName);
         
     //this.__addNameAtom(ksDef);
     //this.__addBasicInfoGroup(ksDef);

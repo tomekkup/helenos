@@ -8,7 +8,8 @@ Authors:
  ************************************************************************ */
 /*
 #asset(qx/icon/${qx.icontheme}/16/status/dialog-information.png)
-#asset(qx/icon/${qx.icontheme}/16/places/user-trash.png)
+#asset(qx/icon/${qx.icontheme}/16/actions/edit-delete.png)
+#asset(qx/icon/${qx.icontheme}/16/actions/edit-clear.png)
 #asset(qx/icon/${qx.icontheme}/16/apps/office-spreadsheet.png)
  */
 qx.Class.define("helenos.components.menu.ColumnFamilyContextMenu",
@@ -30,10 +31,17 @@ qx.Class.define("helenos.components.menu.ColumnFamilyContextMenu",
         viewDataButton.setUserData('CFNAME', cfName);
         this.add(viewDataButton);
         
-        var removeButton = new qx.ui.menu.Button("Remove column family", "qx/icon/Oxygen/16/places/user-trash.png");
+        this.add(new qx.ui.menu.Separator());
+        
+        var removeButton = new qx.ui.menu.Button("Remove", "qx/icon/Oxygen/16/actions/edit-delete.png");
         removeButton.setUserData('KSNAME', ksName);
         removeButton.setUserData('CFNAME', cfName);
         this.add(removeButton);
+        
+        var truncateButton = new qx.ui.menu.Button("Truncate", "qx/icon/Oxygen/16/actions/edit-clear.png");
+        truncateButton.setUserData('KSNAME', ksName);
+        truncateButton.setUserData('CFNAME', cfName);
+        this.add(truncateButton);
     },
     
     members : {

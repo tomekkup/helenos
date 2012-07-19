@@ -35,6 +35,21 @@ public class ClusterProviderImpl extends AbstractProvider implements ClusterProv
     }
     
     @Override
+    public void dropKeyspace(String keyspaceName) {
+        cluster.dropKeyspace(keyspaceName, true);
+    }
+    
+    @Override
+    public void dropColumnFamily(String keyspaceName, String columnFamily) {
+        cluster.dropColumnFamily(keyspaceName, columnFamily, true);
+    }
+    
+    @Override
+    public void truncateColumnFamily(String keyspaceName, String columnFamily) {
+        cluster.truncate(keyspaceName, columnFamily);
+    }
+    
+    @Override
     public JsonKeyspaceDefinition describeKeyspace(String keyspaceName) {
         KeyspaceDefinition def = cluster.describeKeyspace(keyspaceName);
         return mapper.map(def, JsonKeyspaceDefinition.class);
