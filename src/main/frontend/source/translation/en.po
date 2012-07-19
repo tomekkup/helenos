@@ -16,4 +16,4 @@ msgstr ""
 #: helenos/components/menu/ColumnFamilyContextMenu.js:71
 #: helenos/components/menu/ColumnFamilyContextMenu.js:74
 msgid "loss.data.alert"
-msgstr "Are you sure ?! You will lose all your data !!!"
+msgstr "<h4>Are you sure ?! You will lose all your data !!!</h4>"

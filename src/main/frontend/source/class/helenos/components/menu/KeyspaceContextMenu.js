@@ -95,7 +95,7 @@ qx.Class.define("helenos.components.menu.KeyspaceContextMenu",
                 'keyValidationclass' : {
                     'type'  : "SelectBox", 
                     'label' : "Key validation class",
-                    'value' : 1,
+                    'value' : 5,
                     'options' : helenos.util.CassandraTypes.validationClasses,
                     "validation" : {
                         "required" : true
@@ -104,7 +104,7 @@ qx.Class.define("helenos.components.menu.KeyspaceContextMenu",
                 'defaultValidationclass' : {
                     'type'  : "SelectBox", 
                     'label' : "Default validation class",
-                    'value' : 1,
+                    'value' : 4,
                     'options' : helenos.util.CassandraTypes.validationClasses,
                     "validation" : {
                         "required" : true
@@ -118,7 +118,7 @@ qx.Class.define("helenos.components.menu.KeyspaceContextMenu",
                     'value' : ""
                 }
             };
-            dialog.Dialog.form('<b>Create new column family</b>', formData, function(result) {
+            dialog.Dialog.form('<h4>Create new column family</h4>', formData, function(result) {
                 
                 });
         }
