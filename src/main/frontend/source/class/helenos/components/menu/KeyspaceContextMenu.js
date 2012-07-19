@@ -43,7 +43,7 @@ qx.Class.define("helenos.components.menu.KeyspaceContextMenu",
         
         __dropKeyspace : function(e) {
             var ksName = e.getTarget().getUserData('KSNAME');
-            dialog.Dialog.confirm('<b>Are you sure ?! You will lose all your data !!!</b>', function(ret) {
+            dialog.Dialog.confirm(this.tr('loss.data.alert'), function(ret) {
                 if (ret == true) {
                     helenos.util.RpcActionsProvider.dropKeyspace(ksName);
                     helenos.util.GuiObserver.refreshSchemaTree();

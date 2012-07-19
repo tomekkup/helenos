@@ -24,7 +24,7 @@ qx.Class.define("helenos.components.MainPane",
         this.__createLeftPane();
         this.__createRightPane();
     
-        this.add(this.__treePane, 0);
+        this.add(this.__schemaPane, 0);
         this.add(this.__rightPane, 1);
     },
 

@@ -31,38 +31,37 @@ qx.Class.define("helenos.components.SchemaPane",
         });
 
         this.__createButtons();
-        this.__createClusterTree();
+        this.__createSchemaTree();
         
         this.add(this.__btnToolbar);
-        this.add(this.__clusterTree, {
+        this.add(this.__schemaTree, {
             flex : 1
         });
     },
 
     members :
     {
-        __clusterTree : null,
+        __schemaTree : null,
         __btnToolbar : null,
         
         __createButtons : function() {
             this.__btnToolbar = new qx.ui.toolbar.ToolBar();
             
             var refreshButton = new qx.ui.toolbar.Button("Refresh", "qx/icon/Oxygen/16/actions/view-refresh.png");
-            refreshButton.addListener('execute', this.refreshClusterTree);
+            refreshButton.addListener('execute', this.refreshSchemaTree, this);
             
             this.__btnToolbar.add(refreshButton);
         },
         
-        __createClusterTree : function() {
-            this.__clusterTree = new qx.ui.tree.Tree();
+        __createSchemaTree : function() {
+            this.__schemaTree = new qx.ui.tree.Tree();
             
-            this.refreshClusterTree();
+            this.refreshSchemaTree();
         },
         
         refreshSchemaTree : function() {
-            this.__clusterTree.resetSelection(); // ?
-          
-            var rpc = new helenos.util.Rpc('Cluster');
+            this.__schemaTree.resetSelection();
+            this.__schemaTree.resetRoot();
           
             var clusterName = helenos.util.RpcActionsProvider.describeClusterName();
             this.__setRootItem(clusterName);
@@ -81,7 +80,7 @@ qx.Class.define("helenos.components.SchemaPane",
                     icon : 'helenos/keyspace.png',
                     contextMenu: new helenos.components.menu.KeyspaceContextMenu(ks.name)
                 });
-                this.__clusterTree.getRoot().add(ksItem);
+                this.__schemaTree.getRoot().add(ksItem);
                 
                 for (var j = 0; j < ks.cfDefs.length; j++) {
                     var cf = ks.cfDefs[j];
@@ -116,7 +115,7 @@ qx.Class.define("helenos.components.SchemaPane",
             var rootItem = new qx.ui.tree.TreeFolder(clusterName);
             rootItem.setOpen(true);
             rootItem.setIcon("qx/icon/Oxygen/16/devices/computer.png");
-            this.__clusterTree.setRoot(rootItem);
+            this.__schemaTree.setRoot(rootItem);
         }
     }
 });

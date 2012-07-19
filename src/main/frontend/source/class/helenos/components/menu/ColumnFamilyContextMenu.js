@@ -36,11 +36,13 @@ qx.Class.define("helenos.components.menu.ColumnFamilyContextMenu",
         var removeButton = new qx.ui.menu.Button("Remove", "qx/icon/Oxygen/16/actions/edit-delete.png");
         removeButton.setUserData('KSNAME', ksName);
         removeButton.setUserData('CFNAME', cfName);
+        removeButton.addListener("execute", this.__removeColumnFamily);
         this.add(removeButton);
         
         var truncateButton = new qx.ui.menu.Button("Truncate", "qx/icon/Oxygen/16/actions/edit-clear.png");
         truncateButton.setUserData('KSNAME', ksName);
         truncateButton.setUserData('CFNAME', cfName);
+        truncateButton.addListener("execute", this.__truncateColumnFamily);
         this.add(truncateButton);
     },
     
@@ -50,6 +52,28 @@ qx.Class.define("helenos.components.menu.ColumnFamilyContextMenu",
             var cfName = e.getTarget().getUserData('CFNAME');
             
             helenos.util.GuiObserver.showColumnFamilyInfoTab(ksName, cfName);
+        },
+        
+        __truncateColumnFamily : function(e) {
+            var ksName = e.getTarget().getUserData('KSNAME');
+            var cfName = e.getTarget().getUserData('CFNAME');
+            dialog.Dialog.confirm(this.tr('loss.data.alert'), function(ret) {
+                if (ret == true) {
+                    helenos.util.RpcActionsProvider.truncateColumnFamily(ksName, cfName);
+                    //helenos.util.GuiObserver.refreshSchemaTree();
+                }
+            }, this);
+        },
+        
+        __removeColumnFamily : function(e) {
+            var ksName = e.getTarget().getUserData('KSNAME');
+            var cfName = e.getTarget().getUserData('CFNAME');
+            dialog.Dialog.confirm(this.tr('loss.data.alert'), function(ret) {
+                if (ret == true) {
+                    helenos.util.RpcActionsProvider.removeColumnFamily(ksName, cfName);
+                    helenos.util.GuiObserver.refreshSchemaTree();
+                }
+            }, this);
         }
     }
 });
