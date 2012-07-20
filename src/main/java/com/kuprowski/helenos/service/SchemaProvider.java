@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author tomek
  */
-public interface ClusterProvider {
+public interface SchemaProvider {
     
     String describeClusterName();
     

@@ -6,10 +6,12 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <bean name="/Cluster.json" class="com.googlecode.jsonrpc4j.spring.JsonServiceExporter">
-        <property name="service" ref="clusterProvider"/>
-        <property name="serviceInterface" value="com.kuprowski.helenos.service.ClusterProvider"/>
+    <bean name="/Schema.json" class="com.googlecode.jsonrpc4j.spring.JsonServiceExporter">
+        <property name="service" ref="schemaProvider"/>
+        <property name="serviceInterface" value="com.kuprowski.helenos.service.SchemaProvider"/>
     </bean>
+    
+    
     
     <mvc:resources mapping="/helenos/**" location="/helenos/" /> 
 </beans>

@@ -2,14 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kuprowski.helenos.service;
+package com.kuprowski.helenos.service.impl;
 
+import com.kuprowski.helenos.service.SchemaProvider;
 import com.kuprowski.helenos.types.JsonColumnFamilyDefinition;
 import com.kuprowski.helenos.types.JsonKeyspaceDefinition;
 import com.kuprowski.helenos.types.qx.QxJsonColumnFamilyDefinition;
 import java.util.ArrayList;
 import java.util.List;
-import me.prettyprint.cassandra.model.BasicColumnFamilyDefinition;
 import me.prettyprint.cassandra.service.ThriftCfDef;
 import me.prettyprint.hector.api.ddl.ColumnFamilyDefinition;
 import me.prettyprint.hector.api.ddl.ColumnType;
@@ -21,8 +21,8 @@ import org.springframework.stereotype.Component;
  *
  * @author tomek
  */
-@Component("clusterProvider")
-public class ClusterProviderImpl extends AbstractProvider implements ClusterProvider {
+@Component("schemaProvider")
+public class SchemaProviderImpl extends AbstractProvider implements SchemaProvider {
 
     @Override
     public String describeClusterName() {
