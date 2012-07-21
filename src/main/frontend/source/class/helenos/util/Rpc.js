@@ -19,7 +19,7 @@ qx.Class.define('helenos.util.Rpc',
         
         members : {
             __getRemoteUri : function(serviceName) {
-                return window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + '/' + serviceName + '.json';
+                return window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + serviceName;
             }
         }
     });

@@ -11,7 +11,10 @@
         <property name="serviceInterface" value="com.kuprowski.helenos.service.SchemaProvider"/>
     </bean>
     
-    
+    <bean name="/Query.json" class="com.googlecode.jsonrpc4j.spring.JsonServiceExporter">
+        <property name="service" ref="queryProvider"/>
+        <property name="serviceInterface" value="com.kuprowski.helenos.service.QueryProvider"/>
+    </bean>
     
     <mvc:resources mapping="/helenos/**" location="/helenos/" /> 
 </beans>
