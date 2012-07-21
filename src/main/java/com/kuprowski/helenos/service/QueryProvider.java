@@ -5,10 +5,6 @@
 package com.kuprowski.helenos.service;
 
 import com.googlecode.jsonrpc4j.JsonRpcParam;
-import com.kuprowski.helenos.types.JsonColumnFamilyDefinition;
-import com.kuprowski.helenos.types.JsonKeyspaceDefinition;
-import com.kuprowski.helenos.types.qx.QxJsonColumnFamilyDefinition;
-import java.util.List;
 import java.util.UUID;
 
 /**
@@ -17,8 +13,6 @@ import java.util.UUID;
  */
 public interface QueryProvider {
     
-    String get(String columnFamily, UUID uuidKey, String column);
-    String get(String columnFamily, String stringKey, String column);
-    
-    String getUK(@JsonRpcParam("cf") String columnFamily, @JsonRpcParam("key") UUID key, @JsonRpcParam("column") String column);
+    String get(@JsonRpcParam("cf") String columnFamily,@JsonRpcParam("uuidKey") UUID key,@JsonRpcParam("column") String column);
+    String get(@JsonRpcParam("cf") String columnFamily,@JsonRpcParam("stringKey") String key,@JsonRpcParam("column") String column);
 }
