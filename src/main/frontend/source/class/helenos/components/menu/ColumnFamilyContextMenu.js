@@ -29,6 +29,7 @@ qx.Class.define("helenos.components.menu.ColumnFamilyContextMenu",
         var viewDataButton = new qx.ui.menu.Button("View data", "icon/16/apps/office-spreadsheet.png");
         viewDataButton.setUserData('KSNAME', ksName);
         viewDataButton.setUserData('CFNAME', cfName);
+        viewDataButton.addListener("execute", this.__showDataPane);
         this.add(viewDataButton);
         
         this.add(new qx.ui.menu.Separator());
@@ -63,6 +64,12 @@ qx.Class.define("helenos.components.menu.ColumnFamilyContextMenu",
                     //helenos.util.GuiObserver.refreshSchemaTree();
                 }
             }, this);
+        },
+        
+        __showDataPane : function(e) {
+            var ksName = e.getTarget().getUserData('KSNAME');
+            var cfName = e.getTarget().getUserData('CFNAME');
+            helenos.util.GuiObserver.showViewDataTab(ksName, cfName);
         },
         
         __dropColumnFamily : function(e) {
