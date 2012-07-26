@@ -23,6 +23,11 @@ qx.Class.define('helenos.util.RpcActionsProvider', {
             return rpc.callSync('describeClusterName');
         },
         
+        describeKeyspace  : function(keyspaceName) {
+            var rpc = new helenos.util.Rpc(this._SCHEMA);
+            return rpc.callSync('describeKeyspace', keyspaceName);
+        },
+        
         describeKeyspaces  : function() {
             var rpc = new helenos.util.Rpc(this._SCHEMA);
             return rpc.callSync('describeKeyspaces');

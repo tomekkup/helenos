@@ -29,8 +29,8 @@ qx.Class.define("helenos.components.tab.KeyspaceInfoPage",
             layout: new qx.ui.layout.VBox(3, 'top')
         });
         
-        var rpc = new helenos.util.Rpc('Cluster');
-        var ksDef = rpc.callSync('describeKeyspace', ksName);
+        
+        var ksDef = helenos.util.RpcActionsProvider.describeKeyspace(ksName);
         
         this.__addNameAtom(ksDef);
         this.__addBasicInfoGroup(ksDef);
