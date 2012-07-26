@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.kuprowski.helenos.service.impl;
 
 import com.kuprowski.helenos.service.QueryProvider;
@@ -20,7 +16,15 @@ import org.springframework.stereotype.Component;
         "column": "none"
     }
  }
- * @author tomek
+ */
+/**
+ * ********************************************************
+ * Copyright: 2012 Tomek Kuprowski
+ *
+ * License: GPLv2: http://www.gnu.org/licences/gpl.html
+ *
+ * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
+ * *******************************************************
  */
 @Component("queryProvider")
 public class QueryProviderImpl extends AbstractProvider implements QueryProvider {

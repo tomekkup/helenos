@@ -10,8 +10,13 @@ import com.kuprowski.helenos.types.qx.QxJsonColumnFamilyDefinition;
 import java.util.List;
 
 /**
+ * ********************************************************
+ * Copyright: 2012 Tomek Kuprowski
  *
- * @author tomek
+ * License: GPLv2: http://www.gnu.org/licences/gpl.html
+ *
+ * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
+ * *******************************************************
  */
 public interface SchemaProvider {
     

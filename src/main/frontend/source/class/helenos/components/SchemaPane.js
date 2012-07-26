@@ -49,13 +49,21 @@ qx.Class.define("helenos.components.SchemaPane",
             var refreshButton = new qx.ui.toolbar.Button("Refresh", "icon/16/actions/view-refresh.png");
             refreshButton.addListener('execute', this.refreshSchemaTree, this);
             
+            var addKeyspaceButton = new qx.ui.toolbar.Button("Add keyspace", "icon/16/actions/list-add.png");
+            addKeyspaceButton.addListener('execute', this.__addKeyspace, this);
+            
             this.__btnToolbar.add(refreshButton);
+            this.__btnToolbar.add(addKeyspaceButton);
         },
         
         __createSchemaTree : function() {
             this.__schemaTree = new qx.ui.tree.Tree();
             
             this.refreshSchemaTree();
+        },
+        
+        __addKeyspace : function() {
+            
         },
         
         refreshSchemaTree : function() {

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.kuprowski.helenos.service.impl;
 
 import com.kuprowski.helenos.service.SchemaProvider;
@@ -18,8 +14,13 @@ import me.prettyprint.hector.api.ddl.KeyspaceDefinition;
 import org.springframework.stereotype.Component;
 
 /**
+ * ********************************************************
+ * Copyright: 2012 Tomek Kuprowski
  *
- * @author tomek
+ * License: GPLv2: http://www.gnu.org/licences/gpl.html
+ *
+ * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
+ * *******************************************************
  */
 @Component("schemaProvider")
 public class SchemaProviderImpl extends AbstractProvider implements SchemaProvider {
@@ -72,7 +73,7 @@ public class SchemaProviderImpl extends AbstractProvider implements SchemaProvid
         }
         return jsonDef;
     }
-    
+
     @Override
     public void createColumnFamily(QxJsonColumnFamilyDefinition qxDef) {
         ColumnFamilyDefinition cfDef = new ThriftCfDef(qxDef.getKeyspaceName(), qxDef.getName());
@@ -85,7 +86,7 @@ public class SchemaProviderImpl extends AbstractProvider implements SchemaProvid
         }
         cfDef.setKeyValidationClass(qxDef.getKeyValidationclass());
         cfDef.setDefaultValidationClass(qxDef.getDefaultValidationclass());
-        
+
         cluster.addColumnFamily(cfDef, true);
     }
 }
