@@ -15,6 +15,4 @@
         <property name="service" ref="queryProvider"/>
         <property name="serviceInterface" value="com.kuprowski.helenos.service.QueryProvider"/>
     </bean>
-    
-    <mvc:resources mapping="/helenos/**" location="/helenos/" /> 
 </beans>

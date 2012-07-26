@@ -25,7 +25,7 @@ qx.Class.define("helenos.components.tab.WelcomePage",
         this.base(arguments);
         this.set({
             label: 'Welcome',
-            icon: 'qx/icon/Oxygen/16/places/user-home.png',
+            icon: 'icon/16/places/user-home.png',
             layout: new qx.ui.layout.VBox(3, 'top')
         });
         
