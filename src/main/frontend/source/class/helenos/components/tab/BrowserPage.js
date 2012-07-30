@@ -7,7 +7,7 @@ Authors:
   Tomek Kuprowski (tomekkuprowski at gmail dot com)
  ************************************************************************ */
 
-qx.Class.define("helenos.components.tab.ViewDataPage",
+qx.Class.define("helenos.components.tab.BrowserPage",
 {
     extend : helenos.components.tab.AbstractCloseablePage,
  

@@ -29,9 +29,9 @@ qx.Class.define("helenos.util.GuiObserver",
             this.__tabbedPane.setSelection([ksPage]);
         },
         
-        showViewDataTab : function(keyspaceName, columnFamily) {
+        showBrowserTab : function(keyspaceName, columnFamily) {
             qx.core.Assert.assertNotNull(this.__tabbedPane,'tabbed pane not registered yet');
-            var dataPage = new helenos.components.tab.ViewDataPage(keyspaceName, columnFamily);
+            var dataPage = new helenos.components.tab.BrowserPage(keyspaceName, columnFamily);
             this.__tabbedPane.add(dataPage);
             this.__tabbedPane.setSelection([dataPage]);
         }, 

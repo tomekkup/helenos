@@ -26,11 +26,11 @@ qx.Class.define("helenos.components.menu.ColumnFamilyContextMenu",
         propsButton.addListener("execute", this.__showProperties);
         this.add(propsButton);
         
-        var viewDataButton = new qx.ui.menu.Button("View data", "icon/16/apps/office-spreadsheet.png");
-        viewDataButton.setUserData('KSNAME', ksName);
-        viewDataButton.setUserData('CFNAME', cfName);
-        viewDataButton.addListener("execute", this.__showDataPane);
-        this.add(viewDataButton);
+        var browserButton = new qx.ui.menu.Button("Browse", "icon/16/apps/office-spreadsheet.png");
+        browserButton.setUserData('KSNAME', ksName);
+        browserButton.setUserData('CFNAME', cfName);
+        browserButton.addListener("execute", this.__showBrowserPane);
+        this.add(browserButton);
         
         this.add(new qx.ui.menu.Separator());
         
@@ -66,10 +66,10 @@ qx.Class.define("helenos.components.menu.ColumnFamilyContextMenu",
             }, this);
         },
         
-        __showDataPane : function(e) {
+        __showBrowserPane : function(e) {
             var ksName = e.getTarget().getUserData('KSNAME');
             var cfName = e.getTarget().getUserData('CFNAME');
-            helenos.util.GuiObserver.showViewDataTab(ksName, cfName);
+            helenos.util.GuiObserver.showBrowserTab(ksName, cfName);
         },
         
         __dropColumnFamily : function(e) {
