@@ -16,8 +16,7 @@ import java.util.UUID;
  * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
  * *******************************************************
  */
-public interface QueryProvider {
+public interface SuperQueryProvider {
     
-    String get(@JsonRpcParam("cf") String columnFamily,@JsonRpcParam("uuidKey") UUID key,@JsonRpcParam("column") String column);
-    String get(@JsonRpcParam("cf") String columnFamily,@JsonRpcParam("stringKey") String key,@JsonRpcParam("column") String column);
+    <K,SN, N> String singleColumn(@JsonRpcParam("keyClass") Class<K> keyClass, @JsonRpcParam("sNameClass") Class<SN> sNameClass, @JsonRpcParam("nameClass") Class<N> nameClass, @JsonRpcParam("keyspaceName") String keyspaceName, @JsonRpcParam("columnFamily") String columnFamily, @JsonRpcParam("key") K key, @JsonRpcParam("superColumn") SN supercolumn, @JsonRpcParam("column") N column);
 }

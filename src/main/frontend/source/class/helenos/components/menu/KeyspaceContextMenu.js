@@ -11,7 +11,7 @@ Authors:
 #asset(qx/icon/${qx.icontheme}/16/actions/list-add.png)
 #asset(qx/icon/${qx.icontheme}/16/actions/edit-delete.png)
  */
-qx.Class.define("helenos.components.menu.KeyspaceContextMenu",
+qx.Class.define('helenos.components.menu.KeyspaceContextMenu',
 {
     extend : qx.ui.menu.Menu,
  
@@ -19,21 +19,21 @@ qx.Class.define("helenos.components.menu.KeyspaceContextMenu",
     {
         this.base(arguments);
         
-        var propsButton = new qx.ui.menu.Button("Properties", "icon/16/status/dialog-information.png");
+        var propsButton = new qx.ui.menu.Button('Properties', 'icon/16/status/dialog-information.png');
         propsButton.setUserData('KSNAME', ksName);
-        propsButton.addListener("execute", this.__showProperties);
+        propsButton.addListener('execute', this.__showProperties);
         this.add(propsButton);
         
         this.add(new qx.ui.menu.Separator());
         
-        var addCFButton = new qx.ui.menu.Button("Add column family", "icon/16/actions/list-add.png");
+        var addCFButton = new qx.ui.menu.Button('Add column family', 'icon/16/actions/list-add.png');
         addCFButton.setUserData('KSNAME', ksName);
-        addCFButton.addListener("execute", this.__addColumnFamily);
+        addCFButton.addListener('execute', this.__addColumnFamily);
         this.add(addCFButton);
         
-        var dropButton = new qx.ui.menu.Button("Drop", "icon/16/actions/edit-delete.png");
+        var dropButton = new qx.ui.menu.Button('Drop', 'icon/16/actions/edit-delete.png');
         dropButton.setUserData('KSNAME', ksName);
-        dropButton.addListener("execute", this.__dropKeyspace);
+        dropButton.addListener('execute', this.__dropKeyspace);
         this.add(dropButton);
     },
     
@@ -57,71 +57,71 @@ qx.Class.define("helenos.components.menu.KeyspaceContextMenu",
             var ksName = e.getTarget().getUserData('KSNAME');
             var formData = {
                 'name' : {
-                    'type'  : "TextField",
-                    'label' : "Name", 
-                    'value' : "",
-                    "validation" : {
-                        "required" : true
+                    'type'  : 'TextField',
+                    'label' : 'Name', 
+                    'value' : '',
+                    'validation' : {
+                        'required' : true
                     }
                 },
                 'columnType' : {
-                    'type'  : "SelectBox", 
-                    'label' : "Column",
+                    'type'  : 'SelectBox', 
+                    'label' : 'Column',
                     'value' : 1,
                     'options' : helenos.util.CassandraTypes.columnTypes,
-                    "validation" : {
-                        "required" : true
+                    'validation' : {
+                        'required' : true
                     }
                 },
                 'comparatorType' : {
-                    'type'  : "SelectBox", 
-                    'label' : "Comparator",
+                    'type'  : 'SelectBox', 
+                    'label' : 'Comparator',
                     'value' : 1,
                     'options' : helenos.util.CassandraTypes.comparatorTypes,
-                    "validation" : {
-                        "required" : true
+                    'validation' : {
+                        'required' : true
                     }
                 },
                 'subComparatorType' : {
-                    'type'  : "SelectBox", 
-                    'label' : "Subcomparator",
+                    'type'  : 'SelectBox', 
+                    'label' : 'Subcomparator',
                     'value' : 1,
                     'options' : helenos.util.CassandraTypes.comparatorTypes
                 }
                 ,
                 'keyValidationclass' : {
-                    'type'  : "SelectBox", 
-                    'label' : "Key validation class",
+                    'type'  : 'SelectBox', 
+                    'label' : 'Key validation class',
                     'value' : 5,
                     'options' : helenos.util.CassandraTypes.validationClasses,
-                    "validation" : {
-                        "required" : true
+                    'validation' : {
+                        'required' : true
                     }
                 },
                 'defaultValidationclass' : {
-                    'type'  : "SelectBox", 
-                    'label' : "Default validation class",
+                    'type'  : 'SelectBox', 
+                    'label' : 'Default validation class',
                     'value' : 4,
                     'options' : helenos.util.CassandraTypes.validationClasses,
-                    "validation" : {
-                        "required" : true
+                    'validation' : {
+                        'required' : true
                     }
                 },
                 'gcGraceSeconds' : {
-                    'type'  : "TextField",
-                    'label' : "GC grace seconds", 
+                    'type'  : 'TextField',
+                    'label' : 'GC grace seconds', 
                     'value' : '86400',
-                    "validation" : {
-                        "required" : true
-                        //,"validator" : qx.util.Validate.number()
+                    'validation' : {
+                        'required' : true
+                        //,'validator' : qx.util.Validate.number()
                     }
                 },
                 'comment' :
                 {
-                    'type'  : "TextArea",
-                    'label' : "Comment",
+                    'type'  : 'TextArea',
+                    'label' : 'Comment',
                     'lines' : 4,
-                    'value' : ""
+                    'value' : ''
                 }
             };
             dialog.Dialog.form('<h4>Create new column family</h4>', formData, function(result) {

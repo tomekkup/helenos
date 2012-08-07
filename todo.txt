@@ -1,0 +1,77 @@
+Single column :
+
+zaleznie od tego czy CF jest standard czy super wola on query typu ColumnQuery lub SubColumnQuery jak rowniez CounterQuery i SubColumnQuery
+jesli typem danych jest Counter
+
+Slice predicate:
+wola SliceQuery i jego odpowiedniki zgodnie z powyzszym
+
+
+
+
+
+MultigetSliceCounterQuery<UUID, Character> query = HFactory.createMultigetSliceCounterQuery(getKeyspace(), UUIDSerializer.get(), CharSerializer.get());
+        query = query.setColumnFamily(PHOTO_COUNTERS_CF_NAME).setColumnNames(LikeType.ALL_COLUMN_NAMES);
+        query = query.setKeys(photosIds);
+        QueryResult<CounterRows<UUID, Character>> ret = query.execute();
+
+
+----------------------------------------------------------------------------------------------------------------
+
+SliceQuery<UUID, Long, Comment> query = createSliceQuery(UUIDSerializer.get(), LongSerializer.get(), CommentSerializer.get(), COMMENTS_CF_NAME, photoId);
+        query.setRange(fromTime - ONE, 0l, true, limit);
+        
+        QueryResult<ColumnSlice<Long, Comment>> result = query.execute();
+
+----------------------------------------------------------------------------------------------------------------
+
+SliceCounterQuery<String, Character> query = HFactory.createCounterSliceQuery(getKeyspace(), stringSerializer, CharSerializer.get());
+        query = query.setKey(user.getUsername()).setColumnNames(LikeType.USER_COLUMN_NAMES).setColumnFamily(USER_COUNTERS_CF_NAME);
+
+----------------------------------------------------------------------------------------------------------------
+
+SubSliceQuery<UUID, Character, UUID, PhotoDevotee> query = HFactory.createSubSliceQuery(getKeyspace(), UUIDSerializer.get(), CharSerializer.get(), UUIDSerializer.get(), PhotoDevoteeSerializer.get());
+
+        query.setColumnFamily(LISTS_PHOTOS_DEVOTEES_CF_NAME);
+        query.setSuperColumn(likeType.getCode());
+        query.setKey(photoId);
+        query.setRange(UUIDHelper.getNextTimeUUID(from), null, true, maxResults);
+
+        QueryResult<ColumnSlice<UUID, PhotoDevotee>> result = query.execute();
+
+----------------------------------------------------------------------------------------------------------------
+
+IndexedSlicesQuery<String, String, byte[]> query = HFactory.createIndexedSlicesQuery(getKeyspace(), StringSerializer.get(), StringSerializer.get(), BytesArraySerializer.get());
+
+        query.addEqualsExpression("email", email.getBytes());
+        query.setColumnFamily(USERS_CF_NAME);
+        query.setStartKey("");
+        query.setRowCount(1);
+        query.setColumnNames("email", "userdata"); // nie zwracam specjalnie lastPhoto
+        QueryResult<OrderedRows<String, String, byte[]>> result = query.execute();
+
+
+----------------------------------------------------------------------------------------------------------------
+
+ColumnQuery<K, N, V> query = this.createColumnQuery(keySerializer, nameSerializer, valueSerializer);
+        query.setColumnFamily(family);
+        query.setKey(key);
+        query.setName(name);
+
+        QueryResult<HColumn<N, V>> result = query.execute();
+
+        return result.get() != null ? result.get().getValue() : null;
+
+----------------------------------------------------------------------------------------------------------------
+
+
+
+----------------------------------------------------------------------------------------------------------------
+
+
+
+----------------------------------------------------------------------------------------------------------------
+
+
+
+----------------------------------------------------------------------------------------------------------------

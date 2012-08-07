@@ -23,6 +23,10 @@
         <param-name>log4jRefreshInterval</param-name>
         <param-value>360000</param-value>
     </context-param>
+    <context-param>
+      <param-name>useFileMappedBuffer</param-name>
+      <param-value>false</param-value>
+    </context-param>
 
     <listener>
         <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>

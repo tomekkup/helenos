@@ -11,8 +11,13 @@
         <property name="serviceInterface" value="com.kuprowski.helenos.service.SchemaProvider"/>
     </bean>
     
-    <bean name="/Query.json" class="com.googlecode.jsonrpc4j.spring.JsonServiceExporter">
-        <property name="service" ref="queryProvider"/>
-        <property name="serviceInterface" value="com.kuprowski.helenos.service.QueryProvider"/>
+    <bean name="/query/Standard.json" class="com.googlecode.jsonrpc4j.spring.JsonServiceExporter">
+        <property name="service" ref="standardQueryProvider"/>
+        <property name="serviceInterface" value="com.kuprowski.helenos.service.StandardQueryProvider"/>
+    </bean>
+    
+    <bean name="/query/Super.json" class="com.googlecode.jsonrpc4j.spring.JsonServiceExporter">
+        <property name="service" ref="superQueryProvider"/>
+        <property name="serviceInterface" value="com.kuprowski.helenos.service.SuperQueryProvider"/>
     </bean>
 </beans>
