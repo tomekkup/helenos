@@ -7,9 +7,6 @@ Slice predicate:
 wola SliceQuery i jego odpowiedniki zgodnie z powyzszym
 
 
-
-
-
 MultigetSliceCounterQuery<UUID, Character> query = HFactory.createMultigetSliceCounterQuery(getKeyspace(), UUIDSerializer.get(), CharSerializer.get());
         query = query.setColumnFamily(PHOTO_COUNTERS_CF_NAME).setColumnNames(LikeType.ALL_COLUMN_NAMES);
         query = query.setKeys(photosIds);

@@ -60,6 +60,17 @@ qx.Class.define('helenos.util.CassandraTypes', {
             'value' : "org.apache.cassandra.db.marshal.CounterColumnType"
         }
         ],
+        
+        strategyClasses : [
+            {
+                'label' : "Simple", 
+                'value' : "org.apache.cassandra.locator.SimpleStrategy"
+            },
+            {
+                'label' : "Network topology", 
+                'value' : "org.apache.cassandra.locator.NetworkTopologyStrategy"
+            }
+        ],
                    
         columnTypes : [
         {

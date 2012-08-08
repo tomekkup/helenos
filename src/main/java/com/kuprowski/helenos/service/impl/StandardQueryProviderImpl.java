@@ -15,6 +15,14 @@ import me.prettyprint.hector.api.query.SubColumnQuery;
 import org.springframework.stereotype.Component;
 
 /**
+ *
+{
+"id" : 1,
+"method" : "singleColumn",
+"params" : ["java.lang.String", "java.lang.String", "lookminders", "Users", "mama", "userdata"]
+}
+ */
+/**
  * ********************************************************
  * Copyright: 2012 Tomek Kuprowski
  *

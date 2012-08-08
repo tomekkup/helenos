@@ -4,9 +4,11 @@ import com.kuprowski.helenos.service.SchemaProvider;
 import com.kuprowski.helenos.types.JsonColumnFamilyDefinition;
 import com.kuprowski.helenos.types.JsonKeyspaceDefinition;
 import com.kuprowski.helenos.types.qx.QxJsonColumnFamilyDefinition;
+import com.kuprowski.helenos.types.qx.QxJsonKeyspaceDefinition;
 import java.util.ArrayList;
 import java.util.List;
 import me.prettyprint.cassandra.service.ThriftCfDef;
+import me.prettyprint.cassandra.service.ThriftKsDef;
 import me.prettyprint.hector.api.ddl.ColumnFamilyDefinition;
 import me.prettyprint.hector.api.ddl.ColumnType;
 import me.prettyprint.hector.api.ddl.ComparatorType;
@@ -88,5 +90,12 @@ public class SchemaProviderImpl extends AbstractProvider implements SchemaProvid
         cfDef.setDefaultValidationClass(qxDef.getDefaultValidationclass());
 
         cluster.addColumnFamily(cfDef, true);
+    }
+
+    @Override
+    public void createKeyspace(QxJsonKeyspaceDefinition qxDef) {
+        KeyspaceDefinition ksDef = new ThriftKsDef(qxDef.getKeyspaceName(), qxDef.getStrategyClass(), qxDef.getReplicationFactor(), new ArrayList<ColumnFamilyDefinition>(0));
+
+        cluster.addKeyspace(ksDef, true);
     }
 }

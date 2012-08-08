@@ -63,7 +63,37 @@ qx.Class.define("helenos.components.SchemaPane",
         },
         
         __addKeyspace : function() {
-            
+            var formData = {
+                'keyspaceName' : {
+                    'type'  : 'TextField',
+                    'label' : 'Name', 
+                    'value' : '',
+                    'validation' : {
+                        'required' : true
+                    }
+                },
+                'strategyClass' : {
+                    'type'  : 'SelectBox', 
+                    'label' : 'Strategy class',
+                    'value' : 1,
+                    'options' : helenos.util.CassandraTypes.strategyClasses,
+                    'validation' : {
+                        'required' : true
+                    }
+                },
+                'replicationFactor' : {
+                    'type'  : 'TextField', 
+                    'label' : 'Replication factor',
+                    'value' : '1',
+                    'validation' : {
+                        'required' : true
+                    }
+                }
+            };
+            dialog.Dialog.form('<h4>Create new keyspace</h4>', formData, function(result) {
+                helenos.util.RpcActionsProvider.createKeyspace(result);
+                helenos.util.GuiObserver.refreshSchemaTree();
+            });
         },
         
         refreshSchemaTree : function() {

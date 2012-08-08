@@ -11,7 +11,8 @@ qx.Class.define('helenos.util.RpcActionsProvider', {
     statics : {
         
         _SCHEMA : '/Schema.json',
-        _QUERY : '/Query.json',
+        _STANDARDQUERY : '/query/Standard.json',
+        _SUPERQUERY : '/query/Super.json',
         
         dropKeyspace : function(keyspaceName) {
             var rpc = new helenos.util.Rpc(this._SCHEMA);
@@ -51,6 +52,11 @@ qx.Class.define('helenos.util.RpcActionsProvider', {
         createColumnFamily  : function(formData) {
             var rpc = new helenos.util.Rpc(this._SCHEMA);
             return rpc.callSync('createColumnFamily', formData);
+        },
+        
+        createKeyspace : function(formData) {
+            var rpc = new helenos.util.Rpc(this._SCHEMA);
+            return rpc.callSync('createKeyspace', formData);
         }
     }
 });
