@@ -59,7 +59,7 @@ qx.Class.define('helenos.components.menu.ColumnFamilyContextMenu',
             var byKeyButton = new qx.ui.menu.Button('By key', 'icon/16/apps/utilities-keyring.png');
             byKeyButton.setUserData('KSNAME', ksName);
             byKeyButton.setUserData('CFNAME', cfName);
-            //byKeyButton.addListener('execute', this.__showBrowserPane);
+            byKeyButton.addListener('execute', this.__showBrowseByKeyPane);
           
             var sliceButton = new qx.ui.menu.Button('Slice predicate', 'icon/16/apps/office-spreadsheet.png');
             sliceButton.setUserData('KSNAME', ksName);
@@ -82,10 +82,10 @@ qx.Class.define('helenos.components.menu.ColumnFamilyContextMenu',
             }, this);
         },
         
-        __showBrowserPane : function(e) {
+        __showBrowseByKeyPane : function(e) {
             var ksName = e.getTarget().getUserData('KSNAME');
             var cfName = e.getTarget().getUserData('CFNAME');
-            helenos.util.GuiObserver.showBrowserTab(ksName, cfName);
+            helenos.util.GuiObserver.showBrowseByKeyTab(ksName, cfName);
         },
         
         __dropColumnFamily : function(e) {

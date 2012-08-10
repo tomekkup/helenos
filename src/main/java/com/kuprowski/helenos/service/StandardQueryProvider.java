@@ -18,6 +18,6 @@ import java.util.UUID;
  */
 public interface StandardQueryProvider {
 
-    <K, N> String singleColumn(@JsonRpcParam("keyClass") Class<K> keyClass, @JsonRpcParam("valueClass") Class<N> valueClass, @JsonRpcParam("columnFamily") String keyspaceName, @JsonRpcParam("columnFamily") String columnFamily, @JsonRpcParam("key") K key, @JsonRpcParam("name") N name);
+    <K, N> String singleColumn(@JsonRpcParam("keyClass") Class<K> keyClass, @JsonRpcParam("valueClass") Class<N> valueClass, @JsonRpcParam("columnFamily") String keyspaceName, @JsonRpcParam("columnFamily") String columnFamily, @JsonRpcParam("key") String keyStr, @JsonRpcParam("name") String nameStr);
     
 }

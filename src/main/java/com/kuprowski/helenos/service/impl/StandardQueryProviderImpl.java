@@ -1,5 +1,6 @@
 package com.kuprowski.helenos.service.impl;
 
+import com.kuprowski.helenos.Converter;
 import com.kuprowski.helenos.service.StandardQueryProvider;
 import java.util.UUID;
 import me.prettyprint.cassandra.serializers.SerializerTypeInferer;
@@ -35,11 +36,11 @@ import org.springframework.stereotype.Component;
 public class StandardQueryProviderImpl extends AbstractProvider implements StandardQueryProvider {
 
     @Override
-    public <K,N> String singleColumn(Class<K> keyClass, Class<N> nameClass, String keyspaceName, String columnFamily, K key, N name) {
-        ColumnQuery<K,N,String> query = HFactory.createColumnQuery(getKeyspace(keyspaceName), getSerializer(keyClass), getSerializer(nameClass), StringSerializer.get());
+    public <K,N> String singleColumn(Class<K> keyClass, Class<N> nameClass, String keyspaceName, String columnFamily, String keyStr, String nameStr) {
+        ColumnQuery<K,N,String> query = HFactory.createColumnQuery(getKeyspace(keyspaceName), getSerializer(keyClass), getSerializer(nameClass), StringSerializer.get()); 
         query.setColumnFamily(columnFamily);
-        query.setKey(key);
-        query.setName(name);
+        query.setKey(Converter.toValue(keyStr, keyClass));
+        query.setName(Converter.toValue(nameStr, nameClass));
         
         HColumn<N, String> column = query.execute().get();
         return column != null ? column.getValue() : null;

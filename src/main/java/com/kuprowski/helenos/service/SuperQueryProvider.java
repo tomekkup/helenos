@@ -18,5 +18,5 @@ import java.util.UUID;
  */
 public interface SuperQueryProvider {
     
-    <K,SN, N> String singleColumn(@JsonRpcParam("keyClass") Class<K> keyClass, @JsonRpcParam("sNameClass") Class<SN> sNameClass, @JsonRpcParam("nameClass") Class<N> nameClass, @JsonRpcParam("keyspaceName") String keyspaceName, @JsonRpcParam("columnFamily") String columnFamily, @JsonRpcParam("key") K key, @JsonRpcParam("superColumn") SN supercolumn, @JsonRpcParam("column") N column);
+    <K,SN, N> String singleColumn(@JsonRpcParam("keyClass") Class<K> keyClass, @JsonRpcParam("sNameClass") Class<SN> sNameClass, @JsonRpcParam("nameClass") Class<N> nameClass, @JsonRpcParam("keyspaceName") String keyspaceName, @JsonRpcParam("columnFamily") String columnFamily, @JsonRpcParam("key") String keyStr, @JsonRpcParam("superColumn") String sNameStr, @JsonRpcParam("column") String nameStr);
 }

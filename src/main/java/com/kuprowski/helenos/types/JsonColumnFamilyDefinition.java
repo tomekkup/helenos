@@ -4,11 +4,8 @@
  */
 package com.kuprowski.helenos.types;
 
-import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.Map;
-import me.prettyprint.cassandra.constants.CFMetaDataDefaults;
-import me.prettyprint.hector.api.ddl.ColumnDefinition;
 
 /**
  *

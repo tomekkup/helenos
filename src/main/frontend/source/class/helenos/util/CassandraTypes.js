@@ -85,10 +85,6 @@ qx.Class.define('helenos.util.CassandraTypes', {
         
         validationClasses : [
         {
-            'label' : "SuperColumns", 
-            'value' : "SuperColumns"
-        },
-        {
             'label' : "BytesType", 
             'value' : "BytesType"
         },
