@@ -112,9 +112,6 @@ qx.Class.define("helenos.components.tab.BrowseByKeyPage",
             this.__keyTF = new helenos.ui.TextField(this.__cfDef.keyValidationClass);
             this.__nameTF = new helenos.ui.TextField(this.__cfDef.comparatorType.className);
             
-            this.__keyTF.setValue('239daf70-b3d8-11e1-8a37-50e549e89108');
-            this.__nameTF.setValue('1340376726872');
-            
             var searchButton = new qx.ui.form.Button('Search', 'icon/16/actions/system-search.png');
             searchButton.addListener("execute", this.__performSearch, this);
             
