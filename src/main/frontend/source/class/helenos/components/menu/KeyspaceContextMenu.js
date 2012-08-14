@@ -125,9 +125,11 @@ qx.Class.define('helenos.components.menu.KeyspaceContextMenu',
                 }
             };
             dialog.Dialog.form('<h4>Create new column family</h4>', formData, function(result) {
-                result['keyspaceName'] = ksName;
-                helenos.util.RpcActionsProvider.createColumnFamily(result);
-                helenos.util.GuiObserver.refreshSchemaTree();
+                if (result != null) {
+                    result['keyspaceName'] = ksName;
+                    helenos.util.RpcActionsProvider.createColumnFamily(result);
+                    helenos.util.GuiObserver.refreshSchemaTree();
+                }
             });
         }
     }

@@ -5,21 +5,21 @@ License:
   GPLv2: http://www.gnu.org/licences/gpl.html
 Authors:
   Tomek Kuprowski (tomekkuprowski at gmail dot com)
+
+DEPRECATED !!!
  ************************************************************************ */
-qx.Class.define("helenos.components.tab.AbstractBrowsePage",
+qx.Class.define("helenos.types.query.SingleColumnQuery",
 {
-    extend : helenos.components.tab.AbstractCloseablePage,
- 
+    extend : helenos.types.query.AbstractQuery,
+    
     members : {
-        _rajCB : null,
-        _resultView : null
+    
+        key : null,
+        name : null
     },
  
     construct : function()
     {
         this.base(arguments);
-        
-        this._rajCB = new qx.ui.form.CheckBox('Parse results to JSON');
-        this._resultView = new qx.ui.container.Composite(new qx.ui.layout.VBox());
     }
 });

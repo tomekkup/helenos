@@ -56,15 +56,15 @@ qx.Class.define('helenos.components.menu.ColumnFamilyContextMenu',
         __getBrowseSubMenu : function(ksName, cfName) {
             var menu = new qx.ui.menu.Menu();
           
-            var byKeyButton = new qx.ui.menu.Button('By key', 'icon/16/apps/utilities-keyring.png');
+            var byKeyButton = new qx.ui.menu.Button('Single column', 'icon/16/apps/utilities-keyring.png');
             byKeyButton.setUserData('KSNAME', ksName);
             byKeyButton.setUserData('CFNAME', cfName);
-            byKeyButton.addListener('execute', this.__showBrowseByKeyPane);
+            byKeyButton.addListener('execute', this.__showBrowseBySingleColumnPane);
           
-            var sliceButton = new qx.ui.menu.Button('Slice predicate', 'icon/16/apps/office-spreadsheet.png');
+            var sliceButton = new qx.ui.menu.Button('Slice', 'icon/16/apps/office-spreadsheet.png');
             sliceButton.setUserData('KSNAME', ksName);
             sliceButton.setUserData('CFNAME', cfName);
-            //sliceButton.addListener('execute', this.__showBrowserPane);
+            sliceButton.addListener('execute', this.__showBrowseBySlicePane);
             
             menu.add(byKeyButton);
             menu.add(sliceButton);
@@ -82,10 +82,16 @@ qx.Class.define('helenos.components.menu.ColumnFamilyContextMenu',
             }, this);
         },
         
-        __showBrowseByKeyPane : function(e) {
+        __showBrowseBySingleColumnPane : function(e) {
             var ksName = e.getTarget().getUserData('KSNAME');
             var cfName = e.getTarget().getUserData('CFNAME');
-            helenos.util.GuiObserver.showBrowseByKeyTab(ksName, cfName);
+            helenos.util.GuiObserver.showBrowseBySingleColumnTab(ksName, cfName);
+        },
+        
+        __showBrowseBySlicePane : function(e) {
+            var ksName = e.getTarget().getUserData('KSNAME');
+            var cfName = e.getTarget().getUserData('CFNAME');
+            helenos.util.GuiObserver.showBrowseBySliceTab(ksName, cfName);
         },
         
         __dropColumnFamily : function(e) {

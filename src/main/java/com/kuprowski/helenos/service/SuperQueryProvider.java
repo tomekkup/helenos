@@ -5,6 +5,10 @@
 package com.kuprowski.helenos.service;
 
 import com.googlecode.jsonrpc4j.JsonRpcParam;
+import com.kuprowski.helenos.types.SliceResult;
+import com.kuprowski.helenos.types.qx.query.SingleSubColumnQuery;
+import com.kuprowski.helenos.types.qx.query.SubSliceQuery;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -17,6 +21,8 @@ import java.util.UUID;
  * *******************************************************
  */
 public interface SuperQueryProvider {
-    
-    <K,SN, N> String singleColumn(@JsonRpcParam("keyClass") Class<K> keyClass, @JsonRpcParam("sNameClass") Class<SN> sNameClass, @JsonRpcParam("nameClass") Class<N> nameClass, @JsonRpcParam("keyspaceName") String keyspaceName, @JsonRpcParam("columnFamily") String columnFamily, @JsonRpcParam("key") String keyStr, @JsonRpcParam("superColumn") String sNameStr, @JsonRpcParam("column") String nameStr);
+
+    <K, SN, N> String singleColumn(@JsonRpcParam("query") SingleSubColumnQuery<K, SN, N> query);
+
+    <K, SN, N> List<SliceResult<N>> slice(@JsonRpcParam("query") SubSliceQuery<K, SN, N> query);
 }

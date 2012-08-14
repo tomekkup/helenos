@@ -82,27 +82,47 @@ qx.Class.define('helenos.util.RpcActionsProvider', {
         },
         
         querySingleColumn : function(cfDef, key, name, sName) {
-            var rpc;
+            var query = {};
+            
+            query.keyClass = this.__findParamClass(cfDef.keyValidationClass);
+            query.nameClass = this.__findParamClass(cfDef.comparatorType.className);
+            query.keyspace = cfDef.keyspaceName;
+            query.columnFamily = cfDef.name;
+            query.key = key;
+            query.name = name;
+            
+            var rpc = null;
             if (cfDef.columnType == 'Standard') {
                 rpc = new helenos.util.Rpc(this._STANDARDQUERY);
-                return rpc.callSync('singleColumn', this.__findParamClass(cfDef.keyValidationClass),
-                                    this.__findParamClass(cfDef.comparatorType.className),
-                                    cfDef.keyspaceName,
-                                    cfDef.name,
-                                    key,
-                                    name
-                                    );
             } else {
                 rpc = new helenos.util.Rpc(this._SUPERQUERY);
-                return rpc.callSync('singleColumn', this.__findParamClass(cfDef.keyValidationClass),
-                                    this.__findParamClass(cfDef.comparatorType.className),
-                                    cfDef.keyspaceName,
-                                    cfDef.name,
-                                    key,
-                                    sName,
-                                    name
-                                    );
+                query.sNameClass = this.__findParamClass(cfDef.subComparatorType.className);
+                query.sName = sName;
             }
+            return rpc.callSync('singleColumn', query );
+        },
+        
+        querySlice : function(cfDef, key, nameStart, nameEnd, sName, reversed ) {
+            var query = {};
+            
+            query.keyClass = this.__findParamClass(cfDef.keyValidationClass);
+            query.nameClass = this.__findParamClass(cfDef.comparatorType.className);
+            query.keyspace = cfDef.keyspaceName;
+            query.columnFamily = cfDef.name;
+            query.key = key;
+            query.nameStart = nameStart;
+            query.nameEnd = nameEnd;
+            query.reversed = reversed;
+            
+            var rpc = null;
+            if (cfDef.columnType == 'Standard') {
+                rpc = new helenos.util.Rpc(this._STANDARDQUERY);
+            } else {
+                rpc = new helenos.util.Rpc(this._SUPERQUERY);
+                query.sNameClass = this.__findParamClass(cfDef.subComparatorType.className);
+                query.sName = sName;
+            }
+            return rpc.callSync('slice', query );
         }
     }
 });

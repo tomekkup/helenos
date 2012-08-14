@@ -72,3 +72,10 @@ ColumnQuery<K, N, V> query = this.createColumnQuery(keySerializer, nameSerialize
 
 
 ----------------------------------------------------------------------------------------------------------------
+
+W ustawieniach mozna zapisac:
+
+moje preferencje co do JSON PARSE, tj ktora CF to obsluguje
+defaultowa max results domyslna
+defaultowa max results w slice dla poszczegolnych CF
+oraz params do multigeta

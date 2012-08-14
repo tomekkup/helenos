@@ -91,8 +91,10 @@ qx.Class.define("helenos.components.SchemaPane",
                 }
             };
             dialog.Dialog.form('<h4>Create new keyspace</h4>', formData, function(result) {
-                helenos.util.RpcActionsProvider.createKeyspace(result);
-                helenos.util.GuiObserver.refreshSchemaTree();
+                if (result != null) {
+                    helenos.util.RpcActionsProvider.createKeyspace(result);
+                    helenos.util.GuiObserver.refreshSchemaTree();
+                }
             });
         },
         

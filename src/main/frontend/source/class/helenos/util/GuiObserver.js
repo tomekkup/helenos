@@ -29,12 +29,19 @@ qx.Class.define("helenos.util.GuiObserver",
             this.__tabbedPane.setSelection([ksPage]);
         },
         
-        showBrowseByKeyTab : function(keyspaceName, columnFamily) {
+        showBrowseBySingleColumnTab : function(keyspaceName, columnFamily) {
             qx.core.Assert.assertNotNull(this.__tabbedPane,'tabbed pane not registered yet');
-            var dataPage = new helenos.components.tab.BrowseByKeyPage(keyspaceName, columnFamily);
+            var dataPage = new helenos.components.tab.browse.SingleColumnPage(keyspaceName, columnFamily);
             this.__tabbedPane.add(dataPage);
             this.__tabbedPane.setSelection([dataPage]);
-        }, 
+        },
+        
+        showBrowseBySliceTab : function(keyspaceName, columnFamily) {
+            qx.core.Assert.assertNotNull(this.__tabbedPane,'tabbed pane not registered yet');
+            var dataPage = new helenos.components.tab.browse.GetSlicePage(keyspaceName, columnFamily);
+            this.__tabbedPane.add(dataPage);
+            this.__tabbedPane.setSelection([dataPage]);
+        },
         
         showColumnFamilyInfoTab : function(keyspaceName, columnFamilyName) {
             qx.core.Assert.assertNotNull(this.__tabbedPane,'tabbed pane not registered yet');
