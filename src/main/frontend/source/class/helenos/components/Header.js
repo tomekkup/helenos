@@ -18,8 +18,8 @@ qx.Class.define("helenos.components.Header",
                 alignY : "middle"
             }),
             padding : 8,
-            backgroundColor : "#252525",
-            textColor : "#E8E8E8"
+            height : 40,
+            appearance : 'app-header-black'
         });
         
         //TODO change components to appearance definitions

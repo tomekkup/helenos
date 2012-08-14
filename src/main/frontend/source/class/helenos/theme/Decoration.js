@@ -6,11 +6,19 @@ License:
 Authors:
   Tomek Kuprowski (tomekkuprowski at gmail dot com)
  ************************************************************************ */
-qx.Theme.define("helenos.theme.Decoration",
+qx.Theme.define('helenos.theme.Decoration',
 {
-  extend : qx.theme.modern.Decoration,
+    extend : qx.theme.modern.Decoration,
 
-  decorations :
-  {
-  }
+    decorations :
+    {
+        'app-header-black':
+        {
+            decorator : qx.ui.decoration.Background,
+            style : {
+                backgroundImage : 'helenos/background.jpg',
+                backgroundRepeat : 'repeat-x'
+            }
+        } 
+    }
 });
