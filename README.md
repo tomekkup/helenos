@@ -15,4 +15,7 @@ The main goal is to develop a web application based on Qooxdoo Frontend which pr
 * Listing keyspaces and column families
 * Viewing properties of above
 * Add / remove / truncate column family
-* Drop keyspace
+* Add / Drop keyspace
+* Data browsing via:
+** single column
+** slice
