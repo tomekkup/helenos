@@ -14,6 +14,10 @@ The main goal is to develop a web application based on Qooxdoo Frontend which pr
 
 [here](https://github.com/tomekkup/helenos/downloads)
 
+## Gallery
+
+[Picasa album](https://picasaweb.google.com/tomekkuprowski/Helenos)
+
 ## Features
 
 * Listing keyspaces and column families
@@ -43,3 +47,7 @@ You can build manually with Maven but first install all prerequisities:
 * Results pagination
 * Persisting default filter criteria to reuse at anytime
 * JMX monitor
+
+## FAQ
+
+ * I see a cluster structure in a left pane but how to do anything more !? - Use the force Luke ...I mean right mouse button
