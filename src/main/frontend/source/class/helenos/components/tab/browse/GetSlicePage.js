@@ -55,22 +55,15 @@ qx.Class.define("helenos.components.tab.browse.GetSlicePage",
             this._manager.add(this.__keyTF);
             this._manager.add(this.__nameStartTF);
             
-            ret.push(new qx.ui.basic.Label('Key:'));
-            ret.push(this.__keyTF);
-            ret.push(new qx.ui.core.Spacer(5));
+            ret.push(new helenos.ui.CompositeV([new qx.ui.basic.Label('Key:'), this.__keyTF]));
                         
             if (this._cfDef.columnType == 'Super') {
                 this.__sNameTF = new helenos.ui.TextField(this._cfDef.subComparatorType.className);
-                ret.push(new qx.ui.core.Spacer(5));
-                ret.push(new qx.ui.basic.Label('Super column name:'));
-                ret.push(this.__sNameTF);
+                ret.push(new helenos.ui.CompositeV([new qx.ui.basic.Label('Super column name:'), this.__sNameTF]));
             }
             
-            ret.push(new qx.ui.basic.Label('Range from:'));
-            ret.push(this.__nameStartTF);
-            ret.push(new qx.ui.basic.Label('to:'));
-            ret.push(this.__nameEndTF);
-            ret.push(new qx.ui.core.Spacer(5));
+            ret.push(new helenos.ui.CompositeV([new qx.ui.basic.Label('Range from:'), this.__nameStartTF]));
+            ret.push(new helenos.ui.CompositeV([new qx.ui.basic.Label('Range to:'), this.__nameEndTF]));
             ret.push(this.__reversedCB);
             return ret;
         }

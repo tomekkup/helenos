@@ -46,9 +46,10 @@ qx.Class.define("helenos.components.tab.browse.AbstractBrowsePage",
         _rajCB : null,
         
         __getSearchActionPane : function() {
-            var pane = new qx.ui.container.Composite(new qx.ui.layout.HBox(3, 'right'));
-            pane.add(this._rajCB);
+            var pane = new qx.ui.container.Composite(new qx.ui.layout.HBox(3, 'left'));
             pane.add(this._getSearchButton());
+            pane.add(this._rajCB);
+            
             return pane;
         },
         
@@ -59,7 +60,9 @@ qx.Class.define("helenos.components.tab.browse.AbstractBrowsePage",
             criteriaGB.setLayout(new qx.ui.layout.HBox(8).set({alignY : 'middle'}));
             for (var i = 0; i < components.length; i++) {
                 criteriaGB.add(components[i]);
+                criteriaGB.add(new qx.ui.core.Spacer(3));
             }
+            
             return criteriaGB;
         },
         

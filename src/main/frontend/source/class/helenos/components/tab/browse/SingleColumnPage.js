@@ -6,9 +6,6 @@ License:
 Authors:
   Tomek Kuprowski (tomekkuprowski at gmail dot com)
  ************************************************************************ */
-/*
-#asset(qx/icon/${qx.icontheme}/16/places/folder-open.png)
-*/
 qx.Class.define("helenos.components.tab.browse.SingleColumnPage",
 {
     extend : helenos.components.tab.browse.AbstractBrowsePage,
@@ -49,20 +46,15 @@ qx.Class.define("helenos.components.tab.browse.SingleColumnPage",
             this._manager.add(this.__nameTF);
             //var searchButton = this._getSearchButton();
             
-            ret.push(new qx.ui.basic.Label('Key:'));
-            ret.push(this.__keyTF);
-            ret.push(new qx.ui.core.Spacer(5));
+            ret.push(new helenos.ui.CompositeV([new qx.ui.basic.Label('Key:'), this.__keyTF]));
                         
             if (this._cfDef.columnType == 'Super') {
                 this.__sNameTF = new helenos.ui.RequiredTextField(this._cfDef.subComparatorType.className);
                 this._manager.add(this.__sNameTF);
-                ret.push(new qx.ui.core.Spacer(5));
-                ret.push(new qx.ui.basic.Label('Super column name:'));
-                ret.push(this.__sNameTF);
+                ret.push(new helenos.ui.CompositeV([new qx.ui.basic.Label('Super column name:'), this.__sNameTF]));
             }
             
-            ret.push(new qx.ui.basic.Label('Column name:'));
-            ret.push(this.__nameTF);
+            ret.push(new helenos.ui.CompositeV([new qx.ui.basic.Label('Column name:'), this.__nameTF]));
             //filterGB.add(searchButton);
             //filterGB.add(this._rajCB);
             
