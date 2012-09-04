@@ -47,10 +47,13 @@ qx.Class.define("helenos.components.tab.browse.GetSlicePage",
         
         _getCriteriaComponents : function() {
             var ret = new Array();
-            this.__keyTF = new helenos.ui.TextField(this._cfDef.keyValidationClass);
-            this.__nameStartTF = new helenos.ui.TextField(this._cfDef.comparatorType.className);
+            this.__keyTF = new helenos.ui.RequiredTextField(this._cfDef.keyValidationClass);
+            this.__nameStartTF = new helenos.ui.RequiredTextField(this._cfDef.comparatorType.className);
             this.__nameEndTF = new helenos.ui.TextField(this._cfDef.comparatorType.className);
             this.__reversedCB = new qx.ui.form.CheckBox('Reversed');
+            
+            this._manager.add(this.__keyTF);
+            this._manager.add(this.__nameStartTF);
             
             ret.push(new qx.ui.basic.Label('Key:'));
             ret.push(this.__keyTF);

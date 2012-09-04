@@ -43,9 +43,10 @@ qx.Class.define("helenos.components.tab.browse.SingleColumnPage",
         
         _getCriteriaComponents : function() {
             var ret = new Array();
-            this.__keyTF = new helenos.ui.TextField(this._cfDef.keyValidationClass);
-            this.__nameTF = new helenos.ui.TextField(this._cfDef.comparatorType.className);
-            
+            this.__keyTF = new helenos.ui.RequiredTextField(this._cfDef.keyValidationClass);
+            this.__nameTF = new helenos.ui.RequiredTextField(this._cfDef.comparatorType.className);
+            this._manager.add(this.__keyTF);
+            this._manager.add(this.__nameTF);
             //var searchButton = this._getSearchButton();
             
             ret.push(new qx.ui.basic.Label('Key:'));
@@ -53,7 +54,8 @@ qx.Class.define("helenos.components.tab.browse.SingleColumnPage",
             ret.push(new qx.ui.core.Spacer(5));
                         
             if (this._cfDef.columnType == 'Super') {
-                this.__sNameTF = new helenos.ui.TextField(this._cfDef.subComparatorType.className);
+                this.__sNameTF = new helenos.ui.RequiredTextField(this._cfDef.subComparatorType.className);
+                this._manager.add(this.__sNameTF);
                 ret.push(new qx.ui.core.Spacer(5));
                 ret.push(new qx.ui.basic.Label('Super column name:'));
                 ret.push(this.__sNameTF);

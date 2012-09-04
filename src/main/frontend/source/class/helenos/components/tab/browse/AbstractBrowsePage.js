@@ -17,7 +17,7 @@ qx.Class.define("helenos.components.tab.browse.AbstractBrowsePage",
     construct : function(ksName, cfName)
     {;
         this.base(arguments);
-        
+        this._manager = new qx.ui.form.validation.Manager();
         this._ksName = ksName;
         this._cfName = cfName;
         this._cfDef = helenos.util.RpcActionsProvider.describeColumnFamily(this._ksName, this._cfName);
@@ -41,6 +41,7 @@ qx.Class.define("helenos.components.tab.browse.AbstractBrowsePage",
         _cfDef : null,
         
         _resultView : null,
+        _manager : null,
         
         _rajCB : null,
         
@@ -86,8 +87,15 @@ qx.Class.define("helenos.components.tab.browse.AbstractBrowsePage",
 
         _getSearchButton : function() {
             var button = new qx.ui.form.Button('Search', 'icon/16/actions/system-search.png');
-            button.addListener("execute", this._performSearch, this);
+            button.addListener("execute", this._performValidation, this);
             return button;
+        },
+        
+        _performValidation : function(e) {
+            this._manager.validate();
+            if (this._manager.isValid()) {
+                this._performSearch();
+            }
         },
         
         _renderTreeItemFromJson : function(node, data) {

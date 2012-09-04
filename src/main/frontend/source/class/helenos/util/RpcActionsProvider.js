@@ -35,7 +35,7 @@ qx.Class.define('helenos.util.RpcActionsProvider', {
                     return 'java.util.UUID';
                     break;
                 default:
-                    alert('unknown class: ' + className);
+                    this.error('unknown class: ' + className);
                     return null;
                     break;
             }

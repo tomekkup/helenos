@@ -53,9 +53,9 @@ qx.Class.define("helenos.ui.TextField",
             this.set(cd );
         } else {
             if (clazz.substring(0,45) == 'org.apache.cassandra.db.marshal.CompositeType') {
-                alert('Composite type not supported yet');
+                this.error('Composite type not supported yet');
             } else {
-                alert('type not known')
+                this.error('type not known')
             }
             
         }
