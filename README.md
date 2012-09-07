@@ -8,7 +8,7 @@ The main goal is to develop a web application based on Qooxdoo Frontend which pr
 
 ## Current version
 
-1.0-RC
+1.0-RC3
 
 ## Download
 
@@ -30,8 +30,9 @@ The main goal is to develop a web application based on Qooxdoo Frontend which pr
 
 ## Installation
 
-* Download war package and deploy to your servlet container (tested with Jetty 8)
-* put your helenos.properties configuration file (sample at src/test/resources/) into an application classpath
+* Download war package and deploy to your servlet container (tested with Jetty 8, Tomcat 6)
+* Put your helenos.properties configuration file (sample at src/test/resources/) into an application classpath. First set hosts property to coma separated list of Cassandra hosts
+* Restart app
 * Run and open your web browser to http://localhost:8080/
 
 ## Building manually
@@ -44,9 +45,9 @@ You can build manually with Maven but first install all prerequisities:
 ## Wish list
 
 * Browse with indexed slice and range slices
-* Results pagination
+* Results pagination and export to file
 * Persisting default filter criteria to reuse at anytime
-* JMX monitor
+* JMX monitor 
 
 ## FAQ
 
