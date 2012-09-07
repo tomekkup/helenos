@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
-<log4j:configuration>
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
     <appender name="console" class="org.apache.log4j.ConsoleAppender">
-        <param name="Target" value="System.out" />
-        <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d{ABSOLUTE} %5p %c{1}:%L - %m%n" />
-        </layout>
-    </appender>
+        <param name="Target" value="System.out"/> 
+        <layout class="org.apache.log4j.PatternLayout"> 
+            <param name="ConversionPattern" value="%-5p %c{1} - %m%n"/> 
+        </layout> 
+    </appender> 
 
-    <appender name="default" class="org.apache.log4j.rolling.RollingFileAppender">
-        <param name="file" value="${lookminders.root}/WEB-INF/logs/default.log" />
-        <rollingPolicy class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
-            <param name="fileNamePattern" value="${lookminders.root}/WEB-INF/logs-rollover/default.%d.gz" />
-        </rollingPolicy>
+    <appender name="rollingFile" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="file" value="${helenos.root}/WEB-INF/logs/helenos.log" />
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%p %d %t %c %L - %m%n" />
         </layout>
     </appender>
     
     <root>
-        <level>DEBUG</level>
         <priority value="WARN" />
         <appender-ref ref="console" />
-        <appender-ref ref="default" />
+        <appender-ref ref="rollingFile" />
     </root>
 </log4j:configuration>

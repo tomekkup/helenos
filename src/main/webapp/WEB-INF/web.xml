@@ -23,10 +23,6 @@
         <param-name>log4jRefreshInterval</param-name>
         <param-value>360000</param-value>
     </context-param>
-    <context-param>
-      <param-name>useFileMappedBuffer</param-name>
-      <param-value>false</param-value>
-    </context-param>
 
     <listener>
         <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
@@ -36,16 +32,17 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
     
+    <!-- Override init parameter to avoid nasty file locking issue on windows (Jetty only) -->
+    <!--
     <servlet>
-    <!-- Override init parameter to avoid nasty -->
-    <!-- file locking issue on windows.         -->
         <servlet-name>default</servlet-name>
         <init-param>
             <param-name>useFileMappedBuffer</param-name>
             <param-value>false</param-value>
         </init-param>
     </servlet>
-	
+    -->
+    
     <servlet>
         <servlet-name>helenos</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

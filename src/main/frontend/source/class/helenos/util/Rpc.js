@@ -16,10 +16,19 @@ qx.Class.define('helenos.util.Rpc',
         this.setUrl(this.__getRemoteUri(serviceName));
         this.setTimeout(30000);
     },
+    
+    statics : {
+        serverPath : null
+    },
         
     members : {
         __getRemoteUri : function(serviceName) {
-            return window.location.protocol + '//' + window.location.hostname + ':' + window.location.port + serviceName;
+            if (helenos.util.Rpc.serverPath == undefined)  {
+                var pathIdx = window.location.href.indexOf('/helenos/index.html');
+                helenos.util.Rpc.serverPath = window.location.href.substr(0, pathIdx);
+            }
+            
+            return helenos.util.Rpc.serverPath + serviceName;
         },
         
         showDetails : function(details) {
