@@ -6,11 +6,11 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
 
     <bean id="cassandraHostConfigurator" class="me.prettyprint.cassandra.service.CassandraHostConfigurator">
-        <constructor-arg value="${host}" />
+        <constructor-arg value="${hosts?localhost:9160}" />
     </bean>
 
     <bean id="cluster" class="me.prettyprint.cassandra.service.ThriftCluster">
-        <constructor-arg value="${cluster.name}" />
+        <constructor-arg value="${cluster.name?TestCluster}" />
         <constructor-arg ref="cassandraHostConfigurator" />
     </bean>
 

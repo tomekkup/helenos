@@ -7,7 +7,8 @@
 
     <context:annotation-config />
     <context:component-scan base-package="com.kuprowski.helenos.service"/>
-    <context:property-placeholder system-properties-mode="OVERRIDE" location="classpath:helenos.properties"/>
+    
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" p:valueSeparator="?" p:location="classpath:helenos.properties" p:fileEncoding="UTF-8" p:ignoreResourceNotFound="true" p:ignoreUnresolvablePlaceholders="true" />
     
     <bean id="mapper" class="org.dozer.DozerBeanMapper" scope="singleton">
         <property name="mappingFiles">
