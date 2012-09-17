@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.kuprowski.helenos.types;
 
 import java.util.List;
@@ -9,8 +5,13 @@ import java.util.Map;
 import me.prettyprint.hector.api.ddl.KeyspaceDefinition;
 
 /**
+ * ********************************************************
+ * Copyright: 2012 Tomek Kuprowski
  *
- * @author tomek
+ * License: GPLv2: http://www.gnu.org/licences/gpl.html
+ *
+ * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
+ * *******************************************************
  */
 public class JsonKeyspaceDefinition {
     

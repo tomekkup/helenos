@@ -110,6 +110,10 @@ qx.Class.define("helenos.components.SchemaPane",
         },
         
         __renderKeyspaces : function(ksDefs) {
+            if (ksDefs == undefined) {
+                // AHDC
+                return;
+            }
             for (var i = 0; i < ksDefs.length; i++) {
                 var ks = ksDefs[i];
                 
@@ -144,9 +148,11 @@ qx.Class.define("helenos.components.SchemaPane",
             ttt += 'Key validator: <b>' + cfDef.keyValidationClass + '</b><br/>';
             ttt += 'Default validator: <b>' + cfDef.defaultValidationClass + '</b><br/>';
             var tooltip = new qx.ui.tooltip.ToolTip(ttt);
-            tooltip.setWidth(350);
-            tooltip.setRich(true);
-            tooltip.setShowTimeout(100);
+            tooltip.set({
+                        width : 350,
+                        rich : true,
+                        showTimeout : 100
+                        });
             return tooltip;
         },
         

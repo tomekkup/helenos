@@ -1,23 +1,18 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.kuprowski.helenos.types;
 
 import me.prettyprint.hector.api.beans.HColumn;
 
 /**
+ * ********************************************************
+ * Copyright: 2012 Tomek Kuprowski
  *
- * @author tomek
+ * License: GPLv2: http://www.gnu.org/licences/gpl.html
+ *
+ * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
+ * *******************************************************
  */
 
-/*****
- * ZMIEN NAZWE ZMIEN NAZWE ZMIEN NAZWE ZMIEN NAZWE ZMIEN NAZWE ZMIEN NAZWE ZMIEN NAZWE ZMIEN NAZWE 
- * ZMIEN NAZWE ZMIEN NAZWE ZMIEN NAZWE ZMIEN NAZWE ZMIEN NAZWE ZMIEN NAZWE ZMIEN NAZWE ZMIEN NAZWE 
- * ZMIEN NAZWE ZMIEN NAZWE ZMIEN NAZWE ZMIEN NAZWE ZMIEN NAZWE ZMIEN NAZWE ZMIEN NAZWE ZMIEN NAZWE 
- * @author tomek
- * @param <N> 
- */
+/* TODO change name */
 public class SliceResult<N> {
     
     private N name;

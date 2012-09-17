@@ -23,6 +23,22 @@
         <param-name>log4jRefreshInterval</param-name>
         <param-value>360000</param-value>
     </context-param>
+    <context-param>
+        <param-name>db.url</param-name>
+        <param-value>jdbc:h2:~/helenos;INIT=CREATE SCHEMA IF NOT EXISTS helenos AUTHORIZATION helenos\;CREATE TABLE IF NOT EXISTS CLUSTERCONFIG(ALIAS VARCHAR(128) PRIMARY KEY,HOSTS VARCHAR(255), CLUSTERNAME VARCHAR(255), ACTIVE BOOLEAN)\;</param-value>
+    </context-param>
+    <context-param>
+        <param-name>db.user</param-name>
+        <param-value>helenos</param-value>
+    </context-param>
+    <context-param>
+        <param-name>db.password</param-name>
+        <param-value>helenos</param-value>
+    </context-param>
+    <context-param>
+        <param-name>db.tcpServer</param-name>
+        <param-value>-tcpAllowOthers</param-value>
+    </context-param>
 
     <listener>
         <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
@@ -30,6 +46,10 @@
 
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    
+    <listener>
+        <listener-class>org.h2.server.web.DbStarter</listener-class>
     </listener>
     
     <!-- Override init parameter to avoid nasty file locking issue on windows (Jetty only) -->

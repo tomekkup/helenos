@@ -39,10 +39,14 @@ qx.Class.define("helenos.components.tab.browse.GetSlicePage",
         },
         
         _getResultComponent : function(result) {
-            var tableModel = new qx.ui.table.model.Simple();
+            var tableModel = new helenos.ui.table.model.EditableSimple();
             tableModel.setColumns(['Column','Value'],['name','value']);
             tableModel.setDataAsMapArray(result);
-            return new qx.ui.table.Table(tableModel);
+            
+            var tablePane = new qx.ui.core.scroll.ScrollPane();
+            tablePane.set({allowGrowX : true, allowGrowY : true});
+            tablePane.add(new qx.ui.table.Table(tableModel));
+            return tablePane;
         },
         
         _getCriteriaComponents : function() {

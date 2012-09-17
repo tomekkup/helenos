@@ -2,6 +2,7 @@ package com.kuprowski.helenos.service.impl;
 
 import com.googlecode.jsonrpc4j.JsonRpcParam;
 import com.kuprowski.helenos.Converter;
+import com.kuprowski.helenos.service.ClusterConfigAware;
 import com.kuprowski.helenos.service.StandardQueryProvider;
 import com.kuprowski.helenos.service.SuperQueryProvider;
 import com.kuprowski.helenos.types.SliceResult;
@@ -32,7 +33,7 @@ import org.springframework.stereotype.Component;
  * *******************************************************
  */
 @Component("superQueryProvider")
-public class SuperQueryProviderImpl extends AbstractProvider implements SuperQueryProvider {
+public class SuperQueryProviderImpl extends AbstractProvider implements SuperQueryProvider, ClusterConfigAware {
 
     @Override
     public <K, SN, N> String singleColumn(@JsonRpcParam("query") SingleSubColumnQuery<K, SN, N> query) {

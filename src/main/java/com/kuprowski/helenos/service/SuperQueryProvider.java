@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.kuprowski.helenos.service;
 
 import com.googlecode.jsonrpc4j.JsonRpcParam;
@@ -9,7 +5,6 @@ import com.kuprowski.helenos.types.SliceResult;
 import com.kuprowski.helenos.types.qx.query.SingleSubColumnQuery;
 import com.kuprowski.helenos.types.qx.query.SubSliceQuery;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * ********************************************************

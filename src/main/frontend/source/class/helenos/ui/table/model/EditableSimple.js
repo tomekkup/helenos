@@ -6,20 +6,18 @@ License:
 Authors:
   Tomek Kuprowski (tomekkuprowski at gmail dot com)
  ************************************************************************ */
-
-qx.Class.define("helenos.components.RightContentPane",
+qx.Class.define("helenos.ui.table.model.EditableSimple",
 {
-    extend : qx.ui.tabview.TabView,
+    extend : qx.ui.table.model.Simple,
 
-    /*
-  *****************************************************************************
-     MEMBERS
-  *****************************************************************************
-  */
- 
     construct : function()
     {
         this.base(arguments);
-        this.add(new helenos.components.tab.WelcomePage());
+    },
+    
+    members : {
+        isColumnEditable : function(index) {
+            return true;
+        }
     }
 });

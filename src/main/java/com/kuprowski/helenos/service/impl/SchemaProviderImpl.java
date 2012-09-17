@@ -1,5 +1,6 @@
 package com.kuprowski.helenos.service.impl;
 
+import com.kuprowski.helenos.service.ClusterConfigAware;
 import com.kuprowski.helenos.service.SchemaProvider;
 import com.kuprowski.helenos.types.JsonColumnFamilyDefinition;
 import com.kuprowski.helenos.types.JsonKeyspaceDefinition;
@@ -25,7 +26,7 @@ import org.springframework.stereotype.Component;
  * *******************************************************
  */
 @Component("schemaProvider")
-public class SchemaProviderImpl extends AbstractProvider implements SchemaProvider {
+public class SchemaProviderImpl extends AbstractProvider implements SchemaProvider, ClusterConfigAware {
 
     @Override
     public String describeClusterName() {

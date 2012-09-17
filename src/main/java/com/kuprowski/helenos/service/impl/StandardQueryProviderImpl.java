@@ -2,34 +2,21 @@ package com.kuprowski.helenos.service.impl;
 
 import com.googlecode.jsonrpc4j.JsonRpcParam;
 import com.kuprowski.helenos.Converter;
+import com.kuprowski.helenos.service.ClusterConfigAware;
 import com.kuprowski.helenos.service.StandardQueryProvider;
 import com.kuprowski.helenos.types.SliceResult;
 import com.kuprowski.helenos.types.qx.query.SingleColumnQuery;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-import javax.swing.text.StyledEditorKit;
-import me.prettyprint.cassandra.serializers.SerializerTypeInferer;
 import me.prettyprint.cassandra.serializers.StringSerializer;
-import me.prettyprint.cassandra.service.template.ColumnFamilyTemplate;
-import me.prettyprint.cassandra.service.template.ThriftColumnFamilyTemplate;
-import me.prettyprint.hector.api.Keyspace;
-import me.prettyprint.hector.api.Serializer;
 import me.prettyprint.hector.api.beans.ColumnSlice;
 import me.prettyprint.hector.api.beans.HColumn;
 import me.prettyprint.hector.api.factory.HFactory;
 import me.prettyprint.hector.api.query.ColumnQuery;
 import me.prettyprint.hector.api.query.QueryResult;
 import me.prettyprint.hector.api.query.SliceQuery;
-import me.prettyprint.hector.api.query.SubColumnQuery;
 import org.springframework.stereotype.Component;
 
-/**
- *
- * {
- * "id" : 1, "method" : "singleColumn", "params" : ["java.lang.String",
- * "java.lang.String", "lookminders", "Users", "mama", "userdata"] }
- */
 /**
  * ********************************************************
  * Copyright: 2012 Tomek Kuprowski
@@ -40,7 +27,7 @@ import org.springframework.stereotype.Component;
  * *******************************************************
  */
 @Component("standardQueryProvider")
-public class StandardQueryProviderImpl extends AbstractProvider implements StandardQueryProvider {
+public class StandardQueryProviderImpl extends AbstractProvider implements StandardQueryProvider, ClusterConfigAware {
 
     @Override
     public <K, N> String singleColumn(@JsonRpcParam("query") SingleColumnQuery<K, N> query) {

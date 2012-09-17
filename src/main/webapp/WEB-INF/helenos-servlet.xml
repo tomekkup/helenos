@@ -20,4 +20,9 @@
         <property name="service" ref="superQueryProvider"/>
         <property name="serviceInterface" value="com.kuprowski.helenos.service.SuperQueryProvider"/>
     </bean>
+    
+    <bean name="/ClusterConnectionProvider.json" class="com.googlecode.jsonrpc4j.spring.JsonServiceExporter">
+        <property name="service" ref="clusterConnectionProvider"/>
+        <property name="serviceInterface" value="com.kuprowski.helenos.service.ClusterConnectionProvider"/>
+    </bean>
 </beans>
