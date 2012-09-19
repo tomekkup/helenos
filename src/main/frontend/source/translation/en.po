@@ -11,9 +11,13 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: helenos/components/menu/KeyspaceContextMenu.js:46
-#: helenos/components/menu/ColumnFamilyContextMenu.js:60
-#: helenos/components/menu/ColumnFamilyContextMenu.js:71
-#: helenos/components/menu/ColumnFamilyContextMenu.js:74
+#: helenos/components/Footer.js:56 helenos/components/Footer.js:57
+#: helenos/components/Footer.js:58
+msgid "error"
+msgstr "Error"
+
+#: helenos/components/menu/KeyspaceContextMenu.js:48
+#: helenos/components/menu/ColumnFamilyContextMenu.js:77
+#: helenos/components/menu/ColumnFamilyContextMenu.js:100
 msgid "loss.data.alert"
 msgstr "<h4>Are you sure ?! You will lose all your data !!!</h4>"

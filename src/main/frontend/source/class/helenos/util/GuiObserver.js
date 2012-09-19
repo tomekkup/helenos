@@ -20,7 +20,15 @@ qx.Class.define("helenos.util.GuiObserver",
         registerSchemaPane : function(pane) {
             this.__schemaPane = pane;
         },
-		
+	
+        showConnectionEditTab : function() {
+            qx.core.Assert.assertNotNull(this.__tabbedPane,'tabbed pane not registered yet');
+            
+            var page = new helenos.components.tab.ConnectionsEditorPage();
+            this.__tabbedPane.add(page);
+            this.__tabbedPane.setSelection([page]);
+        },
+        
         showKeyspaceInfoTab : function(keyspaceName) {
             qx.core.Assert.assertNotNull(this.__tabbedPane,'tabbed pane not registered yet');
             

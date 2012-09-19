@@ -28,6 +28,7 @@ qx.Class.define("helenos.components.TopComposite",
         this.add(this.__getMainContainer(), {
             flex : 1
         });
+        this.add(this.__getFooter());
     },
 
     members :
@@ -38,6 +39,10 @@ qx.Class.define("helenos.components.TopComposite",
         
         __getMainContainer : function() {
             return new helenos.components.MainPane();
+        },
+        
+        __getFooter : function() {
+            return new helenos.components.Footer();
         }
     }
 });

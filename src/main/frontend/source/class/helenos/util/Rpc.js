@@ -9,6 +9,10 @@ Authors:
 qx.Class.define('helenos.util.Rpc',
 {
     extend : qx.io.remote.Rpc ,
+    
+    properties : {
+        handleExceptions : { init : true, check : 'Boolean' }
+    },
   
     construct : function(serviceName)
     {
@@ -42,10 +46,14 @@ qx.Class.define('helenos.util.Rpc',
         callSync : function(methodName) {
             var ret = null;
             
-            try {
+            if (this.getHandleExceptions()){
+                try {
+                    ret = this._callInternal(arguments, 0);
+                } catch (exc) {
+                    this.showDetails(exc.rpcdetails);
+                }
+            } else {
                 ret = this._callInternal(arguments, 0);
-            } catch (exc) {
-                this.showDetails(exc.rpcdetails);
             }
             
             /*if (ret.error) {

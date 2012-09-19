@@ -26,7 +26,7 @@ public class ClusterConfiguration {
     public ClusterConfiguration() {
     }
 
-    public ClusterConfiguration(String alas, String hosts, String clusterName, boolean active) {
+    public ClusterConfiguration(String alias, String hosts, String clusterName, boolean active) {
         setAlias(alias);
         setHosts(hosts);
         setClusterName(clusterName);

@@ -24,7 +24,7 @@ import org.springframework.util.CollectionUtils;
  * *******************************************************
  */
 public class ClusterConfigDao {
-    
+
     private Properties queries;
     @Autowired
     protected NamedParameterJdbcTemplate jdbcTemplate;
@@ -33,7 +33,7 @@ public class ClusterConfigDao {
     public void setJdbcTemplate(NamedParameterJdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-    
+
     @Required
     public void setQueries(Properties queries) {
         this.queries = queries;
@@ -49,7 +49,7 @@ public class ClusterConfigDao {
 
         return configuration.get(0);
     }
-    
+
     public List<ClusterConfiguration> loadAll() {
         return jdbcTemplate.query(queries.getProperty("clusterconfig.select.star"), new MapSqlParameterSource(), new ClusterConfigurationMapper());
     }
@@ -57,7 +57,7 @@ public class ClusterConfigDao {
     private void createDefaultConfiguration() {
         jdbcTemplate.update(queries.getProperty("clusterconfig.insert"), prepareParameterSource(new ClusterConfiguration("default", "localhost:9160", "TestCluster", true)));
     }
-    
+
     private SqlParameterSource prepareParameterSource(ClusterConfiguration configuration) {
         return new MapSqlParameterSource(configuration.toParametersMap());
     }

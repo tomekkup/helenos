@@ -13,6 +13,13 @@ qx.Class.define('helenos.util.RpcActionsProvider', {
         _SCHEMA : '/Schema.json',
         _STANDARDQUERY : '/query/Standard.json',
         _SUPERQUERY : '/query/Super.json',
+        _CLUSTERCONNECTION : '/ClusterConnectionProvider.json',
+        
+        getConnectionStatus : function() {
+            var rpc = new helenos.util.Rpc(this._CLUSTERCONNECTION);
+            rpc.setHandleExceptions(false);
+            return rpc.callSync('getConnectionStatus');
+        },
         
         dropKeyspace : function(keyspaceName) {
             var rpc = new helenos.util.Rpc(this._SCHEMA);
