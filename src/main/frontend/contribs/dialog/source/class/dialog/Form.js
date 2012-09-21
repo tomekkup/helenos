@@ -644,7 +644,7 @@ qx.Class.define("dialog.Form",
       this.hide();
       if( this.getCallback() )
       {
-        this.getCallback()( qx.util.Serializer.toNativeObject( this.getModel() ) );
+        this.getCallback()(this.getContext(), qx.util.Serializer.toNativeObject( this.getModel() ) );
       }
       this.resetCallback();
     }

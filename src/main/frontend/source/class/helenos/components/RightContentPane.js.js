@@ -20,6 +20,7 @@ qx.Class.define("helenos.components.RightContentPane",
     construct : function()
     {
         this.base(arguments);
+        this.setContentPadding(3);
         this.add(new helenos.components.tab.WelcomePage());
     }
 });

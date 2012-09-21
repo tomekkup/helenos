@@ -26,6 +26,7 @@ qx.Class.define('helenos.util.Rpc',
     },
         
     members : {
+        
         __getRemoteUri : function(serviceName) {
             if (helenos.util.Rpc.serverPath == undefined)  {
                 var pathIdx = window.location.href.indexOf('/helenos/index.html');
@@ -35,11 +36,14 @@ qx.Class.define('helenos.util.Rpc',
             return helenos.util.Rpc.serverPath + serviceName;
         },
         
+        /** 
+        * @lint ignoreUndefined(dialog)
+        */
         showDetails : function(details) {
-            dialog.Dialog.alert('RPC ERROR: ' +
-                'origin: ' + details.origin +
-                '; code: ' + details.code +
-                '; message: ' + details.message
+            dialog.Dialog.error('<b>RPC ERROR:</b><br/>' +
+                'Origin: ' + details.origin + '<br/>' +
+                'Code: ' + details.code + '<br/>' +
+                'Message:<br/><p><i>' + details.message + '</i></p>'
                 );
         },
         

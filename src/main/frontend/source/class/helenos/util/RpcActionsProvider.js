@@ -21,6 +21,36 @@ qx.Class.define('helenos.util.RpcActionsProvider', {
             return rpc.callSync('getConnectionStatus');
         },
         
+        getAllConnections : function() {
+          var rpc = new helenos.util.Rpc(this._CLUSTERCONNECTION);
+          return rpc.callSync('loadAll');
+        },
+        
+        getConnectionByAlias : function(alias) {
+            var rpc = new helenos.util.Rpc(this._CLUSTERCONNECTION);
+            return rpc.callSync('getConnectionByAlias', alias);
+        },
+        
+        deleteConnection : function(alias) {
+            var rpc = new helenos.util.Rpc(this._CLUSTERCONNECTION);
+            return rpc.callSync('delete', alias);
+        },
+        
+        storeConnection : function(connection) {
+            var rpc = new helenos.util.Rpc(this._CLUSTERCONNECTION);
+            return rpc.callSync('store', connection);
+        },
+        
+        activate : function(alias) {
+            var rpc = new helenos.util.Rpc(this._CLUSTERCONNECTION);
+            return rpc.callSync('activate', alias);
+        },
+        
+        getConnectionsCount : function() {
+          var rpc = new helenos.util.Rpc(this._CLUSTERCONNECTION);
+          return rpc.callSync('getConnectionsCount');
+        },
+        
         dropKeyspace : function(keyspaceName) {
             var rpc = new helenos.util.Rpc(this._SCHEMA);
             rpc.callSync('dropKeyspace', keyspaceName);

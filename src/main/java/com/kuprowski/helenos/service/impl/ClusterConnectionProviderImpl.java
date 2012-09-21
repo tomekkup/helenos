@@ -43,18 +43,29 @@ public class ClusterConnectionProviderImpl extends AbstractProvider implements C
     public List<ClusterConfiguration> loadAll() {
         return clusterConfigDao.loadAll();
     }
+    
+    @Override
+    public long getConnectionsCount() {
+        return clusterConfigDao.getConnectionsCount();
+    }
 
     @Override
     public void store(ClusterConfiguration configuration) {
         clusterConfigDao.store(configuration);
     }
+    
+    @Override
+    public ClusterConfiguration getConnectionByAlias(String alias) {
+        return clusterConfigDao.get(alias);
+    }
 
     @Override
-    public void activate(ClusterConfiguration configuration) {
+    public void activate(String alias) {
         if (cluster != null) {
             cluster.getConnectionManager().shutdown();
             cluster = null;
         }
+        ClusterConfiguration configuration = getConnectionByAlias(alias);
         if (!configuration.isActive()) {
             configuration.setActive(true);
             store(configuration);
@@ -63,8 +74,8 @@ public class ClusterConnectionProviderImpl extends AbstractProvider implements C
     }
 
     @Override
-    public void delete(String hosts) {
-        clusterConfigDao.delete(hosts);
+    public void delete(String alias) {
+        clusterConfigDao.delete(alias);
     }
 
     @Override

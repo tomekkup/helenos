@@ -43,6 +43,9 @@ qx.Class.define('helenos.components.menu.KeyspaceContextMenu',
             helenos.util.GuiObserver.showKeyspaceInfoTab(ksName);
         },
         
+        /** 
+        * @lint ignoreUndefined(dialog)
+        */
         __dropKeyspace : function(e) {
             var ksName = e.getTarget().getUserData('KSNAME');
             dialog.Dialog.confirm(this.tr('loss.data.alert'), function(ret) {
@@ -53,6 +56,9 @@ qx.Class.define('helenos.components.menu.KeyspaceContextMenu',
             }, this);
         },
         
+        /** 
+        * @lint ignoreUndefined(dialog)
+        */
         __addColumnFamily : function(e) {
             var ksName = e.getTarget().getUserData('KSNAME');
             var formData = {
@@ -124,13 +130,13 @@ qx.Class.define('helenos.components.menu.KeyspaceContextMenu',
                     'value' : ''
                 }
             };
-            dialog.Dialog.form('<h4>Create new column family</h4>', formData, function(result) {
+            dialog.Dialog.form('<h4>Create new column family</h4>', formData, function(context, result) {
                 if (result != null) {
                     result['keyspaceName'] = ksName;
                     helenos.util.RpcActionsProvider.createColumnFamily(result);
                     helenos.util.GuiObserver.refreshSchemaTree();
                 }
-            });
+            }, this);
         }
     }
 });

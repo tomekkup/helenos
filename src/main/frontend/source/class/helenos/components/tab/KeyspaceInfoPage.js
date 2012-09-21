@@ -70,7 +70,10 @@ qx.Class.define("helenos.components.tab.KeyspaceInfoPage",
             var gb = new qx.ui.groupbox.GroupBox('Column families');
             gb.setLayout(new qx.ui.layout.VBox());
             
-            gb.add(table, {flex : 1});
+            var sp = new qx.ui.core.scroll.ScrollPane();
+            sp.add(table);
+            
+            gb.add(sp, {flex : 1});
             
             this.add(gb, {flex : 1});
         },

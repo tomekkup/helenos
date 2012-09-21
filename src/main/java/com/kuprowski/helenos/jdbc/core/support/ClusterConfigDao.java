@@ -3,6 +3,7 @@ package com.kuprowski.helenos.jdbc.core.support;
 import com.kuprowski.helenos.ClusterConfiguration;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 import javax.sql.DataSource;
@@ -39,6 +40,10 @@ public class ClusterConfigDao {
         this.queries = queries;
     }
 
+    public ClusterConfiguration get(String alias) {
+        return jdbcTemplate.queryForObject(queries.getProperty("clusterconfig.get.by.alias"), new MapSqlParameterSource("alias", alias), new ClusterConfigurationMapper());
+    }
+
     public ClusterConfiguration getActive() {
         List<ClusterConfiguration> configuration = jdbcTemplate.query(queries.getProperty("clusterconfig.select.star.wa"), new MapSqlParameterSource("active", true), new ClusterConfigurationMapper());
 
@@ -52,6 +57,10 @@ public class ClusterConfigDao {
 
     public List<ClusterConfiguration> loadAll() {
         return jdbcTemplate.query(queries.getProperty("clusterconfig.select.star"), new MapSqlParameterSource(), new ClusterConfigurationMapper());
+    }
+
+    public long getConnectionsCount() {
+        return jdbcTemplate.queryForLong(queries.getProperty("clusterconfig.count"), new HashMap<String, Object>());
     }
 
     private void createDefaultConfiguration() {

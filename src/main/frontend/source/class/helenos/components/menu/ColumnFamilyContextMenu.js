@@ -71,13 +71,16 @@ qx.Class.define('helenos.components.menu.ColumnFamilyContextMenu',
             return menu;
         },
         
+        /** 
+        * @lint ignoreUndefined(dialog)
+        */
         __truncateColumnFamily : function(e) {
             var ksName = e.getTarget().getUserData('KSNAME');
             var cfName = e.getTarget().getUserData('CFNAME');
             dialog.Dialog.confirm(this.tr('loss.data.alert'), function(ret) {
                 if (ret == true) {
                     helenos.util.RpcActionsProvider.truncateColumnFamily(ksName, cfName);
-                //helenos.util.GuiObserver.refreshSchemaTree();
+                    helenos.util.GuiObserver.refreshSchemaTree();
                 }
             }, this);
         },
@@ -94,6 +97,9 @@ qx.Class.define('helenos.components.menu.ColumnFamilyContextMenu',
             helenos.util.GuiObserver.showBrowseBySliceTab(ksName, cfName);
         },
         
+        /** 
+        * @lint ignoreUndefined(dialog)
+        */
         __dropColumnFamily : function(e) {
             var ksName = e.getTarget().getUserData('KSNAME');
             var cfName = e.getTarget().getUserData('CFNAME');

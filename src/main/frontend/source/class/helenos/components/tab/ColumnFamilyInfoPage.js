@@ -114,7 +114,10 @@ qx.Class.define("helenos.components.tab.ColumnFamilyInfoPage",
             var gb = new qx.ui.groupbox.GroupBox('Column metadata');
             gb.setLayout(new qx.ui.layout.VBox());
             
-            gb.add(table, {flex : 1});
+            var sp = new qx.ui.core.scroll.ScrollPane();
+            sp.add(table);
+            
+            gb.add(sp, {flex : 1});
             this.add(gb, {flex : 1});
         }
     }

@@ -18,12 +18,16 @@ import me.prettyprint.cassandra.service.CassandraHost;
 public interface ClusterConnectionProvider {
 
     List<ClusterConfiguration> loadAll();
+    
+    ClusterConfiguration getConnectionByAlias(String alias);
+    
+    long getConnectionsCount();
 
     void store(ClusterConfiguration configuration);
 
-    void delete(String hosts);
+    void delete(String alias);
 
-    void activate(ClusterConfiguration configuration);
+    void activate(String alias);
 
     Map<String, Set<CassandraHost>> getConnectionStatus();
 }

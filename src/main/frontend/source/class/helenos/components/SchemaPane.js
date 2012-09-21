@@ -62,6 +62,9 @@ qx.Class.define("helenos.components.SchemaPane",
             this.refreshSchemaTree();
         },
         
+        /** 
+        * @lint ignoreUndefined(dialog)
+        */
         __addKeyspace : function() {
             var formData = {
                 'keyspaceName' : {
@@ -90,12 +93,12 @@ qx.Class.define("helenos.components.SchemaPane",
                     }
                 }
             };
-            dialog.Dialog.form('<h4>Create new keyspace</h4>', formData, function(result) {
+            dialog.Dialog.form('<h3>Create new keyspace</h3>', formData, function(context, result) {
                 if (result != null) {
                     helenos.util.RpcActionsProvider.createKeyspace(result);
                     helenos.util.GuiObserver.refreshSchemaTree();
                 }
-            });
+            }, this);
         },
         
         refreshSchemaTree : function() {
