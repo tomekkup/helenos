@@ -2,7 +2,7 @@
 
 ## About
 
-Helenos is a web based GUI tool that helps you to explore data and manage schema.
+Helenos is a web based GUI Cassandra client that helps you to explore data and manage your schema.
 
 ## Current version
 
