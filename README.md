@@ -2,17 +2,19 @@
 
 ## About
 
-Web application to browse your data stored in Cassandra...
-
-The main goal is to develop a web application based on Qooxdoo Frontend which provide a capability of managing schema, easy viewing and editing data in column familes stored in any format (recommended is JSON).
+Helenos is a web based GUI tool that helps you to explore data and manage schema.
 
 ## Current version
 
-1.0-RC3
+1.1
 
 ## Download
 
 [here](https://github.com/tomekkup/helenos/downloads)
+
+## Changelog
+
+[here](https://github.com/tomekkup/helenos/wiki/Changelog)
 
 ## Gallery
 
@@ -27,13 +29,16 @@ The main goal is to develop a web application based on Qooxdoo Frontend which pr
 * Data browsing via:
     * single column
     * slice
+* Cell data stored in JSON can be easily viewed in tree
 
 ## Installation
 
 * Download war package and deploy to your servlet container (tested with Jetty 8, Tomcat 6)
 * Put your helenos.properties configuration file (sample at src/test/resources/) into an application classpath. First set hosts property to coma separated list of Cassandra hosts
-* Restart app
-* Run and open your web browser to http://localhost:8080/
+* Start app
+* Run and open your web browser to http://localhost:8080/{yourdeploypath}/index.html
+* Edit your connection by clicking icon in upper right corner
+* After editing click button 'Connect to'
 
 ## Building manually
 
