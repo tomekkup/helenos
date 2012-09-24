@@ -191,7 +191,7 @@
                     <scanIntervalSeconds>0</scanIntervalSeconds>
                     <contextPath>/</contextPath>
                     
-                    <webAppSourceDirectory>${project.build.directory}/${project.build.finalName}</webAppSourceDirectory>
+                    <webAppSourceDirectory>${webappDirectory}</webAppSourceDirectory>
                     <connectors>
                         <connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
                             <port>8080</port>
@@ -247,7 +247,7 @@
                         <configuration>
                             <executable>python</executable>
                             <workingDirectory>src/main/frontend</workingDirectory>
-                            <commandlineArgs>generate.py build</commandlineArgs>
+                            <commandlineArgs>generate.py</commandlineArgs>
                         </configuration>
                     </execution>
                 </executions>
@@ -259,6 +259,7 @@
                 <configuration>
                     <port>8080</port>
                     <useTestClasspath>false</useTestClasspath>
+                    <warSourceDirectory>${webappDirectory}</warSourceDirectory>
                 </configuration>
             </plugin>
             <plugin>

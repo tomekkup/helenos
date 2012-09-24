@@ -31,5 +31,12 @@ qx.Class.define("helenos.components.tab.WelcomePage",
         
         var iframe = new qx.ui.embed.ThemedIframe('resource/welcome.html');
         this.add(iframe, {flex : 1});
+        this.add(this.__getVersionInfoBox());
+    },
+    
+    members : {
+        __getVersionInfoBox : function() {
+            return new qx.ui.basic.Label('Version ' + qx.core.Environment.get('qx.app.version'));
+        }
     }
 });

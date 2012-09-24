@@ -29,10 +29,11 @@
     "simulation-run",
     "test",
     "test-source",
-    "translation"
+    "translation",
+    "build-withver"
     ],
   
-    "default-job" : "source-hybrid",
+    "default-job" : "build-withver",
 
     "let" :
     {
@@ -44,7 +45,8 @@
         "LOCALES"      : [ "en" ],
         "CACHE"        : "${TMPDIR}/qx${QOOXDOO_VERSION}/cache",
         "ROOT"         : ".",
-        "BUILD_PATH"   : "../webapp/helenos"
+        "BUILD_PATH"   : "../../../target/helenos-${HELENOS_VER}/helenos/",
+        "HELENOS_VER"  : "1.1"
     },
 
     "jobs" :
@@ -57,6 +59,12 @@
                 "manifest" : "contribs/dialog/Manifest.json"
             }
             ]
+        },
+        "build-withver" : {
+            "extend" : ["build"],
+            "environment" : {
+                "qx.app.version" : "${HELENOS_VER}"
+            }
         }
     }
 }

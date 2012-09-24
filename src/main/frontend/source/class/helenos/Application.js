@@ -39,7 +39,6 @@ qx.Class.define("helenos.Application",
             }
             
             qx.locale.Manager.getInstance().setLocale("en");
-      
             this.getRoot().add(new helenos.components.TopComposite(), {
                 edge : 0
             });
