@@ -24,6 +24,9 @@ qx.Class.define("helenos.Application",
 
     members :
     {       
+        /** 
+        * @lint ignoreUndefined(silverbluetheme)
+        */
         main : function()
         {
             // Call super class

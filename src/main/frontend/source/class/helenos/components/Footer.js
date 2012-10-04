@@ -18,7 +18,8 @@ qx.Class.define("helenos.components.Footer",
                 alignX : 'right',
                 alignY : 'middle'
             }),
-            padding : 2
+            padding : 2,
+            appearance : 'app-footer-dark'
         });
         
         this.__createComponents();

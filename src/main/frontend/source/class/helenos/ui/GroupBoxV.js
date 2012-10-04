@@ -6,12 +6,13 @@ License:
 Authors:
   Tomek Kuprowski (tomekkuprowski at gmail dot com)
  ************************************************************************ */
-qx.Theme.define("helenos.theme.Color",
+qx.Class.define('helenos.ui.GroupBoxV',
 {
-  extend : qx.theme.simple.Color,
+    extend : qx.ui.groupbox.GroupBox,
 
-  colors :
-  {
-    "background" : "#f0f3f9"
-  }
+    construct : function(label)
+    {
+        this.base(arguments, label);
+        this.setLayout(new qx.ui.layout.VBox(5).set({alignX : 'left'}));
+    }
 });

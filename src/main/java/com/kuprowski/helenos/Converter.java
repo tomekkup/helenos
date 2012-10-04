@@ -1,5 +1,6 @@
 package com.kuprowski.helenos;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -30,5 +31,24 @@ public class Converter {
         throw new IllegalArgumentException("class not recognized: " + clazz);
     }
     
-    
+    public static <T> T[] toValue(List<String> arrayVal, Class<T> clazz) {
+        if (arrayVal == null) {
+            return null;
+        }
+        if (String.class.equals(clazz)) {
+            return (T[]) arrayVal.toArray(new String[0]);
+        }
+        if (Long.class.equals(clazz)) {
+            return (T[]) arrayVal.toArray(new Long[0]);
+        }
+        if (UUID.class.equals(clazz)) {
+            UUID[] temp = new UUID[arrayVal.size()];
+            for (int i = 0; i < arrayVal.size(); i++) {
+                temp[i] = UUID.fromString(arrayVal.get(i));
+            }
+            return (T[]) temp;
+        }
+
+        throw new IllegalArgumentException("class not recognized: " + clazz);
+    }
 }

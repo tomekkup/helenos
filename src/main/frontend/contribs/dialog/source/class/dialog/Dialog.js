@@ -216,8 +216,7 @@ qx.Class.define("dialog.Dialog",
      * basic settings
      */
     this.set({
-      'visibility' : "hidden",
-      'decorator'  : "shadow-popup"
+      'visibility' : "hidden"
     });
     this.setLayout( new qx.ui.layout.Grow() );
     

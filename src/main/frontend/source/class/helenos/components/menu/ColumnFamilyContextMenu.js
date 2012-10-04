@@ -60,14 +60,15 @@ qx.Class.define('helenos.components.menu.ColumnFamilyContextMenu',
             byKeyButton.setUserData('KSNAME', ksName);
             byKeyButton.setUserData('CFNAME', cfName);
             byKeyButton.addListener('execute', this.__showBrowseBySingleColumnPane);
-          
-            var sliceButton = new qx.ui.menu.Button('Slice', 'icon/16/apps/office-spreadsheet.png');
-            sliceButton.setUserData('KSNAME', ksName);
-            sliceButton.setUserData('CFNAME', cfName);
-            sliceButton.addListener('execute', this.__showBrowseBySlicePane);
+            
+            var predicateButton = new qx.ui.menu.Button('Predicate', 'icon/16/apps/office-spreadsheet.png');
+            predicateButton.setUserData('KSNAME', ksName);
+            predicateButton.setUserData('CFNAME', cfName);
+            predicateButton.addListener('execute', this.__showBrowseByPredicatePane);
             
             menu.add(byKeyButton);
-            menu.add(sliceButton);
+            menu.add(predicateButton);
+            //menu.add(keyRangeButton);
             return menu;
         },
         
@@ -91,10 +92,10 @@ qx.Class.define('helenos.components.menu.ColumnFamilyContextMenu',
             helenos.util.GuiObserver.showBrowseBySingleColumnTab(ksName, cfName);
         },
         
-        __showBrowseBySlicePane : function(e) {
+        __showBrowseByPredicatePane : function(e) {
             var ksName = e.getTarget().getUserData('KSNAME');
             var cfName = e.getTarget().getUserData('CFNAME');
-            helenos.util.GuiObserver.showBrowseBySliceTab(ksName, cfName);
+            helenos.util.GuiObserver.showBrowseByPredicateTab(ksName, cfName);
         },
         
         /** 

@@ -29,7 +29,7 @@ qx.Class.define('helenos.util.Rpc',
         
         __getRemoteUri : function(serviceName) {
             if (helenos.util.Rpc.serverPath == undefined)  {
-                var pathIdx = window.location.href.indexOf('/helenos/index.html');
+                var pathIdx = window.location.href.indexOf('/gui/index.html');
                 helenos.util.Rpc.serverPath = window.location.href.substr(0, pathIdx);
             }
             

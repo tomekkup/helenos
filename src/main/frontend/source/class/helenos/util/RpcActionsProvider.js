@@ -139,27 +139,64 @@ qx.Class.define('helenos.util.RpcActionsProvider', {
             return rpc.callSync('singleColumn', query );
         },
         
-        querySlice : function(cfDef, key, nameStart, nameEnd, sName, reversed ) {
+        queryPredicate : function(cfDef, keyFrom, keyTo, columnNames, nameStart, nameEnd, sName, reversed ) {
             var query = {};
             
             query.keyClass = this.__findParamClass(cfDef.keyValidationClass);
-            query.nameClass = this.__findParamClass(cfDef.comparatorType.className);
+            
+            if (cfDef.columnType == 'Standard') {
+                query.nameClass = this.__findParamClass(cfDef.comparatorType.className);
+            } else {
+                query.nameClass = this.__findParamClass(cfDef.subComparatorType.className);
+            }
             query.keyspace = cfDef.keyspaceName;
             query.columnFamily = cfDef.name;
-            query.key = key;
+            query.keyFrom = keyFrom;
+            query.keyTo = keyTo;
+            query.columnNames = columnNames;
             query.nameStart = nameStart;
             query.nameEnd = nameEnd;
             query.reversed = reversed;
             
-            var rpc = null;
+            var rpc;
             if (cfDef.columnType == 'Standard') {
                 rpc = new helenos.util.Rpc(this._STANDARDQUERY);
             } else {
                 rpc = new helenos.util.Rpc(this._SUPERQUERY);
-                query.sNameClass = this.__findParamClass(cfDef.subComparatorType.className);
+                query.sNameClass = this.__findParamClass(cfDef.comparatorType.className);
                 query.sName = sName;
             }
-            return rpc.callSync('slice', query );
+            return rpc.callSync('predicate', query );
+        },
+        
+        queryKeyRange : function(cfDef, keyFrom, keyTo, columnNames, nameStart, nameEnd, sName, reversed ) {
+            var query = {};
+            
+            query.keyClass = this.__findParamClass(cfDef.keyValidationClass);
+            
+            if (cfDef.columnType == 'Standard') {
+                query.nameClass = this.__findParamClass(cfDef.comparatorType.className);
+            } else {
+                query.nameClass = this.__findParamClass(cfDef.subComparatorType.className);
+            }
+            query.keyspace = cfDef.keyspaceName;
+            query.columnFamily = cfDef.name;
+            query.keyFrom = keyFrom;
+            query.keyTo = keyTo;
+            query.columnNames = columnNames;
+            query.nameStart = nameStart;
+            query.nameEnd = nameEnd;
+            query.reversed = reversed;
+            
+            var rpc;
+            if (cfDef.columnType == 'Standard') {
+                rpc = new helenos.util.Rpc(this._STANDARDQUERY);
+            } else {
+                rpc = new helenos.util.Rpc(this._SUPERQUERY);
+                query.sNameClass = this.__findParamClass(cfDef.comparatorType.className);
+                query.sName = sName;
+            }
+            return rpc.callSync('keyRange', query );
         }
     }
 });

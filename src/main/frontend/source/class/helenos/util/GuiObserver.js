@@ -25,43 +25,43 @@ qx.Class.define("helenos.util.GuiObserver",
             qx.core.Assert.assertNotNull(this.__tabbedPane,'tabbed pane not registered yet');
             
             var page = new helenos.components.tab.ConnectionsEditorPage();
-            this.__tabbedPane.add(page);
-            this.__tabbedPane.setSelection([page]);
+            this._addPageToTab(page);
         },
         
         showKeyspaceInfoTab : function(keyspaceName) {
             qx.core.Assert.assertNotNull(this.__tabbedPane,'tabbed pane not registered yet');
             
             var ksPage = new helenos.components.tab.KeyspaceInfoPage(keyspaceName);
-            this.__tabbedPane.add(ksPage);
-            this.__tabbedPane.setSelection([ksPage]);
+            this._addPageToTab(ksPage);
         },
         
         showBrowseBySingleColumnTab : function(keyspaceName, columnFamily) {
             qx.core.Assert.assertNotNull(this.__tabbedPane,'tabbed pane not registered yet');
             var dataPage = new helenos.components.tab.browse.SingleColumnPage(keyspaceName, columnFamily);
-            this.__tabbedPane.add(dataPage);
-            this.__tabbedPane.setSelection([dataPage]);
+            this._addPageToTab(dataPage);
         },
         
-        showBrowseBySliceTab : function(keyspaceName, columnFamily) {
+        showBrowseByPredicateTab : function(keyspaceName, columnFamily) {
             qx.core.Assert.assertNotNull(this.__tabbedPane,'tabbed pane not registered yet');
-            var dataPage = new helenos.components.tab.browse.GetSlicePage(keyspaceName, columnFamily);
-            this.__tabbedPane.add(dataPage);
-            this.__tabbedPane.setSelection([dataPage]);
+            var dataPage = new helenos.components.tab.browse.PredicatePage(keyspaceName, columnFamily);
+            this._addPageToTab(dataPage);
         },
         
         showColumnFamilyInfoTab : function(keyspaceName, columnFamilyName) {
             qx.core.Assert.assertNotNull(this.__tabbedPane,'tabbed pane not registered yet');
             
             var cfPage = new helenos.components.tab.ColumnFamilyInfoPage(keyspaceName, columnFamilyName);
-            this.__tabbedPane.add(cfPage);
-            this.__tabbedPane.setSelection([cfPage]);
+            this._addPageToTab(cfPage);
         },
         
         refreshSchemaTree : function() {
             qx.core.Assert.assertNotNull(this.__schemaPane,'cluster pane not registered yet');
             this.__schemaPane.refreshSchemaTree();
+        },
+        
+        _addPageToTab : function(page) {
+            this.__tabbedPane.add(page);
+            this.__tabbedPane.setSelection([page]);
         }
     }
 });

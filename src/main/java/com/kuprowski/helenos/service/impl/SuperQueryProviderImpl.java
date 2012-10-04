@@ -3,25 +3,21 @@ package com.kuprowski.helenos.service.impl;
 import com.googlecode.jsonrpc4j.JsonRpcParam;
 import com.kuprowski.helenos.Converter;
 import com.kuprowski.helenos.service.ClusterConfigAware;
-import com.kuprowski.helenos.service.StandardQueryProvider;
 import com.kuprowski.helenos.service.SuperQueryProvider;
-import com.kuprowski.helenos.types.SliceResult;
-import com.kuprowski.helenos.types.qx.query.SingleColumnQuery;
+import com.kuprowski.helenos.types.Column;
+import com.kuprowski.helenos.types.Slice;
 import com.kuprowski.helenos.types.qx.query.SingleSubColumnQuery;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-import me.prettyprint.cassandra.serializers.SerializerTypeInferer;
 import me.prettyprint.cassandra.serializers.StringSerializer;
-import me.prettyprint.cassandra.service.template.ColumnFamilyTemplate;
-import me.prettyprint.cassandra.service.template.ThriftColumnFamilyTemplate;
-import me.prettyprint.hector.api.Keyspace;
-import me.prettyprint.hector.api.Serializer;
 import me.prettyprint.hector.api.beans.ColumnSlice;
 import me.prettyprint.hector.api.beans.HColumn;
+import me.prettyprint.hector.api.beans.OrderedRows;
+import me.prettyprint.hector.api.beans.Row;
 import me.prettyprint.hector.api.factory.HFactory;
 import me.prettyprint.hector.api.query.*;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 /**
  * ********************************************************
@@ -33,10 +29,10 @@ import org.springframework.stereotype.Component;
  * *******************************************************
  */
 @Component("superQueryProvider")
-public class SuperQueryProviderImpl extends AbstractProvider implements SuperQueryProvider, ClusterConfigAware {
+public class SuperQueryProviderImpl extends AbstractQueryProvider implements SuperQueryProvider, ClusterConfigAware {
 
     @Override
-    public <K, SN, N> String singleColumn(@JsonRpcParam("query") SingleSubColumnQuery<K, SN, N> query) {
+    public <K, SN, N> Column<N> singleColumn(@JsonRpcParam("query") SingleSubColumnQuery<K, SN, N> query) {
         SubColumnQuery<K, SN, N, String> cq = HFactory.createSubColumnQuery(getKeyspace(query.getKeyspace()), getSerializer(query.getKeyClass()), getSerializer(query.getsNameClass()), getSerializer(query.getNameClass()), StringSerializer.get());
         cq.setColumnFamily(query.getColumnFamily());
         cq.setKey(Converter.toValue(query.getKey(), query.getKeyClass()));
@@ -44,27 +40,56 @@ public class SuperQueryProviderImpl extends AbstractProvider implements SuperQue
         cq.setColumn(Converter.toValue(query.getName(), query.getNameClass()));
 
         HColumn<N, String> column = cq.execute().get();
-        return column != null ? column.getValue() : null;
+        return mapper.map(column, Column.class);
     }
 
     @Override
-    public <K, SN, N> List<SliceResult<N>> slice(com.kuprowski.helenos.types.qx.query.SubSliceQuery<K, SN, N> query) {
+    public <K, SN, N> List<Slice<K,N>> predicate(com.kuprowski.helenos.types.qx.query.SubRangeQuery<K, SN, N> query) {
+        K key = Converter.toValue(query.getKeyFrom(), query.getKeyClass());
         SubSliceQuery<K, SN, N, String> cq = HFactory.createSubSliceQuery(getKeyspace(query.getKeyspace()), getSerializer(query.getKeyClass()), getSerializer(query.getsNameClass()), getSerializer(query.getNameClass()), StringSerializer.get());
         cq.setColumnFamily(query.getColumnFamily());
-        cq.setKey(Converter.toValue(query.getKey(), query.getKeyClass()));
+        cq.setKey(key);
         cq.setSuperColumn(Converter.toValue(query.getsName(), query.getsNameClass()));
-        cq.setRange(Converter.toValue(query.getNameStart(), query.getNameClass()), Converter.toValue(query.getNameEnd(), query.getNameClass()), query.isReversed(), query.getMax());
-
-        QueryResult<ColumnSlice<N, String>> qr =  cq.execute();
+        if (CollectionUtils.isEmpty(query.getColumnNames())) {
+            cq.setRange(Converter.toValue(query.getNameStart(), query.getNameClass()), Converter.toValue(query.getNameEnd(), query.getNameClass()), query.isReversed(), query.getMaxResults());
+        } else {
+            cq.setColumnNames(Converter.toValue(query.getColumnNames(), query.getNameClass()));
+        }
         
-        List<SliceResult<N>> ret = new ArrayList<SliceResult<N>>();
+        QueryResult<ColumnSlice<N, String>> qr = cq.execute();
+        
+        List<Slice<K,N>> ret = new ArrayList<Slice<K,N>>(1);
         if (qr != null) {
-            List<HColumn<N, String>> columns = qr.get().getColumns();
-            for (HColumn<N, String> column : columns) {
-                ret.add(new SliceResult(column));
+            ret.add(new Slice(key, toJsonColumns(qr.get().getColumns())));
+        }
+        
+        return ret;
+    }
+    
+    @Override
+    public <K, SN, N> List<Slice<K,N>> keyRange(com.kuprowski.helenos.types.qx.query.SubRangeQuery<K, SN, N> query) {
+        RangeSubSlicesQuery<K, SN, N, String> cq = HFactory.createRangeSubSlicesQuery(getKeyspace(query.getKeyspace()), getSerializer(query.getKeyClass()), getSerializer(query.getsNameClass()), getSerializer(query.getNameClass()), StringSerializer.get());
+        cq.setColumnFamily(query.getColumnFamily());
+        
+        cq.setKeys(Converter.toValue(query.getKeyFrom(), query.getKeyClass()), Converter.toValue(query.getKeyTo(), query.getKeyClass()));
+        cq.setSuperColumn(Converter.toValue(query.getsName(), query.getsNameClass()));
+        if (CollectionUtils.isEmpty(query.getColumnNames())) {
+            cq.setRange(Converter.toValue(query.getNameStart(), query.getNameClass()), Converter.toValue(query.getNameEnd(), query.getNameClass()), query.isReversed(), query.getMaxResults());
+        } else {
+            cq.setColumnNames(Converter.toValue(query.getColumnNames(),query.getNameClass()));
+        }
+        
+        QueryResult<OrderedRows<K, N, String>> qr = cq.execute();
+        
+        List<Slice<K,N>> ret = new ArrayList<Slice<K,N>>(1);
+        if (qr != null) {
+            List<Row<K, N, String>> rows = qr.get().getList();
+            for (Row<K, N, String> row : rows) {
+                ColumnSlice<N, String> colSlice = row.getColumnSlice();
+                ret.add(new Slice(row.getKey(), toJsonColumns(colSlice.getColumns())));
             }
         }
-
+        
         return ret;
     }
 }

@@ -15,7 +15,7 @@ qx.Class.define("helenos.components.tab.browse.AbstractBrowsePage",
     extend : helenos.components.tab.AbstractCloseablePage,
     
     construct : function(ksName, cfName)
-    {;
+    {
         this.base(arguments);
         this._manager = new qx.ui.form.validation.Manager();
         this._ksName = ksName;
@@ -23,16 +23,17 @@ qx.Class.define("helenos.components.tab.browse.AbstractBrowsePage",
         this._cfDef = helenos.util.RpcActionsProvider.describeColumnFamily(this._ksName, this._cfName);
         
         this.set({
-            layout : new qx.ui.layout.VBox(3, 'top'),
+            layout : new qx.ui.layout.VBox(8, 'top'),
             label: (ksName + ' : ' + cfName)
         });
         
-        this._resultView = new qx.ui.container.Composite(new qx.ui.layout.VBox());
+        this._resultView = new qx.ui.container.Composite(new qx.ui.layout.VBox(8));
         this._rajCB = new qx.ui.form.CheckBox('Parse results to JSON');
         
-        this.add(this._getCriteriaPane());
-        this.add(this.__getSearchActionPane());
-        this.add(this._resultView, {flex: 1});
+        var pane = new qx.ui.splitpane.Pane("horizontal");
+        pane.add(this._getCriteriaPane(),0);
+        pane.add(this._resultView, 1);
+        this.add(pane, {flex:1});
     },
  
     members : {
@@ -48,7 +49,7 @@ qx.Class.define("helenos.components.tab.browse.AbstractBrowsePage",
         __getSearchActionPane : function() {
             var pane = new qx.ui.container.Composite(new qx.ui.layout.HBox(3, 'left'));
             pane.add(this._getSearchButton());
-            pane.add(this._rajCB);
+            //pane.add(this._rajCB);
             
             return pane;
         },
@@ -56,14 +57,16 @@ qx.Class.define("helenos.components.tab.browse.AbstractBrowsePage",
         _getCriteriaPane : function() {
             var components = this._getCriteriaComponents();
             
-            var criteriaGB = new qx.ui.groupbox.GroupBox('Criteria');
-            criteriaGB.setLayout(new qx.ui.layout.HBox(8).set({alignY : 'middle'}));
+            var container = new qx.ui.container.Composite(new qx.ui.layout.VBox(5).set({alignX : 'left'}));
+            container.setAppearance('criteria-pane');
             for (var i = 0; i < components.length; i++) {
-                criteriaGB.add(components[i]);
-                criteriaGB.add(new qx.ui.core.Spacer(3));
+                container.add(components[i]);
             }
             
-            return criteriaGB;
+            container.add(this._getSearchButton());
+            var pane = new qx.ui.core.scroll.ScrollPane();
+            pane.add(container);
+            return pane;
         },
         
         _getTreeFromJson : function(name, data) {

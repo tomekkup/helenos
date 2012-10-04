@@ -47,6 +47,8 @@ You can build manually with Maven but first install all prerequisities:
 * Qooxdoo SDK 2.0.1
 * Python 2.x
 
+... and checkout this repository [SilverBlueTheme] (https://qooxdoo-contrib.svn.sourceforge.net/svnroot/qooxdoo-contrib/trunk/qooxdoo-contrib/SilverBlueTheme/) to folder src/main/frontend
+
 ## Wish list
 
 * Browse with indexed slice and range slices

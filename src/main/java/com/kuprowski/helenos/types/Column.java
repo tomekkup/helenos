@@ -1,7 +1,5 @@
 package com.kuprowski.helenos.types;
 
-import me.prettyprint.hector.api.beans.HColumn;
-
 /**
  * ********************************************************
  * Copyright: 2012 Tomek Kuprowski
@@ -11,35 +9,45 @@ import me.prettyprint.hector.api.beans.HColumn;
  * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
  * *******************************************************
  */
+public class Column<N> {
 
-/* TODO change name */
-public class SliceResult<N> {
-    
     private N name;
     private String value;
+    private long clock;
+    private int ttl;
 
-    public SliceResult() {
-        
-    }
-    
-    public SliceResult(HColumn<N, String> column) {
-        setName(column.getName());
-        setValue(column.getValue());
-    }
-    
-    public void setName(N name) {
-        this.name = name;
+    public Column() {
     }
 
     public N getName() {
         return name;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setName(N name) {
+        this.name = name;
     }
 
     public String getValue() {
         return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public long getClock() {
+        return clock;
+    }
+
+    public void setClock(long clock) {
+        this.clock = clock;
+    }
+
+    public int getTtl() {
+        return ttl;
+    }
+
+    public void setTtl(int ttl) {
+        this.ttl = ttl;
     }
 }

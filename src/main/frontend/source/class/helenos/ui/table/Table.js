@@ -6,12 +6,13 @@ License:
 Authors:
   Tomek Kuprowski (tomekkuprowski at gmail dot com)
  ************************************************************************ */
-qx.Theme.define("helenos.theme.Color",
+qx.Class.define("helenos.ui.table.Table",
 {
-  extend : qx.theme.simple.Color,
+    extend : qx.ui.table.Table,
 
-  colors :
-  {
-    "background" : "#f0f3f9"
-  }
+    construct : function(tableModel)
+    {
+        this.base(arguments, tableModel);
+        this.setToolTipText('Double click to edit and copy values');
+    }
 });

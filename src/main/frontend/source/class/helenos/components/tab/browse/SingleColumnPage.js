@@ -28,14 +28,29 @@ qx.Class.define("helenos.components.tab.browse.SingleColumnPage",
             var key = this.__keyTF.getValue();
             var name = this.__nameTF.getValue();
             var sName = (this.__sNameTF == null ? null : this.__sNameTF.getValue());
-            var result = helenos.util.RpcActionsProvider.querySingleColumn(this._cfDef, key, name, sName );
+            var column = helenos.util.RpcActionsProvider.querySingleColumn(this._cfDef, key, name, sName );
             
             this._resultView.removeAll();
             if (this._rajCB.getValue()) {
-                this._resultView.add(this._getTreeFromJson(key, result), {flex: 1});
+                this._resultView.add(this._getTreeFromJson(key, column.value), {flex: 1});
+                
             } else {
-                this._resultView.add(new qx.ui.form.TextArea(result), {flex: 1});
+                this._resultView.add(new helenos.ui.CompositeH([new qx.ui.basic.Label('Value'),
+                                                                new qx.ui.form.TextArea(column.value)]), {flex: 1});
             }
+            
+            this._resultView.add(this._getDetailsBox(column));
+        },
+        
+        _getDetailsBox : function(column) {
+            return new helenos.ui.CompositeH([
+                new helenos.ui.BoldLabel('Column name:'),
+                new qx.ui.form.TextField('' + column.name).set({width: 180}),
+                new helenos.ui.BoldLabel('Clock:'),
+                new qx.ui.form.TextField('' + column.clock).set({width: 150}),
+                new helenos.ui.BoldLabel('TTL:'),
+                new qx.ui.form.TextField('' + column.ttl).set({width: 150})
+            ]);
         },
         
         _getCriteriaComponents : function() {

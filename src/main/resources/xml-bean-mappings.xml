@@ -184,5 +184,26 @@
         </field>
     </mapping>
     
+    <mapping type="one-way">
+        <class-a>me.prettyprint.hector.api.beans.HColumn</class-a>
+        <class-b>com.kuprowski.helenos.types.Column</class-b>
+        <field>
+            <a>name</a>
+            <b>name</b>
+        </field>
+        <field>
+            <a>value</a>
+            <b>value</b>
+        </field>
+        <field>
+            <a>clock</a>
+            <b>clock</b>
+        </field>
+        <field>
+            <a>ttl</a>
+            <b>ttl</b>
+        </field>
+    </mapping>
+    
     
 </mappings>

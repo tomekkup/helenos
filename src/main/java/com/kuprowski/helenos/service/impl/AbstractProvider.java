@@ -1,6 +1,10 @@
 package com.kuprowski.helenos.service.impl;
 
 import com.kuprowski.helenos.ClusterConfiguration;
+import com.kuprowski.helenos.types.Column;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import me.prettyprint.cassandra.serializers.ObjectSerializer;
 import me.prettyprint.cassandra.serializers.SerializerTypeInferer;
 import me.prettyprint.cassandra.service.CassandraHost;
@@ -10,6 +14,7 @@ import me.prettyprint.hector.api.Cluster;
 import me.prettyprint.hector.api.ConsistencyLevelPolicy;
 import me.prettyprint.hector.api.Keyspace;
 import me.prettyprint.hector.api.Serializer;
+import me.prettyprint.hector.api.beans.HColumn;
 import me.prettyprint.hector.api.factory.HFactory;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
