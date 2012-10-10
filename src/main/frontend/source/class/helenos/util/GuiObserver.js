@@ -35,12 +35,6 @@ qx.Class.define("helenos.util.GuiObserver",
             this._addPageToTab(ksPage);
         },
         
-        showBrowseBySingleColumnTab : function(keyspaceName, columnFamily) {
-            qx.core.Assert.assertNotNull(this.__tabbedPane,'tabbed pane not registered yet');
-            var dataPage = new helenos.components.tab.browse.SingleColumnPage(keyspaceName, columnFamily);
-            this._addPageToTab(dataPage);
-        },
-        
         showBrowseByPredicateTab : function(keyspaceName, columnFamily) {
             qx.core.Assert.assertNotNull(this.__tabbedPane,'tabbed pane not registered yet');
             var dataPage = new helenos.components.tab.browse.PredicatePage(keyspaceName, columnFamily);

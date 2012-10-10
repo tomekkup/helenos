@@ -8,7 +8,9 @@ Authors:
  ************************************************************************ */
 /* ************************************************************************
 #asset(helenos/*)
+#asset(ZeroClipboard*.*)
 ************************************************************************ */
+
 /**
  * This is the main application class of your custom application "helenos"
  */
@@ -42,6 +44,7 @@ qx.Class.define("helenos.Application",
             }
             
             qx.locale.Manager.getInstance().setLocale("en");
+            qx.Class.include(qx.ui.treevirtual.TreeVirtual, qx.ui.table.MTableContextMenu);
             this.getRoot().add(new helenos.components.TopComposite(), {
                 edge : 0
             });

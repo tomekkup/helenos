@@ -25,7 +25,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         
         __keyFromTF : null,
         __keyToTF : null,
-        __keyMode : null,
+        __keyMode : 'predicate',
         
         __nameStartTF : null,
         __nameEndTF : null,
@@ -35,6 +35,8 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         __rangeColNamesCP : null,
         __rangeFromToCP : null,
         __reversedCB : null,
+        
+        _tree : null,
         
         _performSearch  : function(e) {
             var keyFrom = this.__keyFromTF.getValue();
@@ -60,29 +62,11 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         },
         
         _getResultComponent : function(result) {
-            var tree = new qx.ui.treevirtual.TreeVirtual(["Name", "Value", "Clock", "TTL"]);
-            tree.setAlwaysShowOpenCloseSymbol(true);
-            tree.setUseTreeLines(true);
+            this._tree = new helenos.ui.treevirtual.ResultsTree(result);
+            
             var tablePane = new qx.ui.core.scroll.ScrollPane().set({allowGrowX : true, allowGrowY : true});
-            var i;
-            var dataModel = tree.getDataModel();
             
-            //var branch = dataModel.addBranch(null, this.__keyTF.getValue(), true);
-            for(i = 0; i < result.length; i++) {
-                var row = result[i];
-                var branch = dataModel.addBranch(null, row.key, true);
-                var j;
-                for (j = 0; j < row.columns.length; j++) {
-                    var col = row.columns[j];
-                    var leaf = dataModel.addLeaf(branch, col.name);
-                    dataModel.setColumnData(leaf, 1, col.value);
-                    dataModel.setColumnData(leaf, 2, col.clock);
-                    dataModel.setColumnData(leaf, 3, col.ttl);
-                }
-            }
-            dataModel.setData();
-            
-            tablePane.add(tree);
+            tablePane.add(this._tree);
             return tablePane;
         },
         

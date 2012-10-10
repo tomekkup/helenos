@@ -27,8 +27,11 @@ qx.Class.define('helenos.components.menu.ColumnFamilyContextMenu',
         propsButton.addListener('execute', this.__showProperties);
         this.add(propsButton);
         
-        var browserMenu = new qx.ui.menu.Button('Browse', null, null, this.__getBrowseSubMenu(ksName, cfName));
-        this.add(browserMenu);
+        var browseButton = new qx.ui.menu.Button('Browse data', 'icon/16/apps/office-spreadsheet.png');
+        browseButton.setUserData('KSNAME', ksName);
+        browseButton.setUserData('CFNAME', cfName);
+        browseButton.addListener('execute', this.__showBrowseByPredicatePane);
+        this.add(browseButton);
         
         this.add(new qx.ui.menu.Separator());
         
@@ -49,27 +52,7 @@ qx.Class.define('helenos.components.menu.ColumnFamilyContextMenu',
         __showProperties : function(e) {
             var ksName = e.getTarget().getUserData('KSNAME');
             var cfName = e.getTarget().getUserData('CFNAME');
-            
             helenos.util.GuiObserver.showColumnFamilyInfoTab(ksName, cfName);
-        },
-        
-        __getBrowseSubMenu : function(ksName, cfName) {
-            var menu = new qx.ui.menu.Menu();
-          
-            var byKeyButton = new qx.ui.menu.Button('Single column', 'icon/16/apps/utilities-keyring.png');
-            byKeyButton.setUserData('KSNAME', ksName);
-            byKeyButton.setUserData('CFNAME', cfName);
-            byKeyButton.addListener('execute', this.__showBrowseBySingleColumnPane);
-            
-            var predicateButton = new qx.ui.menu.Button('Predicate', 'icon/16/apps/office-spreadsheet.png');
-            predicateButton.setUserData('KSNAME', ksName);
-            predicateButton.setUserData('CFNAME', cfName);
-            predicateButton.addListener('execute', this.__showBrowseByPredicatePane);
-            
-            menu.add(byKeyButton);
-            menu.add(predicateButton);
-            //menu.add(keyRangeButton);
-            return menu;
         },
         
         /** 
@@ -84,12 +67,6 @@ qx.Class.define('helenos.components.menu.ColumnFamilyContextMenu',
                     helenos.util.GuiObserver.refreshSchemaTree();
                 }
             }, this);
-        },
-        
-        __showBrowseBySingleColumnPane : function(e) {
-            var ksName = e.getTarget().getUserData('KSNAME');
-            var cfName = e.getTarget().getUserData('CFNAME');
-            helenos.util.GuiObserver.showBrowseBySingleColumnTab(ksName, cfName);
         },
         
         __showBrowseByPredicatePane : function(e) {

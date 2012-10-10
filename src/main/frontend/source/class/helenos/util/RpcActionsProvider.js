@@ -118,27 +118,6 @@ qx.Class.define('helenos.util.RpcActionsProvider', {
             return rpc.callSync('createKeyspace', formData);
         },
         
-        querySingleColumn : function(cfDef, key, name, sName) {
-            var query = {};
-            
-            query.keyClass = this.__findParamClass(cfDef.keyValidationClass);
-            query.nameClass = this.__findParamClass(cfDef.comparatorType.className);
-            query.keyspace = cfDef.keyspaceName;
-            query.columnFamily = cfDef.name;
-            query.key = key;
-            query.name = name;
-            
-            var rpc = null;
-            if (cfDef.columnType == 'Standard') {
-                rpc = new helenos.util.Rpc(this._STANDARDQUERY);
-            } else {
-                rpc = new helenos.util.Rpc(this._SUPERQUERY);
-                query.sNameClass = this.__findParamClass(cfDef.subComparatorType.className);
-                query.sName = sName;
-            }
-            return rpc.callSync('singleColumn', query );
-        },
-        
         queryPredicate : function(cfDef, keyFrom, keyTo, columnNames, nameStart, nameEnd, sName, reversed ) {
             var query = {};
             
