@@ -13,6 +13,6 @@ qx.Class.define('helenos.ui.GroupBoxV',
     construct : function(label)
     {
         this.base(arguments, label);
-        this.setLayout(new qx.ui.layout.VBox(5).set({alignX : 'left'}));
+        this.setLayout(new qx.ui.layout.VBox(7).set({alignX : 'left'}));
     }
 });

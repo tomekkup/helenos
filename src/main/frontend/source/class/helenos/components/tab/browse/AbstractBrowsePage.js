@@ -23,17 +23,17 @@ qx.Class.define("helenos.components.tab.browse.AbstractBrowsePage",
         this._cfDef = helenos.util.RpcActionsProvider.describeColumnFamily(this._ksName, this._cfName);
         
         this.set({
-            layout : new qx.ui.layout.VBox(8, 'top'),
+            layout : new qx.ui.layout.Grow(),
             label: (ksName + ' : ' + cfName)
         });
         
         this._resultView = new qx.ui.container.Composite(new qx.ui.layout.VBox(8));
-        this._rajCB = new qx.ui.form.CheckBox('Parse results to JSON');
+        //this._rajCB = new qx.ui.form.CheckBox('Parse results to JSON');
         
         var pane = new qx.ui.splitpane.Pane("horizontal");
         pane.add(this._getCriteriaPane(),0);
         pane.add(this._resultView, 1);
-        this.add(pane, {flex:1});
+        this.add(pane);
     },
  
     members : {
@@ -44,27 +44,21 @@ qx.Class.define("helenos.components.tab.browse.AbstractBrowsePage",
         _resultView : null,
         _manager : null,
         
-        _rajCB : null,
-        
-        __getSearchActionPane : function() {
-            var pane = new qx.ui.container.Composite(new qx.ui.layout.HBox(3, 'left'));
-            pane.add(this._getSearchButton());
-            //pane.add(this._rajCB);
-            
-            return pane;
-        },
+        //_rajCB : null,
         
         _getCriteriaPane : function() {
             var components = this._getCriteriaComponents();
             
-            var container = new qx.ui.container.Composite(new qx.ui.layout.VBox(5).set({alignX : 'left'}));
+            var container = new qx.ui.container.Composite(new qx.ui.layout.VBox(7).set({alignX : 'left'}));
             container.setAppearance('criteria-pane');
+            
             for (var i = 0; i < components.length; i++) {
                 container.add(components[i]);
             }
             
             container.add(this._getSearchButton());
-            var pane = new qx.ui.core.scroll.ScrollPane();
+            var pane = new qx.ui.container.Scroll();
+            pane.setWidth(180);
             pane.add(container);
             return pane;
         },

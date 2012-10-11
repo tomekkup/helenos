@@ -13,7 +13,7 @@ qx.Class.define("helenos.ui.treevirtual.ResultsTree",
     construct : function(data)
     {
         this.base(arguments, ["Name", "Value", "Clock", "TTL"]);
-        this.set({alwaysShowOpenCloseSymbol : true, useTreeLines : true});
+        this.set({alwaysShowOpenCloseSymbol : true, useTreeLines : true, statusBarVisible : false});
         
         var resizeBehavior = this.getTableColumnModel().getBehavior();
         resizeBehavior.set(1, { width:"1*", minWidth:200  });
@@ -53,6 +53,9 @@ qx.Class.define("helenos.ui.treevirtual.ResultsTree",
         },
         
         setData : function(data) {
+            if (data == null) {
+                return
+            }
             var dataModel = this.getDataModel();
             
             var i;
