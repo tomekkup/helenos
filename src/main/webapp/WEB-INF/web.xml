@@ -52,13 +52,14 @@
         <listener-class>org.h2.server.web.DbStarter</listener-class>
     </listener>
     
-    <!-- Override init parameter to avoid nasty file locking issue on windows (Jetty only) -->
+    <!-- Uncomment this section to enable file servlet in Resin -->
     <!--
     <servlet>
         <servlet-name>default</servlet-name>
+		<servlet-class>com.caucho.servlets.FileServlet</servlet-class>
         <init-param>
-            <param-name>useFileMappedBuffer</param-name>
-            <param-value>false</param-value>
+            <param-name>characterEncoding</param-name>
+            <param-value>UTF-8</param-value>
         </init-param>
     </servlet>
     -->

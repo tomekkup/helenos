@@ -33,6 +33,12 @@ qx.Class.define("helenos.Application",
         {
             // Call super class
             this.base(arguments);
+            
+            // set default locale
+            qx.locale.Manager.getInstance().setLocale("en");
+            
+            // apply some required mixin to TreeVirtual to enable context menu
+            qx.Class.include(qx.ui.treevirtual.TreeVirtual, qx.ui.table.MTableContextMenu);
 
             // Enable logging in debug variant
             if (qx.core.Environment.get("qx.debug"))
@@ -43,8 +49,7 @@ qx.Class.define("helenos.Application",
                 qx.log.appender.Console;
             }
             
-            qx.locale.Manager.getInstance().setLocale("en");
-            qx.Class.include(qx.ui.treevirtual.TreeVirtual, qx.ui.table.MTableContextMenu);
+            // add main component
             this.getRoot().add(new helenos.components.TopComposite(), {
                 edge : 0
             });

@@ -33,10 +33,12 @@ Helenos is a web based GUI Cassandra client that helps you to explore data and m
 
 ## Installation
 
-* Download war package and deploy to your servlet container (tested with Jetty 8, Tomcat 6)
+* Make sure that a user account which your application server runs as, has write permission to home directory
+* Download war package and deploy to your servlet container (tested with Jetty 8, Tomcat 6, Resin 4)
+* When running on Resin, additionally make sure that fileServlet is enabled and configured (see web.xml or Resin manual)
 * Start app
-* Make sure your browser supports Flash 10
-* Run and open your web browser to http://localhost:8080/{yourdeploypath}/index.html
+* Make sure your web browser supports Flash 10
+* Open your web browser to http://localhost:8080/{yourdeploypath}/index.html
 * Edit your connections by clicking icon in upper right corner
 * After editing click button 'Connect to'
 
