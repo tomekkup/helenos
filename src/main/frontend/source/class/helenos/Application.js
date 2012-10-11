@@ -8,6 +8,7 @@ Authors:
  ************************************************************************ */
 /* ************************************************************************
 #asset(helenos/*)
+#asset(favicon.ico)
 #asset(ZeroClipboard*.*)
 ************************************************************************ */
 
@@ -36,6 +37,8 @@ qx.Class.define("helenos.Application",
             
             // set default locale
             qx.locale.Manager.getInstance().setLocale("en");
+            
+            ZeroClipboard.setMoviePath("resource/ZeroClipboard10.swf");
             
             // apply some required mixin to TreeVirtual to enable context menu
             qx.Class.include(qx.ui.treevirtual.TreeVirtual, qx.ui.table.MTableContextMenu);

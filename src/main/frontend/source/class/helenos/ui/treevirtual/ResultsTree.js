@@ -9,7 +9,7 @@ Authors:
 qx.Class.define("helenos.ui.treevirtual.ResultsTree",
 {
     extend : qx.ui.treevirtual.TreeVirtual,
-
+    
     construct : function(data)
     {
         this.base(arguments, ["Name", "Value", "Clock", "TTL"]);
@@ -21,7 +21,6 @@ qx.Class.define("helenos.ui.treevirtual.ResultsTree",
         
         this.setData(data);
         
-        ZeroClipboard.setMoviePath("resource/ZeroClipboard10.swf");
         this.setContextMenuHandler(0, this._contextMenuHandler);
         this.setContextMenuHandler(1, this._contextMenuHandler);
         this.setContextMenuHandler(2, this._contextMenuHandler);
@@ -39,6 +38,9 @@ qx.Class.define("helenos.ui.treevirtual.ResultsTree",
             },this);
             if (!table.getSelectionModel().isSelectionEmpty()) {
                 var text = dataModel.getValue(col, row);
+                if (qx.lang.Type.isObject(text)) {
+                    text = text.label
+                }
                 clip.setText(text);
             }
             
