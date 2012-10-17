@@ -6,7 +6,7 @@ Helenos is a web based GUI Cassandra client that helps you to explore data and m
 
 ## Current version
 
-1.2
+1.2-beta1
 
 ## Download
 
@@ -52,10 +52,11 @@ You can build manually with Maven but first install all prerequisities:
 ## Wish list
 
 * Browse with indexed columns
+* CQL support
 * Results pagination and export to file
 * Manually setting serializers
 * Persisting default filter criteria to reuse at anytime
-* JMX monitor 
+* JMX monitor
 
 ## FAQ
 

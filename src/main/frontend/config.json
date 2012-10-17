@@ -46,7 +46,7 @@
         "CACHE"        : "${TMPDIR}/qx${QOOXDOO_VERSION}/cache",
         "ROOT"         : ".",
         "BUILD_PATH"   : "../../../target/helenos-${HELENOS_VER}/gui/",
-        "HELENOS_VER"  : "1.2"
+        "HELENOS_VER"  : "1.2-beta1"
     },
 
     "jobs" :
