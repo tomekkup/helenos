@@ -11,12 +11,6 @@ qx.Class.define("helenos.components.TopComposite",
 {
     extend : qx.ui.container.Composite,
 
-    /*
-  *****************************************************************************
-     MEMBERS
-  *****************************************************************************
-  */
- 
     construct : function()
     {
         this.base(arguments);

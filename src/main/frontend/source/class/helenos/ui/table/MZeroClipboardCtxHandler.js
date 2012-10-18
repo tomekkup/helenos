@@ -6,11 +6,14 @@ License:
 Authors:
   Tomek Kuprowski (tomekkuprowski at gmail dot com)
  ************************************************************************ */
+/*
+ #asset(helenos/clipboard.png)
+ */
 qx.Mixin.define("helenos.ui.table.MZeroClipboardCtxHandler",
 {
     members : {
         contextMenuHandler : function(col, row, table, dataModel, contextMenu) {
-            var copyBtn = new qx.ui.menu.Button('Copy to clipboard');
+            var copyBtn = new qx.ui.menu.Button('Copy to clipboard', 'helenos/clipboard.png');
             var clip = new ZeroClipboard.Client();
             
             clip.addEventListener('complete', function (client, text) {

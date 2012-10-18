@@ -60,8 +60,6 @@ qx.Class.define("helenos.components.tab.KeyspaceInfoPage",
             var tableModel = new qx.ui.table.model.Simple();
             tableModel.setColumns(['Id','Name','Type', 'Comparator', 'Sub comparator', 'Key validation','Default validation','Row cache', 'Key cache', 'GC grace sec'],['id','name','columnType','comparatorType_typeName', 'subComparatorType_typeName', 'keyValidationClass_normalized','defaultValidationClass_normalized','rowCacheSize', 'keyCacheSize', 'gcGraceSeconds']);
             
-           // qx.lang.Core.arrayForEach(this.__convertCF, ksDef.cfDefs);
-            
             tableModel.setDataAsMapArray(ksDef.cfDefs.map(this.__convertCF));
             var table = new helenos.ui.table.Table(tableModel);
             table.setContextMenuHandlers([0,1]);
