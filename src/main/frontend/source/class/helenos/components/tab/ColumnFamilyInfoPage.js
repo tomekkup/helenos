@@ -97,6 +97,7 @@ qx.Class.define("helenos.components.tab.ColumnFamilyInfoPage",
             
             gb.add(new helenos.ui.RichAtom('Key validation: <b>' + cfDef.keyValidationClass.replace('org.apache.cassandra.db.marshal.','') + '</b>'));
             gb.add(new helenos.ui.RichAtom('Default validation: <b>' + cfDef.defaultValidationClass.replace('org.apache.cassandra.db.marshal.','') + '</b>'));
+            gb.add(new helenos.ui.RichAtom('Key alias: <b>' + cfDef.keyAlias));
             return gb;
         },
         

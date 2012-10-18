@@ -5,6 +5,12 @@
 
     <configuration>
         <wildcard>false</wildcard>
+        <custom-converters>
+            <converter type="com.kuprowski.helenos.dozer.converters.HeapByteBufferConverter" >
+                <class-a>java.nio.HeapByteBuffer</class-a>
+                <class-b>java.lang.String</class-b>
+            </converter>
+        </custom-converters>
     </configuration>
 
     <mapping type="one-way">
@@ -35,10 +41,13 @@
     <mapping type="one-way">
         <class-a>me.prettyprint.cassandra.service.ThriftCfDef</class-a>
         <class-b>com.kuprowski.helenos.types.JsonColumnFamilyDefinition</class-b>
-        
         <field>
             <a>name</a>
             <b>name</b>
+        </field>
+        <field>
+            <a>keyAlias</a>
+            <b>keyAlias</b>
         </field>
         <field>
             <a>keyspaceName</a>
@@ -203,7 +212,5 @@
             <a>ttl</a>
             <b>ttl</b>
         </field>
-    </mapping>
-    
-    
+    </mapping>    
 </mappings>

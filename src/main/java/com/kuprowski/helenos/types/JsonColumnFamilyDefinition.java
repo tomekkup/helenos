@@ -44,7 +44,7 @@ public class JsonColumnFamilyDefinition {
     private Map<String, String> compactionStrategyOptions;
     private Map<String, String> compressionOptions;
     private double mergeShardsChance;
-    
+    private String keyAlias;
 
     public String getName() {
         return name;
@@ -54,6 +54,14 @@ public class JsonColumnFamilyDefinition {
         this.name = name;
     }
 
+    public void setKeyAlias(String keyAlias) {
+        this.keyAlias = keyAlias;
+    }
+
+    public String getKeyAlias() {
+        return keyAlias;
+    }
+    
     public String getKeyspaceName() {
         return keyspaceName;
     }
