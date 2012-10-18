@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="helenos" basedir=".">
+    
+    <target name="create-version-signature-file">
+        <echo file="src/main/frontend/version.json" append="false">{
+    "let" : {
+        "HELENOS_VERSION" : "${app_version}"
+    },
+    "jobs" : {
+        "build-withver" : {
+            "extend" : ["build"],
+            "environment" : {
+                "qx.app.version" : "${HELENOS_VERSION}"
+            }
+        }
+    }
+}
+        </echo>
+    </target>
+</project>

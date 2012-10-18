@@ -20,6 +20,10 @@ Helenos is a web based GUI Cassandra client that helps you to explore data and m
 
 [Picasa album](https://picasaweb.google.com/tomekkuprowski/Helenos)
 
+## Twitter
+
+You can track my tweets to keep up with new releases [Tweeter] (https://twitter.com/tomekkup)
+
 ## Features
 
 * Listing keyspaces and column families

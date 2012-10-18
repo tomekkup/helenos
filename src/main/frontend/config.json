@@ -5,6 +5,9 @@
     [
     {
         "path" : "${QOOXDOO_PATH}/tool/data/config/application.json"
+    },
+    {
+        "path" : "version.json"
     }
     ],
 
@@ -45,8 +48,7 @@
         "LOCALES"      : [ "en" ],
         "CACHE"        : "${TMPDIR}/qx${QOOXDOO_VERSION}/cache",
         "ROOT"         : ".",
-        "BUILD_PATH"   : "../../../target/helenos-${HELENOS_VER}/gui/",
-        "HELENOS_VER"  : "1.2-beta1"
+        "BUILD_PATH"   : "../../../target/helenos-${HELENOS_VERSION}/gui/"
     },
 
     "jobs" :
@@ -59,12 +61,6 @@
                 "manifest" : "contribs/dialog/Manifest.json"
             }
             ]
-        },
-        "build-withver" : {
-            "extend" : ["build"],
-            "environment" : {
-                "qx.app.version" : "${HELENOS_VER}"
-            }
         }
     }
 }

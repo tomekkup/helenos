@@ -38,6 +38,18 @@
         <jsonrpc4j.version>0.23</jsonrpc4j.version>
         <jackson.version>1.9.7</jackson.version>
         <hector.version>1.1-0</hector.version>
+        <maven.plugin.compiler.version>2.5.1</maven.plugin.compiler.version>
+        <maven.plugin.dependency.version>2.4</maven.plugin.dependency.version>
+        <maven.plugin.resources.version>2.4.3</maven.plugin.resources.version>
+        <maven.plugin.exec.version>1.2.1</maven.plugin.exec.version>
+        <maven.plugin.tomcat7.version>2.0-beta-1</maven.plugin.tomcat7.version>
+        <maven.plugin.surefire.version>2.12</maven.plugin.surefire.version>
+        <maven.plugin.clean.version>2.5</maven.plugin.clean.version>
+        <maven.plugin.install.version>2.3.1</maven.plugin.install.version>
+        <maven.plugin.site.version>3.1</maven.plugin.site.version>
+        <maven.plugin.war.version>2.2</maven.plugin.war.version>
+        <maven.plugin.source.version>2.1.2</maven.plugin.source.version>
+        <maven.plugin.antrun.version>1.7</maven.plugin.antrun.version>
     </properties>
 
     <dependencies>
@@ -124,7 +136,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.4</version>
+                <version>${maven.plugin.dependency.version}</version>
                 <executions>
                     <execution>
                         <phase>compile</phase>
@@ -140,7 +152,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
+                <version>${maven.plugin.compiler.version}</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
@@ -150,7 +162,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.12</version>
+                <version>${maven.plugin.surefire.version}</version>
                 <configuration>
                     <skipTests>true</skipTests>
                 </configuration>
@@ -158,27 +170,27 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
-                <version>2.5</version>
+                <version>${maven.plugin.clean.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-install-plugin</artifactId>
-                <version>2.3.1</version>
+                <version>${maven.plugin.install.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.1</version>
+                <version>${maven.plugin.site.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>2.2</version>
+                <version>${maven.plugin.war.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.1.2</version>
+                <version>${maven.plugin.source.version}</version>
             </plugin>
 
             <plugin>
@@ -222,9 +234,31 @@
                 </dependencies>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>${maven.plugin.antrun.version}</version>
+                <executions>
+                    <execution>
+                        <id>create-version-signature-file</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <property name="app_version" value="${project.version}"/>
+                                <ant antfile="${basedir}/build.xml">
+                                    <target name="create-version-signature-file"/>
+                                </ant>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2.1</version>
+                <version>${maven.plugin.exec.version}</version>
                 <executions>
                     <execution>
                         <id>clean-frontend</id>
@@ -255,7 +289,7 @@
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.0-beta-1</version>
+                <version>${maven.plugin.tomcat7.version}</version>
                 <configuration>
                     <port>8080</port>
                     <useTestClasspath>false</useTestClasspath>
@@ -265,7 +299,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>2.4.3</version>
+                <version>${maven.plugin.resources.version}</version>
                 <executions>
                     <execution>
                         <id>copy-webapp-resources</id>
@@ -288,29 +322,6 @@
                             </resources>
                         </configuration>
                     </execution>
-                    <!--
-                    <execution>
-                        <id>copy-frontend-resources</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${webappDirectory}/helenos</outputDirectory>
-                            <encoding>${project.build.sourceEncoding}</encoding>
-                            <includeEmptyDirs>true</includeEmptyDirs>
-                            <overwrite>true</overwrite>
-                            <resources>
-                                <resource>
-                                    <directory>src/main/frontend/build</directory>
-                                    <includes>
-                                        <include>**/*.*</include>
-                                    </includes>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                    -->
                 </executions>
             </plugin>
         </plugins>
