@@ -20,7 +20,7 @@ msgstr "Error"
 #: helenos/components/menu/ColumnFamilyContextMenu.js:80
 #: helenos/components/menu/ColumnFamilyContextMenu.js:106
 msgid "loss.data.alert"
-msgstr "<h3>Are you sure ?! You will lose all your data !!!</h3>"
+msgstr "<h2><p>Are you sure ?!</p></h2><h4>You will lose all your data !!!</h4>"
 
 #: helenos/components/tab/ConnectionsEditorPage.js:97
 msgid "are.you.sure"

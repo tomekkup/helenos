@@ -93,12 +93,18 @@ qx.Class.define("helenos.components.SchemaPane",
                     }
                 }
             };
-            dialog.Dialog.form('<h3>Create new keyspace</h3>', formData, function(context, result) {
-                if (result != null) {
-                    helenos.util.RpcActionsProvider.createKeyspace(result);
-                    helenos.util.GuiObserver.refreshSchemaTree();
-                }
-            }, this);
+            (new dialog.Form({
+                "message"    : '<h3>Create new keyspace</h3>',
+                "formData"    : formData,
+                "allowCancel" : true,
+                "callback"    : function(context, result) {
+                    if (result != null) {
+                        helenos.util.RpcActionsProvider.createKeyspace(result);
+                        helenos.util.GuiObserver.refreshSchemaTree();
+                    }
+                },
+                "context"     : this
+            })).set({width : 450}).show();
         },
         
         refreshSchemaTree : function() {

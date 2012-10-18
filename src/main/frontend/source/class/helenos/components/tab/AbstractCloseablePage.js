@@ -13,8 +13,6 @@ qx.Class.define("helenos.components.tab.AbstractCloseablePage",
     construct : function()
     {
         this.base(arguments);
-        this.set({
-            showCloseButton: true
-        });
+        this.setShowCloseButton(true);
     }
 });

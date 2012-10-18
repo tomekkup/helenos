@@ -18,26 +18,30 @@ qx.Class.define('helenos.components.menu.KeyspaceContextMenu',
     construct : function(ksName)
     {
         this.base(arguments);
-        
-        var propsButton = new qx.ui.menu.Button('Properties', 'icon/16/status/dialog-information.png');
-        propsButton.setUserData('KSNAME', ksName);
-        propsButton.addListener('execute', this.__showProperties);
-        this.add(propsButton);
-        
-        this.add(new qx.ui.menu.Separator());
-        
-        var addCFButton = new qx.ui.menu.Button('Add column family', 'icon/16/actions/list-add.png');
-        addCFButton.setUserData('KSNAME', ksName);
-        addCFButton.addListener('execute', this.__addColumnFamily);
-        this.add(addCFButton);
-        
-        var dropButton = new qx.ui.menu.Button('Drop', 'icon/16/actions/edit-delete.png');
-        dropButton.setUserData('KSNAME', ksName);
-        dropButton.addListener('execute', this.__dropKeyspace);
-        this.add(dropButton);
+        this.__initMenuItems(ksName);
     },
     
     members : {
+        
+        __initMenuItems : function(ksName) {
+            var propsButton = new qx.ui.menu.Button('Properties', 'icon/16/status/dialog-information.png');
+            propsButton.setUserData('KSNAME', ksName);
+            propsButton.addListener('execute', this.__showProperties);
+            
+            var addCFButton = new qx.ui.menu.Button('Add column family', 'icon/16/actions/list-add.png');
+            addCFButton.setUserData('KSNAME', ksName);
+            addCFButton.addListener('execute', this.__addColumnFamily);
+            
+            var dropButton = new qx.ui.menu.Button('Drop', 'icon/16/actions/edit-delete.png');
+            dropButton.setUserData('KSNAME', ksName);
+            dropButton.addListener('execute', this.__dropKeyspace);
+            
+            this.add(propsButton);
+            this.add(new qx.ui.menu.Separator());
+            this.add(addCFButton);
+            this.add(dropButton);
+        },
+        
         __showProperties : function(e) {
             var ksName = e.getTarget().getUserData('KSNAME');
             helenos.util.GuiObserver.showKeyspaceInfoTab(ksName);

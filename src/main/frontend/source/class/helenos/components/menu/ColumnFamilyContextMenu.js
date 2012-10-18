@@ -20,35 +20,39 @@ qx.Class.define('helenos.components.menu.ColumnFamilyContextMenu',
     construct : function(ksName, cfName)
     {
         this.base(arguments);
-        
-        var propsButton = new qx.ui.menu.Button('Properties', 'icon/16/status/dialog-information.png');
-        propsButton.setUserData('KSNAME', ksName);
-        propsButton.setUserData('CFNAME', cfName);
-        propsButton.addListener('execute', this.__showProperties);
-        this.add(propsButton);
-        
-        var browseButton = new qx.ui.menu.Button('Browse data', 'icon/16/apps/office-spreadsheet.png');
-        browseButton.setUserData('KSNAME', ksName);
-        browseButton.setUserData('CFNAME', cfName);
-        browseButton.addListener('execute', this.__showBrowseByPredicatePane);
-        this.add(browseButton);
-        
-        this.add(new qx.ui.menu.Separator());
-        
-        var dropButton = new qx.ui.menu.Button('Drop', 'icon/16/actions/edit-delete.png');
-        dropButton.setUserData('KSNAME', ksName);
-        dropButton.setUserData('CFNAME', cfName);
-        dropButton.addListener('execute', this.__dropColumnFamily);
-        this.add(dropButton);
-        
-        var truncateButton = new qx.ui.menu.Button('Truncate', 'icon/16/actions/edit-clear.png');
-        truncateButton.setUserData('KSNAME', ksName);
-        truncateButton.setUserData('CFNAME', cfName);
-        truncateButton.addListener('execute', this.__truncateColumnFamily);
-        this.add(truncateButton);
+        this.__initMenuItems(ksName, cfName);
     },
     
     members : {
+        
+        __initMenuItems : function(ksName, cfName) {
+            var propsButton = new qx.ui.menu.Button('Properties', 'icon/16/status/dialog-information.png');
+            propsButton.setUserData('KSNAME', ksName);
+            propsButton.setUserData('CFNAME', cfName);
+            propsButton.addListener('execute', this.__showProperties);
+            
+            var browseButton = new qx.ui.menu.Button('Browse data', 'icon/16/apps/office-spreadsheet.png');
+            browseButton.setUserData('KSNAME', ksName);
+            browseButton.setUserData('CFNAME', cfName);
+            browseButton.addListener('execute', this.__showBrowseByPredicatePane);
+            
+            var dropButton = new qx.ui.menu.Button('Drop', 'icon/16/actions/edit-delete.png');
+            dropButton.setUserData('KSNAME', ksName);
+            dropButton.setUserData('CFNAME', cfName);
+            dropButton.addListener('execute', this.__dropColumnFamily);
+            
+            var truncateButton = new qx.ui.menu.Button('Truncate', 'icon/16/actions/edit-clear.png');
+            truncateButton.setUserData('KSNAME', ksName);
+            truncateButton.setUserData('CFNAME', cfName);
+            truncateButton.addListener('execute', this.__truncateColumnFamily);
+            
+            this.add(propsButton);
+            this.add(browseButton);
+            this.add(new qx.ui.menu.Separator());
+            this.add(dropButton);
+            this.add(truncateButton);
+        },
+        
         __showProperties : function(e) {
             var ksName = e.getTarget().getUserData('KSNAME');
             var cfName = e.getTarget().getUserData('CFNAME');

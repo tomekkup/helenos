@@ -40,8 +40,9 @@ qx.Class.define("helenos.Application",
             
             ZeroClipboard.setMoviePath("resource/ZeroClipboard10.swf");
             
-            // apply some required mixin to TreeVirtual to enable context menu
+            // apply MTableContextMenu mixin to TreeVirtual and Table to enable context menu
             qx.Class.include(qx.ui.treevirtual.TreeVirtual, qx.ui.table.MTableContextMenu);
+            qx.Class.include(helenos.ui.table.Table, qx.ui.table.MTableContextMenu);
 
             // Enable logging in debug variant
             if (qx.core.Environment.get("qx.debug"))

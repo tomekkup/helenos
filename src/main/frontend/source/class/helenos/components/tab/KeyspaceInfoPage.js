@@ -46,8 +46,7 @@ qx.Class.define("helenos.components.tab.KeyspaceInfoPage",
         },
         
         __addBasicInfoGroup : function(ksDef) {
-            var gb = new qx.ui.groupbox.GroupBox('Basic');
-            gb.setLayout(new qx.ui.layout.VBox());
+            var gb = new helenos.ui.GroupBoxV('Basic');
             
             var a1 = new helenos.ui.RichAtom('Strategy class: <b>' + ksDef.strategyClass + '</b>');
             var a2 = new helenos.ui.RichAtom('Replication factor: <b>' + ksDef.replicationFactor + '</b>');
@@ -64,9 +63,9 @@ qx.Class.define("helenos.components.tab.KeyspaceInfoPage",
            // qx.lang.Core.arrayForEach(this.__convertCF, ksDef.cfDefs);
             
             tableModel.setDataAsMapArray(ksDef.cfDefs.map(this.__convertCF));
-            //alert(qx.lang.Object.getKeysAsString(ksDef.cfDefs[0]));
-            var table = new qx.ui.table.Table(tableModel);
-            
+            var table = new helenos.ui.table.Table(tableModel);
+            table.setContextMenuHandlers([0,1]);
+            table.setColumnsWidth([10,10,10,10,10,10,10,10,10,10]);
             var gb = new qx.ui.groupbox.GroupBox('Column families');
             gb.setLayout(new qx.ui.layout.VBox());
             

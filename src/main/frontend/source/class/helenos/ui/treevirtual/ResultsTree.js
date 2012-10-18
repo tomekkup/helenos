@@ -9,6 +9,7 @@ Authors:
 qx.Class.define("helenos.ui.treevirtual.ResultsTree",
 {
     extend : qx.ui.treevirtual.TreeVirtual,
+    include : [helenos.ui.table.MZeroClipboardCtxHandler],
     
     construct : function(data)
     {
@@ -21,36 +22,13 @@ qx.Class.define("helenos.ui.treevirtual.ResultsTree",
         
         this.setData(data);
         
-        this.setContextMenuHandler(0, this._contextMenuHandler);
-        this.setContextMenuHandler(1, this._contextMenuHandler);
-        this.setContextMenuHandler(2, this._contextMenuHandler);
-        this.setContextMenuHandler(3, this._contextMenuHandler);
+        this.setContextMenuHandler(0, this.contextMenuHandler);
+        this.setContextMenuHandler(1, this.contextMenuHandler);
+        this.setContextMenuHandler(2, this.contextMenuHandler);
+        this.setContextMenuHandler(3, this.contextMenuHandler);
     },
     
     members : {
-        
-        _contextMenuHandler : function(col, row, table, dataModel, contextMenu) {
-            var copyBtn = new qx.ui.menu.Button('Copy to clipboard');
-            var clip = new ZeroClipboard.Client();
-            
-            clip.addEventListener('complete', function (client, text) {
-                client.destroy();
-            },this);
-            if (!table.getSelectionModel().isSelectionEmpty()) {
-                var text = dataModel.getValue(col, row);
-                if (qx.lang.Type.isObject(text)) {
-                    text = text.label
-                }
-                clip.setText(text);
-            }
-            
-            copyBtn.addListener("appear", function(e) {
-                clip.glue(e.getTarget().getContentElement().getDomElement());
-            }, this);
-            
-            contextMenu.add(copyBtn);
-            return true;
-        },
         
         setData : function(data) {
             if (data == null) {

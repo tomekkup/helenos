@@ -43,9 +43,11 @@ qx.Class.define("helenos.components.tab.ConnectionsEditorPage",
         __deleteButton : null,
     
         __addConnectionsTable : function() {
-            this.__connectionsTable = new qx.ui.table.Table(new helenos.remote.ConnectionsTableModel());
+            this.__connectionsTable = new helenos.ui.table.Table(new helenos.remote.ConnectionsTableModel());
             this.__connectionsTable.getTableColumnModel().setDataCellRenderer(3, new qx.ui.table.cellrenderer.Boolean());
             this.__connectionsTable.getSelectionModel().addListener('changeSelection', this.__onTableSelectionChanged, this);
+            this.__connectionsTable.setContextMenuHandlers([0,1,2]);
+            this.__connectionsTable.setColumnsWidth([15,45,25,15]);
             
             var gb = new qx.ui.groupbox.GroupBox('Available connections');
             gb.setLayout(new qx.ui.layout.VBox(5));
@@ -118,13 +120,19 @@ qx.Class.define("helenos.components.tab.ConnectionsEditorPage",
                     }
                 }
             };
-            dialog.Dialog.form('<h3>Create connection</h3>', formData, function(context, result) {
-                if (result != null) {
-                    result['active'] = false;
-                    helenos.util.RpcActionsProvider.storeConnection(result);
-                    context._reloadConnectionsTable();
-                }
-            }, this);
+            (new dialog.Form({
+                "message"    : '<h3>Create new connection</h3>',
+                "formData"    : formData,
+                "allowCancel" : true,
+                "callback"    : function(context, result) {
+                    if (result != null) {
+                        result['active'] = false;
+                        helenos.util.RpcActionsProvider.storeConnection(result);
+                        context._reloadConnectionsTable();
+                    }
+                },
+                "context"     : this
+            })).set({width : 550}).show();
         },
         
         /** 
@@ -152,14 +160,20 @@ qx.Class.define("helenos.components.tab.ConnectionsEditorPage",
                     }
                 }
             };
-            dialog.Dialog.form('<h3>Edit connection</h3>', formData, function(context, result) {
-                if (result != null) {
-                    result['alias'] = cc.alias;
-                    result['active'] = cc.active;
-                    helenos.util.RpcActionsProvider.storeConnection(result);
-                    context._reloadConnectionsTable();
-                }
-            }, this);
+            (new dialog.Form({
+                "message"    : '<h3>Edit connection</h3>',
+                "formData"    : formData,
+                "allowCancel" : true,
+                "callback"    : function(context, result) {
+                    if (result != null) {
+                        result['alias'] = cc.alias;
+                        result['active'] = cc.active;
+                        helenos.util.RpcActionsProvider.storeConnection(result);
+                        context._reloadConnectionsTable();
+                    }
+                },
+                "context"     : this
+            })).set({width : 550}).show();
         },
         
         /** 

@@ -50,8 +50,8 @@ qx.Class.define("helenos.components.tab.ColumnFamilyInfoPage",
         },
         
         __addCommentArea : function(cfDef) {
-            var gb = new qx.ui.groupbox.GroupBox('Comment');
-            gb.setLayout(new qx.ui.layout.VBox());
+            var gb = new helenos.ui.GroupBoxV('Comment');
+
             var ta = new qx.ui.form.TextField(cfDef.comment).set({readOnly : true})
             
             gb.add(ta, {flex : 1});
@@ -59,9 +59,7 @@ qx.Class.define("helenos.components.tab.ColumnFamilyInfoPage",
         },
         
         __getCacheInfoPane : function(cfDef) {
-            var gb = new qx.ui.groupbox.GroupBox('Cache');
-            gb.setLayout(new qx.ui.layout.VBox());
-            
+            var gb = new helenos.ui.GroupBoxV('Cache');
             
             gb.add(new helenos.ui.RichAtom('Row cache size: <b>' + cfDef.rowCacheSize + '</b>'));
             gb.add(new helenos.ui.RichAtom('Row cache save period: <b>' + cfDef.rowCacheSavePeriodInSeconds.className + ' seconds</b>'));
@@ -77,8 +75,7 @@ qx.Class.define("helenos.components.tab.ColumnFamilyInfoPage",
         },
         
         __getMemInfoPane : function(cfDef) {
-            var gb = new qx.ui.groupbox.GroupBox('Memtable & threshold');
-            gb.setLayout(new qx.ui.layout.VBox());
+            var gb = new helenos.ui.GroupBoxV('Memtable & threshold');
             
             gb.add(new helenos.ui.RichAtom('Max compaction threshold: <b>' + cfDef.maxCompactionThreshold + '</b>'));
             gb.add(new helenos.ui.RichAtom('Min compaction threshold: <b>' + cfDef.minCompactionThreshold + '</b>'));
@@ -90,8 +87,7 @@ qx.Class.define("helenos.components.tab.ColumnFamilyInfoPage",
         },
         
         __getTypesInfoPane : function(cfDef) {
-            var gb = new qx.ui.groupbox.GroupBox('Types');
-            gb.setLayout(new qx.ui.layout.VBox());
+            var gb = new helenos.ui.GroupBoxV('Types');
             
             gb.add(new helenos.ui.RichAtom('Column: <b>' + cfDef.columnType + '</b>'));
             gb.add(new helenos.ui.RichAtom('Comparator: <b>' + cfDef.comparatorType.className.replace('org.apache.cassandra.db.marshal.','') + '</b>'));
@@ -109,10 +105,11 @@ qx.Class.define("helenos.components.tab.ColumnFamilyInfoPage",
             tableModel.setColumns(['Name','Validation class', 'Index name', 'Index type'],['name','validationClass','indexName', 'indexType']);
             
             tableModel.setDataAsMapArray(cfDef.columnMetadata);
-            var table = new qx.ui.table.Table(tableModel);
+            var table = new helenos.ui.table.Table(tableModel);
+            table.setContextMenuHandlers([0,1,2,3]);
+            table.setColumnsWidth([28,28,28,16]);
             
-            var gb = new qx.ui.groupbox.GroupBox('Column metadata');
-            gb.setLayout(new qx.ui.layout.VBox());
+            var gb = new helenos.ui.GroupBoxV('Column metadata');
             
             var sp = new qx.ui.core.scroll.ScrollPane();
             sp.add(table);
