@@ -48,7 +48,7 @@ qx.Class.define("helenos.ui.TextField",
     {
         this.base(arguments);
         
-        var cd = helenos.ui.TextField.classDefs[clazz];
+        var cd = this.self(arguments).classDefs[clazz];
         if (cd != undefined) {
             this.set(cd );
         } else {

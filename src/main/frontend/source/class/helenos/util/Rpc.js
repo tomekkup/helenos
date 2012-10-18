@@ -28,12 +28,12 @@ qx.Class.define('helenos.util.Rpc',
     members : {
         
         __getRemoteUri : function(serviceName) {
-            if (helenos.util.Rpc.serverPath == undefined)  {
+            if (this.self(arguments).serverPath == undefined)  {
                 var pathIdx = window.location.href.indexOf('/gui/index.html');
-                helenos.util.Rpc.serverPath = window.location.href.substr(0, pathIdx);
+                this.self(arguments).serverPath = window.location.href.substr(0, pathIdx);
             }
             
-            return helenos.util.Rpc.serverPath + serviceName;
+            return this.self(arguments).serverPath + serviceName;
         },
         
         /** 
@@ -59,14 +59,6 @@ qx.Class.define('helenos.util.Rpc',
             } else {
                 ret = this._callInternal(arguments, 0);
             }
-            
-            /*if (ret.error) {
-                alert('RPC CALL ERROR: ' +
-                        'code: ' + ret.error.code +
-                        'message: ' + ret.error.message
-                     );
-                return null;
-            }*/
             
             return ret;
         }
