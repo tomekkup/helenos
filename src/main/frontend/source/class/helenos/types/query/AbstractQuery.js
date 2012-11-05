@@ -10,15 +10,14 @@ DEPRECATED !!!
  ************************************************************************ */
 qx.Class.define("helenos.types.query.AbstractQuery",
 {
-    
-    
+        
     members : {
         keyspace : null,
         columnFamily : null,
         keyClass : null,
         nameClass : null
     },
- 
+   
     construct : function()
     {
         this.base(arguments);

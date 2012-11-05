@@ -25,7 +25,7 @@
     </context-param>
     <context-param>
         <param-name>db.url</param-name>
-        <param-value>jdbc:h2:~/helenos;INIT=CREATE SCHEMA IF NOT EXISTS helenos AUTHORIZATION helenos\;CREATE TABLE IF NOT EXISTS CLUSTERCONFIG(ALIAS VARCHAR(128) PRIMARY KEY,HOSTS VARCHAR(255), CLUSTERNAME VARCHAR(255), ACTIVE BOOLEAN)\;</param-value>
+        <param-value>jdbc:h2:~/helenos;INIT=CREATE SCHEMA IF NOT EXISTS helenos AUTHORIZATION helenos\;CREATE TABLE IF NOT EXISTS CLUSTERCONFIG(ALIAS VARCHAR(128) PRIMARY KEY,HOSTS VARCHAR(255), CLUSTERNAME VARCHAR(255), ACTIVE BOOLEAN);DB_CLOSE_ON_EXIT=FALSE\;</param-value>
     </context-param>
     <context-param>
         <param-name>db.user</param-name>

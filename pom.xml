@@ -5,7 +5,7 @@
 
     <groupId>com.kuprowski</groupId>
     <artifactId>helenos</artifactId>
-    <version>1.2-beta1</version>
+    <version>1.2</version>
     <packaging>war</packaging>
     <name>helenos</name>
     <developers>
@@ -260,6 +260,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>${maven.plugin.exec.version}</version>
                 <executions>
+                    <!--
                     <execution>
                         <id>clean-frontend</id>
                         <phase>clean</phase>
@@ -272,6 +273,7 @@
                             <commandlineArgs>generate.py clean</commandlineArgs>
                         </configuration>
                     </execution>
+                    -->
                     <execution>
                         <id>build-frontend</id>
                         <phase>prepare-package</phase>

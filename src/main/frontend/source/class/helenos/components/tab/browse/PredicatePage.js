@@ -26,6 +26,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         __keyFromTF : null,
         __keyToTF : null,
         __keyMode : 'predicate',
+        __keysLimit : null,
         
         __nameStartTF : null,
         __nameEndTF : null,
@@ -35,6 +36,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         __rangeColNamesCP : null,
         __rangeFromToCP : null,
         __reversedCB : null,
+        __colsLimit : null,
         
         _tree : null,
         
