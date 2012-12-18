@@ -1,18 +1,14 @@
-package com.kuprowski.helenos.jdbc.core.support;
+package com.kuprowski.helenos.dao;
 
 import com.kuprowski.helenos.ClusterConfiguration;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
-import javax.sql.DataSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 /**
@@ -24,28 +20,15 @@ import org.springframework.util.CollectionUtils;
  * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
  * *******************************************************
  */
-public class ClusterConfigDao {
-
-    private Properties queries;
-    @Autowired
-    protected NamedParameterJdbcTemplate jdbcTemplate;
-
-    @Required
-    public void setJdbcTemplate(NamedParameterJdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
-    @Required
-    public void setQueries(Properties queries) {
-        this.queries = queries;
-    }
+@Component("clusterConfigDao")
+public class ClusterConfigDao extends AbstractDao {
 
     public ClusterConfiguration get(String alias) {
-        return jdbcTemplate.queryForObject(queries.getProperty("clusterconfig.get.by.alias"), new MapSqlParameterSource("alias", alias), new ClusterConfigurationMapper());
+        return jdbcTemplate.queryForObject(queriesProperties.getProperty("clusterconfig.get.by.alias"), new MapSqlParameterSource("alias", alias), new ClusterConfigurationMapper());
     }
 
     public ClusterConfiguration getActive() {
-        List<ClusterConfiguration> configuration = jdbcTemplate.query(queries.getProperty("clusterconfig.select.star.wa"), new MapSqlParameterSource("active", true), new ClusterConfigurationMapper());
+        List<ClusterConfiguration> configuration = jdbcTemplate.query(queriesProperties.getProperty("clusterconfig.select.star.wa"), new MapSqlParameterSource("active", true), new ClusterConfigurationMapper());
 
         if (CollectionUtils.isEmpty(configuration)) {
             this.createDefaultConfiguration();
@@ -56,15 +39,15 @@ public class ClusterConfigDao {
     }
 
     public List<ClusterConfiguration> loadAll() {
-        return jdbcTemplate.query(queries.getProperty("clusterconfig.select.star"), new MapSqlParameterSource(), new ClusterConfigurationMapper());
+        return jdbcTemplate.query(queriesProperties.getProperty("clusterconfig.select.star"), new MapSqlParameterSource(), new ClusterConfigurationMapper());
     }
 
     public long getConnectionsCount() {
-        return jdbcTemplate.queryForLong(queries.getProperty("clusterconfig.count"), new HashMap<String, Object>());
+        return jdbcTemplate.queryForLong(queriesProperties.getProperty("clusterconfig.count"), new HashMap<String, Object>());
     }
 
     private void createDefaultConfiguration() {
-        jdbcTemplate.update(queries.getProperty("clusterconfig.insert"), prepareParameterSource(new ClusterConfiguration("default", "localhost:9160", "TestCluster", true)));
+        jdbcTemplate.update(queriesProperties.getProperty("clusterconfig.insert"), prepareParameterSource(new ClusterConfiguration("default", "localhost:9160", "TestCluster", true)));
     }
 
     private SqlParameterSource prepareParameterSource(ClusterConfiguration configuration) {
@@ -73,13 +56,13 @@ public class ClusterConfigDao {
 
     public void store(ClusterConfiguration configuration) {
         if (configuration.isActive()) {
-            jdbcTemplate.update(queries.getProperty("clusterconfig.update.all.active.false"), new MapSqlParameterSource());
+            jdbcTemplate.update(queriesProperties.getProperty("clusterconfig.update.all.active.false"), new MapSqlParameterSource());
         }
-        jdbcTemplate.update(queries.getProperty("clusterconfig.merge"), prepareParameterSource(configuration));
+        jdbcTemplate.update(queriesProperties.getProperty("clusterconfig.merge"), prepareParameterSource(configuration));
     }
 
     public void delete(String alias) {
-        jdbcTemplate.update(queries.getProperty("clusterconfig.delete"), new MapSqlParameterSource("alias", alias));
+        jdbcTemplate.update(queriesProperties.getProperty("clusterconfig.delete"), new MapSqlParameterSource("alias", alias));
     }
 
     private static final class ClusterConfigurationMapper implements RowMapper<ClusterConfiguration> {

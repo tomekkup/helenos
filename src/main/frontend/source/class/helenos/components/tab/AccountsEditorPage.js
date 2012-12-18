@@ -11,7 +11,7 @@ Authors:
 #asset(qx/icon/${qx.icontheme}/16/actions/edit-cut.png)
 #asset(qx/icon/${qx.icontheme}/16/actions/list-remove.png)
 */
-qx.Class.define("helenos.components.tab.ConnectionsEditorPage",
+qx.Class.define("helenos.components.tab.AccountsEditorPage",
 {
     extend : helenos.components.tab.AbstractCloseablePage,
 
@@ -25,7 +25,7 @@ qx.Class.define("helenos.components.tab.ConnectionsEditorPage",
     {
         this.base(arguments);
         this.set({
-            label: 'Connections',
+            label: 'Accounts',
             icon: 'helenos/users-16.png',
             layout: new qx.ui.layout.VBox(3, 'top')
         });
@@ -42,13 +42,13 @@ qx.Class.define("helenos.components.tab.ConnectionsEditorPage",
         __deleteButton : null,
     
         __addMainContainer : function() {
-            this.__connectionsTable = new helenos.ui.table.Table(new helenos.remote.ConnectionsTableModel());
-            this.__connectionsTable.getTableColumnModel().setDataCellRenderer(3, new qx.ui.table.cellrenderer.Boolean());
+            this.__connectionsTable = new helenos.ui.table.Table(new helenos.remote.AccountsTableModel());
+            this.__connectionsTable.getTableColumnModel().setDataCellRenderer(2, new qx.ui.table.cellrenderer.Boolean());
             this.__connectionsTable.getSelectionModel().addListener('changeSelection', this.__onTableSelectionChanged, this);
             this.__connectionsTable.setContextMenuHandlers([0,1,2]);
-            this.__connectionsTable.setColumnsWidth([15,45,25,15]);
+            this.__connectionsTable.setColumnsWidth([23,63,13]);
             
-            var gb = new qx.ui.groupbox.GroupBox('Accounts');
+            var gb = new qx.ui.groupbox.GroupBox('Available accounts');
             gb.setLayout(new qx.ui.layout.VBox(5));
             
             var sp = new qx.ui.core.scroll.ScrollPane();

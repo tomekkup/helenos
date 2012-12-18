@@ -39,11 +39,11 @@ qx.Class.define("helenos.ui.treevirtual.ResultsTree",
             var i;
             for(i = 0; i < data.length; i++) {
                 var row = data[i];
-                var branch = dataModel.addBranch(null, row.key, true);
+                var branch = dataModel.addBranch(null, row.key, true, false, 'helenos/key.png');
                 var j;
                 for (j = 0; j < row.columns.length; j++) {
                     var col = row.columns[j];
-                    var leaf = dataModel.addLeaf(branch, col.name);
+                    var leaf = dataModel.addLeaf(branch, col.name, 'helenos/isctf.png');
                     dataModel.setColumnData(leaf, 1, col.value);
                     dataModel.setColumnData(leaf, 2, col.clock);
                     dataModel.setColumnData(leaf, 3, col.ttl);

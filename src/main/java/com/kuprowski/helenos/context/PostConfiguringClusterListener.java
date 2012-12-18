@@ -1,7 +1,7 @@
 package com.kuprowski.helenos.context;
 
 import com.kuprowski.helenos.ClusterConfiguration;
-import com.kuprowski.helenos.jdbc.core.support.ClusterConfigDao;
+import com.kuprowski.helenos.dao.ClusterConfigDao;
 import com.kuprowski.helenos.service.ClusterConfigAware;
 import java.util.Map;
 import me.prettyprint.hector.api.Cluster;

@@ -40,7 +40,6 @@ qx.Class.define("helenos.components.Footer",
             this._timerManager.start(function(userData, timerId) {
 	        	this.__checkConnectionHealth();
 	        }, 10000, this, null, 1);
-
         },
         
         __checkConnectionHealth : function() {
@@ -72,7 +71,7 @@ qx.Class.define("helenos.components.Footer",
             this.__liveAtom = new qx.ui.basic.Atom('', 'helenos/green-light.png');
             this.__downAtom = new qx.ui.basic.Atom('', 'helenos/red-light.png');
             this.__suspendedAtom = new qx.ui.basic.Atom('', 'helenos/yellow-light.png');
-        
+            
             this.add(new qx.ui.basic.Label('Connection state:'));
             this.add(this.__liveAtom);
             this.add(this.__downAtom);

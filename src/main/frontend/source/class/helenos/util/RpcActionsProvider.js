@@ -11,9 +11,11 @@ qx.Class.define('helenos.util.RpcActionsProvider', {
     statics : {
         
         _SCHEMA : '/Schema.json',
+        _CREDENTIALS : '/Credentials.json',
         _STANDARDQUERY : '/query/Standard.json',
         _SUPERQUERY : '/query/Super.json',
         _CLUSTERCONNECTION : '/ClusterConnectionProvider.json',
+        _ACCOUNT : '/admin/Account.json',
         
         getConnectionStatus : function() {
             var rpc = new helenos.util.Rpc(this._CLUSTERCONNECTION);
@@ -26,6 +28,11 @@ qx.Class.define('helenos.util.RpcActionsProvider', {
           return rpc.callSync('loadAll');
         },
         
+        getAllAccounts : function() {
+          var rpc = new helenos.util.Rpc(this._ACCOUNT);
+          return rpc.callSync('loadAll');
+        },
+                
         getConnectionByAlias : function(alias) {
             var rpc = new helenos.util.Rpc(this._CLUSTERCONNECTION);
             return rpc.callSync('getConnectionByAlias', alias);
@@ -49,6 +56,11 @@ qx.Class.define('helenos.util.RpcActionsProvider', {
         getConnectionsCount : function() {
           var rpc = new helenos.util.Rpc(this._CLUSTERCONNECTION);
           return rpc.callSync('getConnectionsCount');
+        },
+        
+        getAccountsCount : function() {
+          var rpc = new helenos.util.Rpc(this._ACCOUNT);
+          return rpc.callSync('getAccountsCount');
         },
         
         dropKeyspace : function(keyspaceName) {

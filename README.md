@@ -50,8 +50,11 @@ You can track my tweets to keep up with new releases [Tweeter] (https://twitter.
 
 You can build manually with Maven but first install all prerequisities:
 
-* Qooxdoo SDK 2.0.1 [download] (http://sourceforge.net/projects/qooxdoo/)
+* Qooxdoo SDK 2.1 [download] (http://sourceforge.net/projects/qooxdoo/)
 * Python 2.x [download] (http://www.python.org/getit/releases/2.7.3/)
+
+Next download this package: [https://github.com/cboulanger/qx-contrib-Dialog/archive/master.zip] (https://github.com/cboulanger/qx-contrib-Dialog/archive/master.zip)
+and unpack to directory src/main/frontend/contribs and change destination folder name to 'dialog'. Next apply patch file 'src/main/frontent/Dialog.js.patch'.
 
 ## Wish list
 

@@ -17,5 +17,5 @@
     
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate" c:dataSource-ref="dataSource"/>
     
-    <bean id="clusterConfigDao" class="com.kuprowski.helenos.jdbc.core.support.ClusterConfigDao" p:queries-ref="queriesProperties" />
+
 </beans>

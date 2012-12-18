@@ -6,9 +6,6 @@ License:
 Authors:
   Tomek Kuprowski (tomekkuprowski at gmail dot com)
  ************************************************************************ */
-/*
- #asset(helenos/clipboard.png)
- */
 qx.Mixin.define("helenos.ui.table.MZeroClipboardCtxHandler",
 {
     members : {

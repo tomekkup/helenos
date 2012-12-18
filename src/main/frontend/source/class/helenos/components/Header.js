@@ -37,17 +37,43 @@ qx.Class.define("helenos.components.Header",
             boxLayout.setAlignX('right');
             var box = new qx.ui.container.Composite(boxLayout);
             
-            var editClusterConfigButton = new qx.ui.form.Button(null, 'icon/16/devices/network-wired.png');
-            editClusterConfigButton.setPadding(1);
-            editClusterConfigButton.setToolTipText('Manage connections');
-            editClusterConfigButton.addListener('execute', this.__onSomething);
+            box.add(new helenos.ui.BoldLabel('User: ' + helenos.util.CredentialsProvider.getLoggedUser()));
+            box.add(new qx.ui.core.Spacer(10));
             
+            var editClusterConfigButton = new helenos.ui.HeaderButton('helenos/connections.png', 'Manage connections');
+            editClusterConfigButton.addListener('execute', this.__onEditCC);
+            
+            var editAccountsButton = new helenos.ui.HeaderButton('helenos/users.png', 'Manage accounts');
+            editAccountsButton.addListener('execute', this.__onEditAccounts);
+            
+            var logoutButton = new helenos.ui.HeaderButton('helenos/logout.png', 'Logout');
+            logoutButton.addListener('execute', this.__onLogout);
+            
+            box.add(editAccountsButton);
             box.add(editClusterConfigButton);
+            box.add(logoutButton);
             return box;
         },
         
-        __onSomething : function(e) {
+        __onLogout : function(e) {
+            var req = new qx.io.remote.Request(helenos.util.UriHelper.getRemoteUri('/j_spring_security_logout'), 'GET', 'application/json');
+            req.set({
+                parseJson : true, 
+                prohibitCaching : true
+            });
+            req.addListener("completed", function(e) {
+                helenos.util.GuiObserver.shutdownApp();
+            }, this);
+            
+            req.send();
+        },
+        
+        __onEditCC : function(e) {
             helenos.util.GuiObserver.showConnectionEditTab();
+        },
+        
+        __onEditAccounts : function(e) {
+            helenos.util.GuiObserver.showAccountsEditTab();
         }
     }
 });

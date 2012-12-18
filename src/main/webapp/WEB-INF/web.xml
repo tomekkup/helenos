@@ -25,7 +25,7 @@
     </context-param>
     <context-param>
         <param-name>db.url</param-name>
-        <param-value>jdbc:h2:~/helenos;INIT=CREATE SCHEMA IF NOT EXISTS helenos AUTHORIZATION helenos\;CREATE TABLE IF NOT EXISTS CLUSTERCONFIG(ALIAS VARCHAR(128) PRIMARY KEY,HOSTS VARCHAR(255), CLUSTERNAME VARCHAR(255), ACTIVE BOOLEAN);DB_CLOSE_ON_EXIT=FALSE\;</param-value>
+        <param-value>jdbc:h2:~/helenos;INIT=RUNSCRIPT FROM 'classpath:dbinit.sql';DB_CLOSE_ON_EXIT=FALSE\;</param-value>
     </context-param>
     <context-param>
         <param-name>db.user</param-name>
@@ -56,13 +56,25 @@
     <!--
     <servlet>
         <servlet-name>default</servlet-name>
-		<servlet-class>com.caucho.servlets.FileServlet</servlet-class>
+                              		<servlet-class>com.caucho.servlets.FileServlet</servlet-class>
         <init-param>
             <param-name>characterEncoding</param-name>
             <param-value>UTF-8</param-value>
         </init-param>
     </servlet>
     -->
+    
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>*.json</url-pattern>
+        <url-pattern>/j_spring_security_check</url-pattern>
+        <url-pattern>/j_spring_security_logout</url-pattern>
+    </filter-mapping>
     
     <servlet>
         <servlet-name>helenos</servlet-name>

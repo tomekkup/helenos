@@ -6,7 +6,6 @@ License:
 Authors:
   Tomek Kuprowski (tomekkuprowski at gmail dot com)
  ************************************************************************ */
-
 qx.Class.define("helenos.components.TopComposite",
 {
     extend : qx.ui.container.Composite,

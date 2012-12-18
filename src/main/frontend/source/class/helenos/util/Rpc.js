@@ -17,24 +17,11 @@ qx.Class.define('helenos.util.Rpc',
     construct : function(serviceName)
     {
         this.base(arguments);
-        this.setUrl(this.__getRemoteUri(serviceName));
         this.setTimeout(30000);
-    },
-    
-    statics : {
-        serverPath : null
+        this.setUrl(helenos.util.UriHelper.getRemoteUri(serviceName));
     },
         
     members : {
-        
-        __getRemoteUri : function(serviceName) {
-            if (this.self(arguments).serverPath == undefined)  {
-                var pathIdx = window.location.href.indexOf('/gui/index.html');
-                this.self(arguments).serverPath = window.location.href.substr(0, pathIdx);
-            }
-            
-            return this.self(arguments).serverPath + serviceName;
-        },
         
         /** 
         * @lint ignoreUndefined(dialog)

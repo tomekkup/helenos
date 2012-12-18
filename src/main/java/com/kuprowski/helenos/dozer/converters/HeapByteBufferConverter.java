@@ -1,20 +1,22 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.kuprowski.helenos.dozer.converters;
 
 import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import org.dozer.CustomConverter;
 import org.dozer.MappingException;
 
 /**
+ * ********************************************************
+ * Copyright: 2012 Tomek Kuprowski
  *
- * @author tomek
+ * License: GPLv2: http://www.gnu.org/licences/gpl.html
+ *
+ * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
+ * *******************************************************
  */
 public class HeapByteBufferConverter implements CustomConverter {
+    
+    private static final Charset charset = Charset.forName("UTF-8");
 
     @Override
     public Object convert(Object existingDestinationFieldValue, Object sourceFieldValue, Class<?> destinationClass, Class<?> sourceClass) {
@@ -26,6 +28,6 @@ public class HeapByteBufferConverter implements CustomConverter {
                     + existingDestinationFieldValue + " and " + sourceFieldValue);
         }
 
-        return Charset.forName("UTF-8").decode((ByteBuffer) sourceFieldValue).toString();
+        return charset.decode((ByteBuffer) sourceFieldValue).toString();
     }
 }

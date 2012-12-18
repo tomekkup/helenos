@@ -26,7 +26,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         __keyFromTF : null,
         __keyToTF : null,
         __keyMode : 'predicate',
-        __keysLimit : null,
+        __keysLimitTF : null,
         
         __nameStartTF : null,
         __nameEndTF : null,
@@ -36,7 +36,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         __rangeColNamesCP : null,
         __rangeFromToCP : null,
         __reversedCB : null,
-        __colsLimit : null,
+        __colsLimitTF : null,
         
         _tree : null,
         
@@ -132,7 +132,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             this.__columnsByRBG.add(byNameBT);
             this.__columnsByRBG.add(byRangeBT);
             this.__columnsByRBG.setSelection([byRangeBT]);
-            this.__columnsByRBG.addListener("changeSelection", this._onRangeModeChanged, this);
+            this.__columnsByRBG.addListener("changeSelection", this._onRangeModeToggled, this);
             return this.__columnsByRBG;
         },
         
@@ -144,17 +144,21 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             this.__keyModeRBG.add(predicateBT);
             this.__keyModeRBG.add(keyRangeBT);
             this.__keyModeRBG.setSelection([predicateBT]);
-            this.__keyModeRBG.addListener("changeSelection", this._onKeyModeChanged, this);
+            this.__keyModeRBG.addListener("changeSelection", this._onKeyModeToggled, this);
             return this.__keyModeRBG;
         },
         
         __getRangeFromToBox : function() {
             this.__rangeFromToCP = new qx.ui.container.Composite(new qx.ui.layout.VBox(5)).set({padding : 0});
             
+            this.__colsLimitTF = new qx.ui.form.TextField().set({filter : /[0-9]/, value : '10'});
+            
             this.__rangeFromToCP.add(new qx.ui.basic.Label('From:'));
             this.__rangeFromToCP.add(this.__nameStartTF);
             this.__rangeFromToCP.add(new qx.ui.basic.Label('To:'));
             this.__rangeFromToCP.add(this.__nameEndTF);
+            this.__rangeFromToCP.add(new qx.ui.basic.Label('Limit:'));
+            this.__rangeFromToCP.add(this.__colsLimitTF);
             
             this.__reversedCB = new qx.ui.form.CheckBox('Reversed');
             this.__rangeFromToCP.add(this.__reversedCB);
@@ -165,14 +169,14 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         __getRangeColNamesBox : function() {
             this.__rangeColNamesCP = new qx.ui.container.Composite(new qx.ui.layout.VBox(5)).set({padding : 0, visibility : 'excluded'});
 
-            this.__columnNamesTF = new qx.ui.form.TextArea().set({placeholder : 'comma separated list'});
+            this.__columnNamesTF = new qx.ui.form.TextArea().set({placeholder : 'comma separated columns list'});
             this.__rangeColNamesCP.add(new qx.ui.basic.Label('Column names:'));
             this.__rangeColNamesCP.add(this.__columnNamesTF);
             
             return this.__rangeColNamesCP;
         },
         
-        _onRangeModeChanged : function(e) {
+        _onRangeModeToggled : function(e) {
             var selectedBtnLabel = e.getData()[0].getLabel();
             if (selectedBtnLabel == 'name') {
                 this.__rangeFromToCP.setVisibility('excluded');
@@ -183,7 +187,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             }
         },
         
-        _onKeyModeChanged : function(e) {
+        _onKeyModeToggled : function(e) {
             var selectedBtnLabel = e.getData()[0].getLabel();
             this.__keyToTF.resetValue();
             this.__keyToTF.setEnabled(selectedBtnLabel != 'predicate');

@@ -33,7 +33,9 @@
     "test",
     "test-source",
     "translation",
-    "build-withver"
+    "build-withver",
+    "lint-withver",
+    "clean-withver"
     ],
   
     "default-job" : "build-withver",

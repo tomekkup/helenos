@@ -7,7 +7,6 @@ Authors:
   Tomek Kuprowski (tomekkuprowski at gmail dot com)
  ************************************************************************ */
 /*
-#asset(helenos/keyspace.png)
 #asset(qx/icon/${qx.icontheme}/64/status/dialog-information.png)
 */
 qx.Class.define("helenos.components.tab.KeyspaceInfoPage",

@@ -2,7 +2,7 @@ package com.kuprowski.helenos.service.impl;
 
 import com.kuprowski.helenos.ClusterConfiguration;
 import com.kuprowski.helenos.context.PostConfiguringClusterListener;
-import com.kuprowski.helenos.jdbc.core.support.ClusterConfigDao;
+import com.kuprowski.helenos.dao.ClusterConfigDao;
 import com.kuprowski.helenos.service.ClusterConfigAware;
 import com.kuprowski.helenos.service.ClusterConnectionProvider;
 import java.util.HashMap;

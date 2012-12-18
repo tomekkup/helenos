@@ -1,0 +1,6 @@
+219,220c219,220
+<       'visibility' : "hidden",
+<       'decorator'  : "shadow-popup"
+---
+>       'visibility' : "hidden"//,
+>       //'decorator'  : "shadow-popup"

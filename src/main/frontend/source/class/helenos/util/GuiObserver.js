@@ -12,6 +12,21 @@ qx.Class.define("helenos.util.GuiObserver",
     {
         __tabbedPane : null,
         __schemaPane : null,
+        __root : null,
+        
+        shutdownApp : function() {
+            qx.core.Assert.assertNotNull(this.__root,'root not registered yet');
+            
+            var handler = this.__root.fadeOut(750);
+            handler.addListener('end', function(e) {
+                qx.core.ObjectRegistry.shutdown();
+                window.location.reload();
+            }, this);
+        },
+        
+        registerRoot : function(component) {
+            this.__root = component;
+        },
         
         registerTabbedPane : function(pane) {
             this.__tabbedPane = pane;
@@ -25,6 +40,13 @@ qx.Class.define("helenos.util.GuiObserver",
             qx.core.Assert.assertNotNull(this.__tabbedPane,'tabbed pane not registered yet');
             
             var page = new helenos.components.tab.ConnectionsEditorPage();
+            this._addPageToTab(page);
+        },
+        
+        showAccountsEditTab : function() {
+            qx.core.Assert.assertNotNull(this.__tabbedPane,'tabbed pane not registered yet');
+            
+            var page = new helenos.components.tab.AccountsEditorPage();
             this._addPageToTab(page);
         },
         
