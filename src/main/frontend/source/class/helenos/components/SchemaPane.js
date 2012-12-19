@@ -140,7 +140,7 @@ qx.Class.define("helenos.components.SchemaPane",
                     cfItem.set({
                         icon : cf.columnType == 'Super' ? 'helenos/supercf.png' : 'helenos/standardcf.png',
                         toolTip : this.__createColumnFamilyToolTip(cf),
-                        contextMenu: new helenos.components.menu.ColumnFamilyContextMenu(ks.name, cf.name)
+                        contextMenu: new helenos.components.menu.ColumnFamilyContextMenu(ks.name, cf.name, cf.columnType)
                     });
                     cfItem.setIcon(cf.columnType == 'Super' ? 'helenos/supercf.png' : 'helenos/standardcf.png');
                     cfItem.setToolTip(this.__createColumnFamilyToolTip(cf));

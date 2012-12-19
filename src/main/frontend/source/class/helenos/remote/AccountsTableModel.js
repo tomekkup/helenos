@@ -13,7 +13,7 @@ qx.Class.define('helenos.remote.AccountsTableModel',
     
     construct: function() {
         this.base(arguments);
-        this.setColumns(['Username','Authorities', 'Enabled'],['username','authorities', 'enabled']);
+        this.setColumns(['Username','Authorities', 'Password', 'Enabled'],['username','authorities', 'password', 'enabled']);
     },
 
     members:

@@ -1,0 +1,29 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+       http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+    
+    <bean id="entryPoint" class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint"/>
+    <bean id="passwordEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
+        <constructor-arg index="0" value="256" />
+    </bean>
+    <bean id="saltSource" class="org.springframework.security.authentication.dao.ReflectionSaltSource" p:userPropertyToUse="username"/>
+    
+    <security:http entry-point-ref="entryPoint" create-session="always">
+        <security:intercept-url pattern="/admin/*.json" access="ROLE_ADMIN" />
+        <security:intercept-url pattern="/**/*.json" access="ROLE_USER,ROLE_ADMIN" />
+        <security:form-login authentication-failure-handler-ref="jsonAuthenticationFailureHandler" authentication-success-handler-ref="jsonAuthenticationSuccessHandler" />
+        <security:logout success-handler-ref="jsonLogoutSuccessHandler"/>
+    </security:http>
+    
+    <security:authentication-manager>
+        <security:authentication-provider user-service-ref="accountDao">
+            <security:password-encoder ref="passwordEncoder">
+                <security:salt-source ref="saltSource"/>
+            </security:password-encoder>
+        </security:authentication-provider>
+    </security:authentication-manager>
+    
+</beans>

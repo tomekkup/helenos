@@ -51,7 +51,7 @@ qx.Class.define("helenos.Application",
             qx.Class.include(helenos.ui.table.Table, qx.ui.table.MTableContextMenu);
 
             // Enable logging in debug variant
-            if (qx.core.Environment.get("qx.debug"))
+            //if (qx.core.Environment.get("qx.debug"))
             {
                 // support native logging capabilities, e.g. Firebug for Firefox
                 qx.log.appender.Native;

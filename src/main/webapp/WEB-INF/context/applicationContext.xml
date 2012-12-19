@@ -6,7 +6,7 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd">
 
     <context:annotation-config />
-    <context:component-scan base-package="com.kuprowski.helenos" />
+    <context:component-scan base-package="tomekkup.helenos" />
     
     <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
         <property name="environment">
@@ -14,7 +14,7 @@
         </property>
     </bean>
         
-    <bean class="com.kuprowski.helenos.context.PostConfiguringClusterListener" />
+    <bean class="tomekkup.helenos.context.PostConfiguringClusterListener" />
     
     <bean id="mapper" class="org.dozer.DozerBeanMapper" scope="singleton">
         <property name="mappingFiles">

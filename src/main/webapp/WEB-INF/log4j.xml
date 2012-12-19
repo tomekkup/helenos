@@ -8,16 +8,28 @@
         </layout> 
     </appender> 
 
-    <appender name="rollingFile" class="org.apache.log4j.DailyRollingFileAppender">
+    <appender name="defaultAppender" class="org.apache.log4j.DailyRollingFileAppender">
         <param name="file" value="${helenos.root}/WEB-INF/logs/helenos.log" />
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%p %d %t %c %L - %m%n" />
+            <param name="ConversionPattern" value="%p %d{HH:mm:ss,SSS} %L - %m: %n" />
         </layout>
     </appender>
+    
+    <appender name="securityAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="file" value="${helenos.root}/WEB-INF/logs/security.log" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%p %d{HH:mm:ss,SSS} - %F: %n" />
+        </layout>
+    </appender>
+    
+    <logger name="tomekkup.helenos.security.web.authentication">
+        <priority value="DEBUG" />
+        <appender-ref ref="securityAppender" />
+    </logger>
     
     <root>
         <priority value="WARN" />
         <appender-ref ref="console" />
-        <appender-ref ref="rollingFile" />
+        <appender-ref ref="defaultAppender" />
     </root>
 </log4j:configuration>

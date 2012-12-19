@@ -10,13 +10,15 @@ Helenos is a web based GUI Cassandra client that helps you to explore data and m
 
 ## Download
 
-[here](https://github.com/tomekkup/helenos/downloads)
+[sourceforge](https://sourceforge.net/projects/helenos-gui/files/)
 
 ## Changelog
 
 [here](https://github.com/tomekkup/helenos/wiki/Changelog)
 
 ## Gallery
+
+
 
 [Picasa album](https://picasaweb.google.com/tomekkuprowski/Helenos)
 

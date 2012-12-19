@@ -8,31 +8,31 @@
 
     <bean name="/Schema.json" class="com.googlecode.jsonrpc4j.spring.JsonServiceExporter">
         <property name="service" ref="schemaProvider"/>
-        <property name="serviceInterface" value="com.kuprowski.helenos.service.SchemaProvider"/>
+        <property name="serviceInterface" value="tomekkup.helenos.service.SchemaProvider"/>
     </bean>
     
     <bean name="/Credentials.json" class="com.googlecode.jsonrpc4j.spring.JsonServiceExporter">
         <property name="service" ref="credentialsProvider"/>
-        <property name="serviceInterface" value="com.kuprowski.helenos.service.CredentialsProvider"/>
+        <property name="serviceInterface" value="tomekkup.helenos.service.CredentialsProvider"/>
     </bean>
     
     <bean name="/query/Standard.json" class="com.googlecode.jsonrpc4j.spring.JsonServiceExporter">
         <property name="service" ref="standardQueryProvider"/>
-        <property name="serviceInterface" value="com.kuprowski.helenos.service.StandardQueryProvider"/>
+        <property name="serviceInterface" value="tomekkup.helenos.service.StandardQueryProvider"/>
     </bean>
     
     <bean name="/query/Super.json" class="com.googlecode.jsonrpc4j.spring.JsonServiceExporter">
         <property name="service" ref="superQueryProvider"/>
-        <property name="serviceInterface" value="com.kuprowski.helenos.service.SuperQueryProvider"/>
+        <property name="serviceInterface" value="tomekkup.helenos.service.SuperQueryProvider"/>
     </bean>
     
     <bean name="/admin/Account.json" class="com.googlecode.jsonrpc4j.spring.JsonServiceExporter">
         <property name="service" ref="accountsProvider"/>
-        <property name="serviceInterface" value="com.kuprowski.helenos.service.AccountsProvider"/>
+        <property name="serviceInterface" value="tomekkup.helenos.service.AccountsProvider"/>
     </bean>
     
     <bean name="/ClusterConnectionProvider.json" class="com.googlecode.jsonrpc4j.spring.JsonServiceExporter">
         <property name="service" ref="clusterConnectionProvider"/>
-        <property name="serviceInterface" value="com.kuprowski.helenos.service.ClusterConnectionProvider"/>
+        <property name="serviceInterface" value="tomekkup.helenos.service.ClusterConnectionProvider"/>
     </bean>
 </beans>

@@ -17,15 +17,15 @@ qx.Class.define('helenos.components.menu.ColumnFamilyContextMenu',
 {
     extend : qx.ui.menu.Menu,
  
-    construct : function(ksName, cfName)
+    construct : function(ksName, cfName, columnType)
     {
         this.base(arguments);
-        this.__initMenuItems(ksName, cfName);
+        this.__initMenuItems(ksName, cfName, columnType);
     },
     
     members : {
         
-        __initMenuItems : function(ksName, cfName) {
+        __initMenuItems : function(ksName, cfName, columnType) {
             var propsButton = new qx.ui.menu.Button('Properties', 'icon/16/status/dialog-information.png');
             propsButton.setUserData('KSNAME', ksName);
             propsButton.setUserData('CFNAME', cfName);
@@ -35,6 +35,15 @@ qx.Class.define('helenos.components.menu.ColumnFamilyContextMenu',
             browseButton.setUserData('KSNAME', ksName);
             browseButton.setUserData('CFNAME', cfName);
             browseButton.addListener('execute', this.__showBrowseByPredicatePane);
+            
+            var cqlButton = new qx.ui.menu.Button('CQL query', 'helenos/query-16.png');
+            cqlButton.setUserData('KSNAME', ksName);
+            cqlButton.setUserData('CFNAME', cfName);
+            cqlButton.addListener('execute', this.__showBrowseByCqlQueryPane);
+            
+            if (columnType != 'Standard') {
+                cqlButton.setEnabled(false);
+            }
             
             var dropButton = new qx.ui.menu.Button('Drop', 'icon/16/actions/edit-delete.png');
             dropButton.setUserData('KSNAME', ksName);
@@ -48,6 +57,7 @@ qx.Class.define('helenos.components.menu.ColumnFamilyContextMenu',
             
             this.add(propsButton);
             this.add(browseButton);
+            this.add(cqlButton);
             this.add(new qx.ui.menu.Separator());
             this.add(dropButton);
             this.add(truncateButton);
@@ -77,6 +87,12 @@ qx.Class.define('helenos.components.menu.ColumnFamilyContextMenu',
             var ksName = e.getTarget().getUserData('KSNAME');
             var cfName = e.getTarget().getUserData('CFNAME');
             helenos.util.GuiObserver.showBrowseByPredicateTab(ksName, cfName);
+        },
+        
+        __showBrowseByCqlQueryPane : function(e) {
+            var ksName = e.getTarget().getUserData('KSNAME');
+            var cfName = e.getTarget().getUserData('CFNAME');
+            helenos.util.GuiObserver.showBrowseByCqlQueryTab(ksName, cfName);
         },
         
         /** 

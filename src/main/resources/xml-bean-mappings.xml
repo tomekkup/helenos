@@ -6,7 +6,7 @@
     <configuration>
         <wildcard>false</wildcard>
         <custom-converters>
-            <converter type="com.kuprowski.helenos.dozer.converters.HeapByteBufferConverter" >
+            <converter type="tomekkup.helenos.dozer.converters.HeapByteBufferConverter" >
                 <class-a>java.nio.HeapByteBuffer</class-a>
                 <class-b>java.lang.String</class-b>
             </converter>
@@ -15,7 +15,7 @@
 
     <mapping type="one-way">
         <class-a>me.prettyprint.cassandra.service.ThriftKsDef</class-a>
-        <class-b>com.kuprowski.helenos.types.JsonKeyspaceDefinition</class-b>
+        <class-b>tomekkup.helenos.types.JsonKeyspaceDefinition</class-b>
         <field>
             <a>name</a>
             <b>name</b>
@@ -40,7 +40,7 @@
         
     <mapping type="one-way">
         <class-a>me.prettyprint.cassandra.service.ThriftCfDef</class-a>
-        <class-b>com.kuprowski.helenos.types.JsonColumnFamilyDefinition</class-b>
+        <class-b>tomekkup.helenos.types.JsonColumnFamilyDefinition</class-b>
         <field>
             <a>name</a>
             <b>name</b>
@@ -161,7 +161,7 @@
     
     <mapping type="one-way">
         <class-a>me.prettyprint.hector.api.ddl.ComparatorType</class-a>
-        <class-b>com.kuprowski.helenos.types.JsonComparatorType</class-b>
+        <class-b>tomekkup.helenos.types.JsonComparatorType</class-b>
         <field>
             <a>className</a>
             <b>className</b>
@@ -174,7 +174,7 @@
     
     <mapping type="one-way">
         <class-a>me.prettyprint.hector.api.ddl.ColumnDefinition</class-a>
-        <class-b>com.kuprowski.helenos.types.JsonColumnDefinition</class-b>
+        <class-b>tomekkup.helenos.types.JsonColumnDefinition</class-b>
         <field>
             <a>name</a>
             <b>name</b>
@@ -195,7 +195,7 @@
     
     <mapping type="one-way">
         <class-a>me.prettyprint.hector.api.beans.HColumn</class-a>
-        <class-b>com.kuprowski.helenos.types.Column</class-b>
+        <class-b>tomekkup.helenos.types.Column</class-b>
         <field>
             <a>name</a>
             <b>name</b>
