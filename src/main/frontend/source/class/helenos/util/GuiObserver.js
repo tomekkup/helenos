@@ -12,20 +12,13 @@ qx.Class.define("helenos.util.GuiObserver",
     {
         __tabbedPane : null,
         __schemaPane : null,
-        __root : null,
         
         shutdownApp : function() {
-            qx.core.Assert.assertNotNull(this.__root,'root not registered yet');
-            
-            var handler = this.__root.fadeOut(750);
+            var handler = qx.core.Init.getApplication().getRoot().fadeOut(750);
             handler.addListener('end', function(e) {
                 qx.core.ObjectRegistry.shutdown();
                 window.location.reload();
             }, this);
-        },
-        
-        registerRoot : function(component) {
-            this.__root = component;
         },
         
         registerTabbedPane : function(pane) {
@@ -68,6 +61,13 @@ qx.Class.define("helenos.util.GuiObserver",
             
             var cfPage = new helenos.components.tab.ColumnFamilyInfoPage(keyspaceName, columnFamilyName);
             this._addPageToTab(cfPage);
+        },
+        
+        showBrowseByCqlQueryTab : function(keyspaceName, columnFamilyName) {
+            qx.core.Assert.assertNotNull(this.__tabbedPane,'tabbed pane not registered yet');
+            var cqlPage = new helenos.components.tab.browse.CqlPage(keyspaceName, columnFamilyName);
+            
+            this._addPageToTab(cqlPage);
         },
         
         refreshSchemaTree : function() {

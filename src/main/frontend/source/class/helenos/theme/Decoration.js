@@ -16,8 +16,7 @@ qx.Theme.define('helenos.theme.Decoration',
         {
             decorator : qx.ui.decoration.Background,
             style : {
-                backgroundImage : 'helenos/background.jpg',
-                backgroundRepeat : 'repeat-x'
+                backgroundColor : "#1e1b1b"
             }
         } 
     }

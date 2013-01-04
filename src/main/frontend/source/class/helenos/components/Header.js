@@ -6,9 +6,6 @@ License:
 Authors:
   Tomek Kuprowski (tomekkuprowski at gmail dot com)
  ************************************************************************ */
-/*
-#asset(qx/icon/${qx.icontheme}/16/devices/network-wired.png)
-*/
 qx.Class.define("helenos.components.Header",
 {
     extend : qx.ui.container.Composite,

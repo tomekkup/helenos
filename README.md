@@ -18,9 +18,9 @@ Helenos is a web based GUI Cassandra client that helps you to explore data and m
 
 ## Gallery
 
-
-
 [Picasa album](https://picasaweb.google.com/tomekkuprowski/Helenos)
+
+Click here for [preview on Youtube](http://www.youtube.com)
 
 ## Twitter
 

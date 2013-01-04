@@ -12,6 +12,18 @@
             "environment" : {
                 "qx.app.version" : "${HELENOS_VERSION}"
             }
+        },
+        "lint-withver" : {
+            "extend" : ["lint"],
+            "environment" : {
+                "qx.app.version" : "${HELENOS_VERSION}"
+            }
+        },
+        "clean-withver" : {
+            "extend" : ["clean"],
+            "environment" : {
+                "qx.app.version" : "${HELENOS_VERSION}"
+            }
         }
     }
 }

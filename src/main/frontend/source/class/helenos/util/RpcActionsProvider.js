@@ -38,6 +38,21 @@ qx.Class.define('helenos.util.RpcActionsProvider', {
             return rpc.callSync('getConnectionByAlias', alias);
         },
         
+        saveNewPasword : function(passwordBean) {
+            var rpc = new helenos.util.Rpc(this._ACCOUNT);
+            return rpc.callSync('saveNewPassword', passwordBean);
+        },
+        
+        createAccount : function(account) {
+            var rpc = new helenos.util.Rpc(this._ACCOUNT);
+            return rpc.callSync('createAccount', account);
+        },
+        
+        loadUserByUsername : function(username) {
+            var rpc = new helenos.util.Rpc(this._ACCOUNT);
+            return rpc.callSync('loadUserByUsername', username);
+        },
+        
         deleteConnection : function(alias) {
             var rpc = new helenos.util.Rpc(this._CLUSTERCONNECTION);
             return rpc.callSync('delete', alias);
@@ -133,6 +148,18 @@ qx.Class.define('helenos.util.RpcActionsProvider', {
         createKeyspace : function(formData) {
             var rpc = new helenos.util.Rpc(this._SCHEMA);
             return rpc.callSync('createKeyspace', formData);
+        },
+        
+        queryCql : function(cfDef, queryStr) {
+            var query = {};
+            query.keyClass = this.__findParamClass(cfDef.keyValidationClass);
+            query.nameClass = this.__findParamClass(cfDef.comparatorType.className);
+            query.keyspace = cfDef.keyspaceName;
+            query.columnFamily = cfDef.name;
+            query.query = queryStr;
+            
+            var rpc = new helenos.util.Rpc(this._STANDARDQUERY);
+            return rpc.callSync('cql', query);
         },
         
         queryPredicate : function(cfDef, keyFrom, keyTo, columnNames, nameStart, nameEnd, sName, reversed ) {

@@ -8,10 +8,10 @@ Authors:
  ************************************************************************ */
 qx.Theme.define("helenos.theme.Color",
 {
-  extend : qx.theme.simple.Color,
+    extend : qx.theme.simple.Color,
 
-  colors :
-  {
-    "background" : "#f0f3f9"
-  }
+    colors :
+    {
+        "background" : "#f0f3f9"
+    }
 });

@@ -134,7 +134,7 @@ qx.Class.define('helenos.components.menu.KeyspaceContextMenu',
                     'value' : ''
                 }
             };
-            dialog.Dialog.form('<h4>Create new column family</h4>', formData, function(context, result) {
+            dialog.Dialog.form('<h4>Create new column family</h4>', formData, function(result) {
                 if (result != null) {
                     result['keyspaceName'] = ksName;
                     helenos.util.RpcActionsProvider.createColumnFamily(result);

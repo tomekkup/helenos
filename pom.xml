@@ -276,20 +276,6 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>${maven.plugin.exec.version}</version>
                 <executions>
-                    <!--
-                    <execution>
-                        <id>clean-frontend</id>
-                        <phase>clean</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>python</executable>
-                            <workingDirectory>src/main/frontend</workingDirectory>
-                            <commandlineArgs>generate.py clean</commandlineArgs>
-                        </configuration>
-                    </execution>
-                    -->
                     <execution>
                         <id>build-frontend</id>
                         <phase>prepare-package</phase>

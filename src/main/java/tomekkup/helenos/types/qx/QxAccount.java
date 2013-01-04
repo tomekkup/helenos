@@ -1,4 +1,4 @@
-package tomekkup.helenos.dao.model;
+package tomekkup.helenos.types.qx;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,23 +16,23 @@ import org.springframework.util.StringUtils;
  *
  * @author tomek
  */
-public class Account implements UserDetails {
+public class QxAccount implements UserDetails {
     
     private Collection<SimpleGrantedAuthority> authorities = new HashSet<SimpleGrantedAuthority>();
     private String username;
     private String password;
     private boolean enabled;
     
-    public Account() {
+    public QxAccount() {
         super();
     }
     
-    public Account(String username) {
+    public QxAccount(String username) {
         this();
         setUsername(username);
     }
     
-    public Account(String username, String password, SimpleGrantedAuthority authority, boolean enabled) {
+    public QxAccount(String username, String password, SimpleGrantedAuthority authority, boolean enabled) {
         this(username);
         setPassword(password);
         addAuthority(authority);

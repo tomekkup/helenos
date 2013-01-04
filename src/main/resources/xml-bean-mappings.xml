@@ -10,6 +10,10 @@
                 <class-a>java.nio.HeapByteBuffer</class-a>
                 <class-b>java.lang.String</class-b>
             </converter>
+            <converter type="tomekkup.helenos.dozer.converters.SimpleGrantedAuthorityConverter" >
+                <class-a>java.lang.String</class-a>
+                <class-b>org.springframework.security.core.authority.SimpleGrantedAuthority</class-b>
+            </converter>
         </custom-converters>
     </configuration>
 

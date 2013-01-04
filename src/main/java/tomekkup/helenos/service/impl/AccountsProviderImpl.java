@@ -1,11 +1,14 @@
 package tomekkup.helenos.service.impl;
 
 import tomekkup.helenos.dao.AccountDao;
-import tomekkup.helenos.dao.model.Account;
+import tomekkup.helenos.types.qx.QxAccount;
 import tomekkup.helenos.service.AccountsProvider;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
+import tomekkup.helenos.types.qx.QxPasswordChangeRequest;
 
 /**
  * ********************************************************
@@ -31,7 +34,7 @@ public class AccountsProviderImpl implements AccountsProvider {
     }
 
     @Override
-    public List<Account> loadAll() {
+    public List<QxAccount> loadAll() {
         return accountDao.loadAll();
     }
 
@@ -46,12 +49,28 @@ public class AccountsProviderImpl implements AccountsProvider {
     }
     
     @Override
-    public void store(Account account) {
+    public void store(QxAccount account) {
         accountDao.store(account);
     }
     
     @Override
-    public Account loadUserByUsername(String username) {
-        return (Account) accountDao.loadUserByUsername(username);
+    public void saveNewPassword(QxPasswordChangeRequest pcr) throws IllegalStateException {
+        accountDao.saveNewPassword(pcr);
+    }
+    
+    @Override
+    public void createAccount(QxAccount account) throws IllegalStateException {
+        try {
+            loadUserByUsername(account.getUsername());
+        } catch(UsernameNotFoundException e) {
+            accountDao.createAccount(account);
+            return;
+        }
+        throw new IllegalStateException("account with this name already exists");
+    }
+    
+    @Override
+    public QxAccount loadUserByUsername(String username) {
+        return (QxAccount) accountDao.loadUserByUsername(username);
     }
 }

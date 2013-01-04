@@ -11,16 +11,22 @@ qx.Class.define("helenos.ui.treevirtual.ResultsTree",
     extend : qx.ui.treevirtual.TreeVirtual,
     include : [helenos.ui.table.MZeroClipboardCtxHandler],
     
-    construct : function(data)
+    construct : function()
     {
         this.base(arguments, ["Name", "Value", "Clock", "TTL"]);
-        this.set({alwaysShowOpenCloseSymbol : true, useTreeLines : true, statusBarVisible : false});
+        this.set({
+            alwaysShowOpenCloseSymbol : true, 
+            useTreeLines : true,
+            statusBarVisible : false
+        });
         
         var resizeBehavior = this.getTableColumnModel().getBehavior();
-        resizeBehavior.set(1, { width:"1*", minWidth:200  });
+        resizeBehavior.set(1, {
+            width:"1*", 
+            minWidth:200
+        });
+        resizeBehavior.setWidth(2, 140);
         resizeBehavior.setWidth(3, 60);
-        
-        this.setData(data);
         
         this.setContextMenuHandler(0, this.contextMenuHandler);
         this.setContextMenuHandler(1, this.contextMenuHandler);
@@ -35,7 +41,7 @@ qx.Class.define("helenos.ui.treevirtual.ResultsTree",
                 return
             }
             var dataModel = this.getDataModel();
-            
+            dataModel.clearData();
             var i;
             for(i = 0; i < data.length; i++) {
                 var row = data[i];
@@ -43,10 +49,12 @@ qx.Class.define("helenos.ui.treevirtual.ResultsTree",
                 var j;
                 for (j = 0; j < row.columns.length; j++) {
                     var col = row.columns[j];
-                    var leaf = dataModel.addLeaf(branch, col.name, 'helenos/isctf.png');
-                    dataModel.setColumnData(leaf, 1, col.value);
-                    dataModel.setColumnData(leaf, 2, col.clock);
-                    dataModel.setColumnData(leaf, 3, col.ttl);
+                    if (col.name != 'KEY') {
+                        var leaf = dataModel.addLeaf(branch, col.name, 'helenos/isctf.png');
+                        dataModel.setColumnData(leaf, 1, col.value);
+                        dataModel.setColumnData(leaf, 2, col.clock);
+                        dataModel.setColumnData(leaf, 3, col.ttl);
+                    }
                 }
             }
             dataModel.setData();

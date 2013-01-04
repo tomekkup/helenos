@@ -6,13 +6,17 @@ License:
 Authors:
   Tomek Kuprowski (tomekkuprowski at gmail dot com)
  ************************************************************************ */
-qx.Class.define("helenos.components.tab.browse.PredicatePage",
+qx.Class.define("helenos.components.tab.browse.CqlPageOLD",
 {
-    extend : helenos.components.tab.browse.AbstractPage,
+    /*
+    extend : helenos.components.tab.browse.AbstractBrowsePage,
  
-    construct : function(ksName, cfName)
+    construct : function(ksName)
     {
-        this.base(arguments, ksName, cfName);
+        this.base(arguments, ksName, null);
+        this.set({
+            icon : 'helenos/query-16.png'
+        });
     },
 
     members :
@@ -37,15 +41,6 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         
         _tree : null,
         
-        _getSplitPaneOrientation : function() {
-            return 'horizontal';
-        },
-        
-        _getIconPath : function() {
-            return 'icon/16/apps/office-spreadsheet.png';
-        },
-        
-        
         _performSearch  : function(e) {
             var keyFrom = this.__keyFromTF.getValue();
             var keyTo = this.__keyToTF.getValue();
@@ -59,34 +54,34 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             } else {
                 columnNames = this.__columnNamesTF.getValue().split(',');
             }
-
+            var result;
             if (this.__keyMode == 'predicate') {
-                return helenos.util.RpcActionsProvider.queryPredicate(this._cfDef, keyFrom, keyTo, columnNames, nameStart, nameEnd, sName, reversed);
+                result = helenos.util.RpcActionsProvider.queryPredicate(this._cfDef, keyFrom, keyTo, columnNames, nameStart, nameEnd, sName, reversed);
             } else  {
-                return helenos.util.RpcActionsProvider.queryKeyRange(this._cfDef, keyFrom, keyTo, columnNames, nameStart, nameEnd, sName, reversed);
+                result = helenos.util.RpcActionsProvider.queryKeyRange(this._cfDef, keyFrom, keyTo, columnNames, nameStart, nameEnd, sName, reversed);
             }
+            this._resultView.removeAll();
+            this._resultView.add(this._getResultComponent(result), {flex: 1});
         },
         
-        _getCriteriaPane : function() {
-            var widgets = new Array();
-            widgets.push(this.__getKeysGB());
-            widgets.push(this.__getColumnsGB());
+        _getResultComponent : function(result) {
+            this._tree = new helenos.ui.treevirtual.ResultsTree(result);
             
-            var container = new qx.ui.container.Composite(new qx.ui.layout.VBox(7).set({alignX : 'left'}));
-            container.setAppearance('criteria-pane');
+            var tablePane = new qx.ui.core.scroll.ScrollPane().set({allowGrowX : true, allowGrowY : true});
             
-            for (var i = 0; i < widgets.length; i++) {
-                container.add(widgets[i]);
-            }
-            container.add(this._getSearchButton());
-            
-            var pane = new qx.ui.container.Scroll();
-            pane.setWidth(180);
-            pane.add(container);
-            return pane;
+            tablePane.add(this._tree);
+            return tablePane;
         },
-
-
+        
+        _getCriteriaComponents : function() {
+            var ret = new Array();
+            
+            ret.push(this.__getKeysGB());
+            ret.push(this.__getColumnsGB());
+            
+            return ret;
+        },
+        
         __getColumnsGB : function() {
             var columnsGB = new helenos.ui.GroupBoxV('Columns');
             
@@ -199,5 +194,5 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             this.__keyToTF.setEnabled(selectedBtnLabel != 'predicate');
             this.__keyMode = selectedBtnLabel;
         }
-    }
+    }*/
 });

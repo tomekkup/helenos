@@ -10,8 +10,9 @@ Authors:
 #asset(qx/icon/${qx.icontheme}/16/actions/system-search.png)
 #asset(qx/icon/${qx.icontheme}/16/places/folder-open.png)
 */
-qx.Class.define("helenos.components.tab.browse.AbstractBrowsePage",
+qx.Class.define("helenos.components.tab.browse.AbstractPageOLD",
 {
+    /*
     extend : helenos.components.tab.AbstractCloseablePage,
     
     construct : function(ksName, cfName)
@@ -28,7 +29,6 @@ qx.Class.define("helenos.components.tab.browse.AbstractBrowsePage",
         });
         
         this._resultView = new qx.ui.container.Composite(new qx.ui.layout.VBox(8));
-        //this._rajCB = new qx.ui.form.CheckBox('Parse results to JSON');
         
         var pane = new qx.ui.splitpane.Pane("horizontal");
         pane.add(this._getCriteriaPane(),0);
@@ -44,7 +44,6 @@ qx.Class.define("helenos.components.tab.browse.AbstractBrowsePage",
         _resultView : null,
         _manager : null,
         
-        //_rajCB : null,
         
         _getCriteriaPane : function() {
             var components = this._getCriteriaComponents();
@@ -137,5 +136,5 @@ qx.Class.define("helenos.components.tab.browse.AbstractBrowsePage",
                node.add(new qx.ui.tree.TreeFile(data));
             }
         }
-    }
+    }*/
 });

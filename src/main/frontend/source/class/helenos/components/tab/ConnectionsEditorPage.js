@@ -119,15 +119,16 @@ qx.Class.define("helenos.components.tab.ConnectionsEditorPage",
                     }
                 }
             };
+            var _this = this;
             (new dialog.Form({
                 "message"    : '<h3>Create new connection</h3>',
                 "formData"    : formData,
                 "allowCancel" : true,
-                "callback"    : function(context, result) {
+                "callback"    : function(result) {
                     if (result != null) {
                         result['active'] = false;
                         helenos.util.RpcActionsProvider.storeConnection(result);
-                        context._reloadConnectionsTable();
+                        _this._reloadConnectionsTable();
                     }
                 },
                 "context"     : this
@@ -159,16 +160,17 @@ qx.Class.define("helenos.components.tab.ConnectionsEditorPage",
                     }
                 }
             };
+            var _this = this;
             (new dialog.Form({
                 "message"    : '<h3>Edit connection</h3>',
                 "formData"    : formData,
                 "allowCancel" : true,
-                "callback"    : function(context, result) {
+                "callback"    : function(result) {
                     if (result != null) {
                         result['alias'] = cc.alias;
                         result['active'] = cc.active;
                         helenos.util.RpcActionsProvider.storeConnection(result);
-                        context._reloadConnectionsTable();
+                        _this._reloadConnectionsTable();
                     }
                 },
                 "context"     : this

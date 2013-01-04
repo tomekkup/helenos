@@ -48,7 +48,7 @@ public class StandardQueryProviderImpl extends AbstractQueryProvider implements 
     }
     
     @Override
-    public <K, N> List<Slice<K,N>> cql(tomekkup.helenos.types.qx.query.CqlQuery<K, N> query) {
+    public <K, N> List<Slice<K,N>> cql(@JsonRpcParam("query") tomekkup.helenos.types.qx.query.CqlQuery<K, N> query) {
         CqlQuery<K,N,String> cqlQuery = new CqlQuery<K, N, String>(getKeyspace(query.getKeyspace()), getSerializer(query.getKeyClass()), getSerializer(query.getNameClass()), StringSerializer.get());
         cqlQuery.setQuery(query.getQuery());
         QueryResult<CqlRows<K, N, String>> qr = cqlQuery.execute();

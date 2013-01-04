@@ -23,19 +23,6 @@ qx.Class.define("helenos.Application",
     {
         _loginBox : null,
         
-        shake : {duration: 1000, keyFrames : {
-            0 : {translate: "0px"},
-            10 : {translate: "-10px"},
-            20 : {translate: "10px"},
-            30 : {translate: "-10px"},
-            40 : {translate: "10px"},
-            50 : {translate: "-10px"},
-            60 : {translate: "10px"},
-            70 : {translate: "-10px"},
-            80 : {translate: "10px"},
-            90 : {translate: "-10px"},
-            100 : {translate: "0px"}
-        }},
         /** 
         * @lint ignoreUndefined(silverbluetheme)
         */
@@ -58,15 +45,21 @@ qx.Class.define("helenos.Application",
                 // support additional cross-browser console. Press F7 to toggle visibility
                 qx.log.appender.Console;
             }
-            // register root
-            helenos.util.GuiObserver.registerRoot(this.getRoot());
             // ask for credentials
-            this.initLoginBox();
+            //this.initLoginBox();
+            this.initLoginBoxFAKE();
+        },
+        
+        initLoginBoxFAKE : function() {
+           this.checkCredentials('admin', '123', function(foo1, foo2){
+               qx.core.Init.getApplication().getRoot().add(new helenos.components.TopComposite(), {edge : 0});
+           }, this);
         },
         
         initLoginBox : function() {
             this._loginBox = new dialog.Login({
-                "text" : 'Please sign in',
+                "text" : 'Enter your credentials...',
+                "image" : "helenos/logobw.png",
                 checkCredentials : this.checkCredentials
             });
             

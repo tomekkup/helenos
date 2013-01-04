@@ -12,5 +12,11 @@ qx.Theme.define("helenos.theme.Font",
 
     fonts :
     {
-}
+        "cql" :
+        {
+            size : 14,
+            family : [ "Courier New" ],
+            bold : true
+        }
+    }
 });

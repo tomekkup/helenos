@@ -1,6 +1,6 @@
 package tomekkup.helenos.dao;
 
-import tomekkup.helenos.dao.model.Account;
+import tomekkup.helenos.types.qx.QxAccount;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
@@ -22,6 +22,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import tomekkup.helenos.types.qx.QxPasswordChangeRequest;
 
 /**
  * ********************************************************
@@ -63,19 +64,44 @@ public class AccountDao extends AbstractDao implements UserDetailsService, Initi
         try {
             loadUserByUsername("admin");
         } catch (UsernameNotFoundException e) {
-            String encodedPasswd = passwordEncoder.encodePassword("admin", saltSource.getSalt(new Account("admin")));
-            Account user = new Account("admin", encodedPasswd, new SimpleGrantedAuthority(ROLE_ADMIN), true);
+            String encodedPasswd = encodePasswd("admin", "admin");
+            QxAccount user = new QxAccount("admin", encodedPasswd, new SimpleGrantedAuthority(ROLE_ADMIN), true);
             user.addAuthority(new SimpleGrantedAuthority(ROLE_USER));
             
             store(user);
         }
     }
     
-    public void store(Account user) {
+    private String encodePasswd(String username, String passwd) {
+        return passwordEncoder.encodePassword(passwd, saltSource.getSalt(new QxAccount(username)));
+    }
+    
+    private void encodePasswd(QxAccount user) {
+        user.setPassword(passwordEncoder.encodePassword(user.getPassword(), saltSource.getSalt(new QxAccount(user.getUsername()))));
+    }
+    
+    public void createAccount(QxAccount user) {
+        encodePasswd(user);
+        store(user);
+    }
+    
+    public void store(QxAccount user) {
         jdbcTemplate.update(queriesProperties.getProperty("user.merge"), prepareParameterSource(user));
     }
     
-    public List<Account> loadAll() {
+    public void saveNewPassword(QxPasswordChangeRequest pcr) throws IllegalStateException {
+        if(!pcr.getPassword1().equals(pcr.getPassword2())) {
+            throw new IllegalStateException("both passwords must equal");
+        }
+        if(!StringUtils.hasText(pcr.getPassword2())) {
+            throw new IllegalStateException("password can not be empty");
+        }
+        QxAccount account = (QxAccount)loadUserByUsername(pcr.getUsername());
+        account.setPassword(encodePasswd(pcr.getUsername(), pcr.getPassword1()));
+        this.store(account);
+    }
+    
+    public List<QxAccount> loadAll() {
         return jdbcTemplate.query(queriesProperties.getProperty("user.select.star"), new MapSqlParameterSource(), new UserMapper());
     }
     
@@ -84,18 +110,21 @@ public class AccountDao extends AbstractDao implements UserDetailsService, Initi
     }
     
     public void delete(String username) {
+        if (username.toLowerCase().equals("admin")) {
+            throw new IllegalArgumentException("admin account can not be removed");
+        }
         jdbcTemplate.update(queriesProperties.getProperty("user.delete"), new MapSqlParameterSource("username", username));
     }
     
-    private SqlParameterSource prepareParameterSource(Account user) {
+    private SqlParameterSource prepareParameterSource(QxAccount user) {
         return new MapSqlParameterSource(user.toParametersMap());
     }
     
-    private static final class UserMapper implements RowMapper<Account> {
+    private static final class UserMapper implements RowMapper<QxAccount> {
         
         @Override
-        public Account mapRow(ResultSet rs, int rowNum) throws SQLException {
-            Account user = new Account();
+        public QxAccount mapRow(ResultSet rs, int rowNum) throws SQLException {
+            QxAccount user = new QxAccount();
             user.setUsername(rs.getString("USERNAME"));
             user.setPassword(rs.getString("PASSWORD"));
             user.setEnabled(rs.getBoolean("ENABLED"));

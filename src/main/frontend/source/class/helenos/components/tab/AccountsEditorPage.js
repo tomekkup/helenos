@@ -74,8 +74,8 @@ qx.Class.define("helenos.components.tab.AccountsEditorPage",
             this.__deleteButton.addListener('execute', this.__onDeleteAccount, this);
             this.__deleteButton.setEnabled(false);
             
-            this.__editButton = new qx.ui.form.Button('Edit', 'icon/16/actions/edit-cut.png');
-            this.__editButton.addListener('execute', this.__onEditAccount, this);
+            this.__editButton = new qx.ui.form.Button('Reset password', 'icon/16/actions/edit-cut.png');
+            this.__editButton.addListener('execute', this.__onEditPasswdAccount, this);
             this.__editButton.setEnabled(false);
             
             pane.add(this.__addButton);
@@ -88,110 +88,87 @@ qx.Class.define("helenos.components.tab.AccountsEditorPage",
         * @lint ignoreUndefined(dialog)
         */
         __onAddAccount : function(e) {
-            var formData = {
-                'username' : {
-                    'type'  : 'textfield',
-                    'label' : 'Username (unique)', 
-                    'value' : '',
-                    'validation' : {
-                        'required' : true
-                    }
-                },
-                'password1' : {
-                    'type'  : 'passwordfield',
-                    'label' : 'Password', 
-                    'value' : '',
-                    'validation' : {
-                        'required' : true
-                    }
-                },
-                'password2' : {
-                    'type'  : 'passwordfield',
-                    'label' : 'Repeat password', 
-                    'value' : '',
-                    'validation' : {
-                        'required' : true
-                    }
-                },
-                'authorities'   : 
+            var formData =  
+            {
+                'username' : 
                 {
-                    'type'  : "combobox", 
-                    'label' : "Authorities",
+                    'type'  : "TextField",
+                    'label' : "User Name", 
+                    'value' : "",
+                    "validation" : {
+                        "required" : true
+                    } 
+                },
+                'password' :
+                {
+                    'type'  : "passwordfield",
+                    'label' : "Password",
+                    'value' : "",
+                    'validation' : {
+                        "required" : true
+                    }
+                },
+                'authority'   : 
+                {
+                    'type'  : "SelectBox", 
+                    'label' : "Authority",
                     'value' : "ROLE_USER",
-                    'height' : 120,
                     'options' : [
                     {
-                        'label' : "ROLE_USER", 'value' : "ROLE_USER"
+                        'label' : "ROLE_USER", 
+                        'value' : "ROLE_USER"
                     }, 
-                    {
-                        'label' : "ROLE_ADMIN", 'value' : "ROLE_ADMIN"
+{
+                        'label' : "ROLE_ADMIN",    
+                        'value' : "ROLE_ADMIN"
                     }
                     ]
-                },
-                'enabled' :
-                {
-                    'type'  : 'checkbox',
-                    'label' : 'Enabled',
-                    'value' : true
                 }
             };
-            (new dialog.Form({
-                "message"    : '<h3>Create new account</h3>',
-                "formData"    : formData,
-                "allowCancel" : true,
-                "callback"    : function(context, result) {
-                    if (result != null) {
-                        helenos.util.RpcActionsProvider.storeAccount(result);
-                        context._reloadAccountsTable();
-                    }
-                },
-                "context"     : this
-            })).set({
-                width : 350
-            }).show();
+            
+            var _this = this;
+            dialog.Dialog.form("<h3>Add account</h3>",formData, function( result )
+            {
+                result['enabled'] = true;
+                result['authorities'] = [result['authority']];
+                result['authority'] = undefined;
+                helenos.util.RpcActionsProvider.createAccount(result);
+                _this._reloadAccountsTable();
+            }, _this);
         },
         
         /** 
         * @lint ignoreUndefined(dialog)
         */
-        __onEditAccount : function(e) {
-            var alias = this.__getSelectedAlias();
-            var cc = helenos.util.RpcActionsProvider.getAccountByAlias(alias);
-            var formData = {
-                'hosts' : {
-                    'type'  : 'TextField',
-                    'label' : 'Hosts (comma separated)', 
-                    'value' : cc.hosts,
-                    'validation' : {
-                        'required' : true
-                    }
-                },
-                'clusterName' :
+        __onEditPasswdAccount : function(e) {
+            var username = this.__getSelectedUsername();
+            var formData =  
+            {
+                'password1' : 
                 {
-                    'type'  : 'TextField',
-                    'label' : 'Cluster name',
-                    'value' : cc.clusterName,
+                    'type'  : "passwordfield",
+                    'label' : "Password", 
+                    'value' : "",
                     'validation' : {
-                        'required' : true
+                        "required" : true
+                    } 
+                },
+                'password2' :
+                {
+                    'type'  : "passwordfield",
+                    'label' : "Repeat password",
+                    'value' : "",
+                    'validation' : {
+                        "required" : true
                     }
                 }
             };
-            (new dialog.Form({
-                "message"    : '<h3>Edit account</h3>',
-                "formData"    : formData,
-                "allowCancel" : true,
-                "callback"    : function(context, result) {
-                    if (result != null) {
-                        result['alias'] = cc.alias;
-                        result['active'] = cc.active;
-                        helenos.util.RpcActionsProvider.storeAccount(result);
-                        context._reloadAccountsTable();
-                    }
-                },
-                "context"     : this
-            })).set({
-                width : 550
-            }).show();
+            dialog.Dialog.form("<h3>Reset password for: " + username + "</h3>",formData, function( result )
+            {
+                result['username'] = username;
+                helenos.util.RpcActionsProvider.saveNewPasword(result);
+            }, this);
+            
         },
         
         /** 
@@ -202,12 +179,14 @@ qx.Class.define("helenos.components.tab.AccountsEditorPage",
             var selectedRow = selectionModel.getSelectedRanges()[0].minIndex;
             
             var username = this.__accountsTable.getTableModel().getValue(0, selectedRow);
+            
+            var _this = this;
             dialog.Dialog.confirm(this.tr('are.you.sure'), function(ret) {
                 if (ret == true) {
                     helenos.util.RpcActionsProvider.deleteAccount(username);
                     this._reloadAccountsTable();
                 }
-            }, this);
+            }, _this);
             
         },
         
@@ -216,7 +195,7 @@ qx.Class.define("helenos.components.tab.AccountsEditorPage",
             this.__accountsTable.getTableModel().reloadData();
         },
         
-        __getSelectedAlias : function() {
+        __getSelectedUsername : function() {
             var selectedRow = this.__accountsTable.getSelectionModel().getSelectedRanges()[0].minIndex;
             return this.__accountsTable.getTableModel().getValue(0, selectedRow);
         },

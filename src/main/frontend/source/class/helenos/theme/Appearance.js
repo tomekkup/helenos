@@ -17,7 +17,7 @@ qx.Theme.define("helenos.theme.Appearance",
                 return {
                     font : "bold",
                     textColor : "#E8E8E8",
-                    padding : [ 8, 12 ],
+                    padding : [ 6 ],
                     decorator : "app-header-black"
                 };
             }
@@ -37,6 +37,15 @@ qx.Theme.define("helenos.theme.Appearance",
             style : function(states) {
                 return {
                     backgroundColor : '#E0ECFF'
+                }
+            }
+        },
+        
+        'cql-textarea' : {
+            style : function(states) {
+                return {
+                    textColor : '#265515',
+                    font : 'cql'
                 }
             }
         },

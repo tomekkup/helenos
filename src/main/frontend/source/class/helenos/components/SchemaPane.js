@@ -97,7 +97,7 @@ qx.Class.define("helenos.components.SchemaPane",
                 "message"    : '<h3>Create new keyspace</h3>',
                 "formData"    : formData,
                 "allowCancel" : true,
-                "callback"    : function(context, result) {
+                "callback"    : function(result) {
                     if (result != null) {
                         helenos.util.RpcActionsProvider.createKeyspace(result);
                         helenos.util.GuiObserver.refreshSchemaTree();
