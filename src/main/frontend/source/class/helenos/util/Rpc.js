@@ -27,16 +27,17 @@ qx.Class.define('helenos.util.Rpc',
         * @lint ignoreUndefined(dialog)
         */
         showDetails : function(details) {
-            dialog.Dialog.error('<b>RPC ERROR:</b><br/>' +
-                'Origin: ' + details.origin + '<br/>' +
-                'Code: ' + details.code + '<br/>' +
-                'Message:<br/><p><i>' + details.message + '</i></p>'
-                );
+            (new dialog.Alert({
+                "message" : '<h3><b>An error has occured !</b></h3>' +
+                '<p>' + details.message + '</p>',
+                'image' : 'icon/48/status/dialog-error.png'
+            })).set({width : 450}).show();
+            console.log(details);
         },
         
         callSync : function(methodName) {
             var ret = null;
-            
+            //qx.core.Init.getApplication().getRoot().setGlobalCursor('progress');
             if (this.getHandleExceptions()){
                 try {
                     ret = this._callInternal(arguments, 0);
@@ -46,7 +47,7 @@ qx.Class.define('helenos.util.Rpc',
             } else {
                 ret = this._callInternal(arguments, 0);
             }
-            
+            //qx.core.Init.getApplication().getRoot().resetGlobalCursor();
             return ret;
         }
     }

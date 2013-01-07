@@ -11,7 +11,7 @@ import java.util.List;
  * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
  * *******************************************************
  */
-public class SubRangeQuery<K,SN,N> extends RangeQuery<K, N> {
+public class SubRangeQuery<K,SN,N,V> extends RangeQuery<K,N,V> {
 
     private Class<SN> sNameClass;
     private String sName;

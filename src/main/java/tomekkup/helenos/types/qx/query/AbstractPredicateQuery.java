@@ -9,7 +9,7 @@ package tomekkup.helenos.types.qx.query;
  * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
  * *******************************************************
  */
-public abstract class AbstractPredicateQuery<K,N> extends AbstractRangeQuery<K,N> {
+public abstract class AbstractPredicateQuery<K,N,V> extends AbstractRangeQuery<K,N,V> {
     
     private static final int DEFAULT_MAX_KEYS = 10;
     private boolean reversed = true;

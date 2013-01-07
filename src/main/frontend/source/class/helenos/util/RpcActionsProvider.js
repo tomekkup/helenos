@@ -97,6 +97,7 @@ qx.Class.define('helenos.util.RpcActionsProvider', {
                     return 'java.lang.String';
                     break;
                 case 'org.apache.cassandra.db.marshal.LongType':
+                case 'org.apache.cassandra.db.marshal.CounterColumnType':
                     return 'java.lang.Long';
                     break;
                 case 'org.apache.cassandra.db.marshal.LexicalUUIDType':
@@ -151,29 +152,29 @@ qx.Class.define('helenos.util.RpcActionsProvider', {
         },
         
         queryCql : function(cfDef, queryStr) {
-            var query = {};
-            query.keyClass = this.__findParamClass(cfDef.keyValidationClass);
-            query.nameClass = this.__findParamClass(cfDef.comparatorType.className);
-            query.keyspace = cfDef.keyspaceName;
-            query.columnFamily = cfDef.name;
+            var query = this.__prepareQuery(cfDef);
             query.query = queryStr;
             
             var rpc = new helenos.util.Rpc(this._STANDARDQUERY);
             return rpc.callSync('cql', query);
         },
         
-        queryPredicate : function(cfDef, keyFrom, keyTo, columnNames, nameStart, nameEnd, sName, reversed ) {
+        __prepareQuery : function(cfDef) {
             var query = {};
-            
             query.keyClass = this.__findParamClass(cfDef.keyValidationClass);
-            
             if (cfDef.columnType == 'Standard') {
                 query.nameClass = this.__findParamClass(cfDef.comparatorType.className);
             } else {
                 query.nameClass = this.__findParamClass(cfDef.subComparatorType.className);
             }
+            query.valueClass = this.__findParamClass(cfDef.defaultValidationClass);
             query.keyspace = cfDef.keyspaceName;
             query.columnFamily = cfDef.name;
+            return query;
+        },
+        
+        queryPredicate : function(cfDef, keyFrom, keyTo, columnNames, nameStart, nameEnd, sName, reversed ) {
+            var query = this.__prepareQuery(cfDef);
             query.keyFrom = keyFrom;
             query.keyTo = keyTo;
             query.columnNames = columnNames;

@@ -33,7 +33,7 @@ qx.Class.define("helenos.components.tab.browse.CqlPage",
         _getCriteriaPane : function() {
             this._queryArea = new qx.ui.form.TextArea('SELECT * FROM ' + this._cfDef.name);
             this._queryArea.set({
-                padding : 6,
+                padding : 4,
                 wrap : true,
                 height : 120,
                 appearance : 'cql-textarea'

@@ -9,7 +9,7 @@ package tomekkup.helenos.types.qx.query;
  * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
  * *******************************************************
  */
-public class CqlQuery<K, N> extends AbstractQuery<K, N> {
+public class CqlQuery<K,N,V> extends AbstractQuery<K,N,V> {
 
     private String query;
 

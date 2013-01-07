@@ -1,13 +1,12 @@
 package tomekkup.helenos.service.impl;
 
-import tomekkup.helenos.dao.AccountDao;
-import tomekkup.helenos.types.qx.QxAccount;
-import tomekkup.helenos.service.AccountsProvider;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
+import tomekkup.helenos.dao.AccountDao;
+import tomekkup.helenos.service.AccountsProvider;
+import tomekkup.helenos.types.qx.QxAccount;
 import tomekkup.helenos.types.qx.QxPasswordChangeRequest;
 
 /**

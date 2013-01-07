@@ -1,6 +1,5 @@
 package tomekkup.helenos.service.impl;
 
-import tomekkup.helenos.cassandra.model.AllConsistencyLevelPolicy;
 import me.prettyprint.cassandra.serializers.ObjectSerializer;
 import me.prettyprint.cassandra.serializers.SerializerTypeInferer;
 import me.prettyprint.hector.api.Cluster;
@@ -13,6 +12,7 @@ import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.util.Assert;
+import tomekkup.helenos.cassandra.model.AllConsistencyLevelPolicy;
 
 /**
  * ********************************************************

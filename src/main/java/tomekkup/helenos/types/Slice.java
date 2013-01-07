@@ -11,16 +11,16 @@ import java.util.List;
  * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
  * *******************************************************
  */
-public class Slice<K, N> {
+public class Slice<K,N,V> {
 
     private K key;
-    private List<Column<N>> columns;
+    private List<Column<N,V>> columns;
 
     public Slice() {
         super();
     }
     
-    public Slice(K key, List<Column<N>> columns) {
+    public Slice(K key, List<Column<N,V>> columns) {
         setKey(key);
         setColumns(columns);
     }
@@ -33,11 +33,11 @@ public class Slice<K, N> {
         this.key = key;
     }
 
-    public List<Column<N>> getColumns() {
+    public List<Column<N,V>> getColumns() {
         return columns;
     }
 
-    public void setColumns(List<Column<N>> columns) {
+    public void setColumns(List<Column<N,V>> columns) {
         this.columns = columns;
     }
 }

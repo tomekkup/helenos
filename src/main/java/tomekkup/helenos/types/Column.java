@@ -1,5 +1,7 @@
 package tomekkup.helenos.types;
 
+import java.io.Serializable;
+
 /**
  * ********************************************************
  * Copyright: 2012 Tomek Kuprowski
@@ -9,10 +11,10 @@ package tomekkup.helenos.types;
  * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
  * *******************************************************
  */
-public class Column<N> {
+public class Column<N,V> {
 
     private N name;
-    private String value;
+    private V value;
     private long clock;
     private int ttl;
 
@@ -27,11 +29,11 @@ public class Column<N> {
         this.name = name;
     }
 
-    public String getValue() {
+    public V getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(V value) {
         this.value = value;
     }
 

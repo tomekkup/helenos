@@ -9,7 +9,7 @@ package tomekkup.helenos.types.qx.query;
  * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
  * *******************************************************
  */
-public class SingleSubColumnQuery<K,SN,N> extends SingleColumnQuery<K, N> {
+public class SingleSubColumnQuery<K,SN,N,V> extends SingleColumnQuery<K,N,V> {
 
     private Class<SN> sNameClass;
     private String sName;

@@ -11,7 +11,7 @@ import java.util.List;
  * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
  * *******************************************************
  */
-public class RangeQuery<K, N> extends AbstractPredicateQuery<K, N> {
+public class RangeQuery<K,N,V> extends AbstractPredicateQuery<K,N,V> {
 
     private String keyFrom;
     private String keyTo;

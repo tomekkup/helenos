@@ -9,7 +9,7 @@ package tomekkup.helenos.types.qx.query;
  * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
  * *******************************************************
  */
-public abstract class AbstractQuery<K,N> {
+public abstract class AbstractQuery<K,N,V> {
 
     public AbstractQuery() {
     }
@@ -26,6 +26,7 @@ public abstract class AbstractQuery<K,N> {
     
     private Class<K> keyClass;
     private Class<N> nameClass;
+    private Class<V> valueClass;
 
     public String getKeyspace() {
         return keyspace;
@@ -57,5 +58,13 @@ public abstract class AbstractQuery<K,N> {
 
     public Class<N> getNameClass() {
         return nameClass;
+    }
+
+    public void setValueClass(Class<V> valueClass) {
+        this.valueClass = valueClass;
+    }
+    
+    public Class<V> getValueClass() {
+        return valueClass;
     }
 }

@@ -46,8 +46,8 @@ qx.Class.define("helenos.Application",
                 qx.log.appender.Console;
             }
             // ask for credentials
-            //this.initLoginBox();
-            this.initLoginBoxFAKE();
+            this.initLoginBox();
+            //this.initLoginBoxFAKE();
         },
         
         initLoginBoxFAKE : function() {

@@ -9,7 +9,7 @@ package tomekkup.helenos.types.qx.query;
  * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
  * *******************************************************
  */
-public abstract class AbstractRangeQuery<K,N> extends AbstractQuery<K,N> {
+public abstract class AbstractRangeQuery<K,N,V> extends AbstractQuery<K,N,V> {
     
     private static final int DEFAULT_MAX_RESULTS = 20;
     protected int maxResults = DEFAULT_MAX_RESULTS;
