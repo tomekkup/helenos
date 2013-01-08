@@ -175,6 +175,7 @@ qx.Class.define('helenos.util.RpcActionsProvider', {
         
         queryPredicate : function(cfDef, keyFrom, keyTo, columnNames, nameStart, nameEnd, sName, reversed ) {
             var query = this.__prepareQuery(cfDef);
+            
             query.keyFrom = keyFrom;
             query.keyTo = keyTo;
             query.columnNames = columnNames;
@@ -194,17 +195,8 @@ qx.Class.define('helenos.util.RpcActionsProvider', {
         },
         
         queryKeyRange : function(cfDef, keyFrom, keyTo, columnNames, nameStart, nameEnd, sName, reversed ) {
-            var query = {};
+            var query = this.__prepareQuery(cfDef);
             
-            query.keyClass = this.__findParamClass(cfDef.keyValidationClass);
-            
-            if (cfDef.columnType == 'Standard') {
-                query.nameClass = this.__findParamClass(cfDef.comparatorType.className);
-            } else {
-                query.nameClass = this.__findParamClass(cfDef.subComparatorType.className);
-            }
-            query.keyspace = cfDef.keyspaceName;
-            query.columnFamily = cfDef.name;
             query.keyFrom = keyFrom;
             query.keyTo = keyTo;
             query.columnNames = columnNames;
