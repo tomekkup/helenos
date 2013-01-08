@@ -6,7 +6,7 @@ Helenos is a web based GUI Cassandra client that helps you to explore data and m
 
 ## Current version
 
-1.3-alpha1
+1.3
 
 ## Download
 
