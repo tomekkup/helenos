@@ -1,19 +1,12 @@
 package tomekkup.helenos.service.impl;
 
-import com.googlecode.jsonrpc4j.JsonRpcParam;
-import java.io.Serializable;
 import tomekkup.helenos.Converter;
 import tomekkup.helenos.service.ClusterConfigAware;
 import tomekkup.helenos.service.SuperQueryProvider;
-import tomekkup.helenos.types.Column;
 import tomekkup.helenos.types.Slice;
-import tomekkup.helenos.types.qx.query.SingleSubColumnQuery;
 import java.util.ArrayList;
 import java.util.List;
-import me.prettyprint.cassandra.serializers.ObjectSerializer;
-import me.prettyprint.cassandra.serializers.StringSerializer;
 import me.prettyprint.hector.api.beans.ColumnSlice;
-import me.prettyprint.hector.api.beans.HColumn;
 import me.prettyprint.hector.api.beans.OrderedRows;
 import me.prettyprint.hector.api.beans.Row;
 import me.prettyprint.hector.api.factory.HFactory;
@@ -36,7 +29,7 @@ public class SuperQueryProviderImpl extends AbstractQueryProvider implements Sup
     @Override
     public <K, SN, N, V> List<Slice<K, N, V>> predicate(tomekkup.helenos.types.qx.query.SubRangeQuery<K, SN, N, V> query) {
         K key = Converter.toValue(query.getKeyFrom(), query.getKeyClass());
-        SubSliceQuery<K, SN, N, V> cq = HFactory.createSubSliceQuery(getKeyspace(query.getKeyspace()), getSerializer(query.getKeyClass()), getSerializer(query.getsNameClass()), getSerializer(query.getNameClass()), getSerializer(query.getValueClass()));
+        SubSliceQuery<K, SN, N, V> cq = HFactory.createSubSliceQuery(getKeyspace(query), getSerializer(query.getKeyClass()), getSerializer(query.getsNameClass()), getSerializer(query.getNameClass()), getSerializer(query.getValueClass()));
         cq.setColumnFamily(query.getColumnFamily());
         cq.setKey(key);
         cq.setSuperColumn(Converter.toValue(query.getsName(), query.getsNameClass()));
@@ -58,7 +51,7 @@ public class SuperQueryProviderImpl extends AbstractQueryProvider implements Sup
 
     @Override
     public <K, SN, N, V> List<Slice<K, N, V>> keyRange(tomekkup.helenos.types.qx.query.SubRangeQuery<K, SN, N,V> query) {
-        RangeSubSlicesQuery<K, SN, N, V> cq = HFactory.createRangeSubSlicesQuery(getKeyspace(query.getKeyspace()), getSerializer(query.getKeyClass()), getSerializer(query.getsNameClass()), getSerializer(query.getNameClass()), getSerializer(query.getValueClass()));
+        RangeSubSlicesQuery<K, SN, N, V> cq = HFactory.createRangeSubSlicesQuery(getKeyspace(query), getSerializer(query.getKeyClass()), getSerializer(query.getsNameClass()), getSerializer(query.getNameClass()), getSerializer(query.getValueClass()));
         cq.setColumnFamily(query.getColumnFamily());
 
         cq.setKeys(Converter.toValue(query.getKeyFrom(), query.getKeyClass()), Converter.toValue(query.getKeyTo(), query.getKeyClass()));

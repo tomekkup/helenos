@@ -28,11 +28,11 @@ qx.Class.define('helenos.components.menu.KeyspaceContextMenu',
             propsButton.setUserData('KSNAME', ksName);
             propsButton.addListener('execute', this.__showProperties);
             
-            var addCFButton = new qx.ui.menu.Button('Add column family', 'icon/16/actions/list-add.png');
+            var addCFButton = new helenos.ui.menu.RoleAwareButton('Add column family', 'icon/16/actions/list-add.png', helenos.model.Roles.ADMIN);
             addCFButton.setUserData('KSNAME', ksName);
             addCFButton.addListener('execute', this.__addColumnFamily);
             
-            var dropButton = new qx.ui.menu.Button('Drop', 'icon/16/actions/edit-delete.png');
+            var dropButton = new helenos.ui.menu.RoleAwareButton('Drop', 'icon/16/actions/edit-delete.png', helenos.model.Roles.ADMIN);
             dropButton.setUserData('KSNAME', ksName);
             dropButton.addListener('execute', this.__dropKeyspace);
             
@@ -78,7 +78,7 @@ qx.Class.define('helenos.components.menu.KeyspaceContextMenu',
                     'type'  : 'SelectBox', 
                     'label' : 'Column',
                     'value' : 1,
-                    'options' : helenos.util.CassandraTypes.columnTypes,
+                    'options' : helenos.util.Constants.columnTypes,
                     'validation' : {
                         'required' : true
                     }
@@ -87,7 +87,7 @@ qx.Class.define('helenos.components.menu.KeyspaceContextMenu',
                     'type'  : 'SelectBox', 
                     'label' : 'Comparator',
                     'value' : 1,
-                    'options' : helenos.util.CassandraTypes.comparatorTypes,
+                    'options' : helenos.util.Constants.comparatorTypes,
                     'validation' : {
                         'required' : true
                     }
@@ -96,14 +96,14 @@ qx.Class.define('helenos.components.menu.KeyspaceContextMenu',
                     'type'  : 'SelectBox', 
                     'label' : 'Subcomparator',
                     'value' : 1,
-                    'options' : helenos.util.CassandraTypes.comparatorTypes
+                    'options' : helenos.util.Constants.comparatorTypes
                 }
                 ,
                 'keyValidationclass' : {
                     'type'  : 'SelectBox', 
                     'label' : 'Key validation class',
                     'value' : 5,
-                    'options' : helenos.util.CassandraTypes.validationClasses,
+                    'options' : helenos.util.Constants.validationClasses,
                     'validation' : {
                         'required' : true
                     }
@@ -112,7 +112,7 @@ qx.Class.define('helenos.components.menu.KeyspaceContextMenu',
                     'type'  : 'SelectBox', 
                     'label' : 'Default validation class',
                     'value' : 4,
-                    'options' : helenos.util.CassandraTypes.validationClasses,
+                    'options' : helenos.util.Constants.validationClasses,
                     'validation' : {
                         'required' : true
                     }

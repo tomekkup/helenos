@@ -64,7 +64,7 @@ public class ClusterConfiguration {
     public void setActive(boolean active) {
         this.active = active;
     }
-
+    
     public Cluster createCluster() {
         return new ThriftCluster(clusterName, new CassandraHostConfigurator(hosts));
     }

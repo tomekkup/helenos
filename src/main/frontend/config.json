@@ -35,7 +35,8 @@
     "translation",
     "build-withver",
     "lint-withver",
-    "clean-withver"
+    "clean-withver",
+    "translation-withver"
     ],
   
     "default-job" : "build-withver",

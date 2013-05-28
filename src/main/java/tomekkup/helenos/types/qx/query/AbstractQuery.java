@@ -9,7 +9,7 @@ package tomekkup.helenos.types.qx.query;
  * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
  * *******************************************************
  */
-public abstract class AbstractQuery<K,N,V> {
+public abstract class AbstractQuery<K,N,V> implements Query<K,N,V> {
 
     public AbstractQuery() {
     }
@@ -27,7 +27,18 @@ public abstract class AbstractQuery<K,N,V> {
     private Class<K> keyClass;
     private Class<N> nameClass;
     private Class<V> valueClass;
-
+    private String consistencyLevel;
+    
+    @Override
+    public String getConsistencyLevel() {
+        return consistencyLevel;
+    }
+    
+    public void setConsistencyLevel(String consistencyLevel) {
+        this.consistencyLevel = consistencyLevel;
+    }
+    
+    @Override
     public String getKeyspace() {
         return keyspace;
     }

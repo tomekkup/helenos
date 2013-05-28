@@ -1,6 +1,5 @@
 package tomekkup.helenos.dao;
 
-import tomekkup.helenos.ClusterConfiguration;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -10,6 +9,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+import tomekkup.helenos.ClusterConfiguration;
 
 /**
  * ********************************************************

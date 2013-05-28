@@ -45,12 +45,12 @@ qx.Class.define('helenos.components.menu.ColumnFamilyContextMenu',
                 cqlButton.setEnabled(false);
             }
             
-            var dropButton = new qx.ui.menu.Button('Drop', 'icon/16/actions/edit-delete.png');
+            var dropButton = new helenos.ui.menu.RoleAwareButton('Drop', 'icon/16/actions/edit-delete.png', helenos.model.Roles.ADMIN);
             dropButton.setUserData('KSNAME', ksName);
             dropButton.setUserData('CFNAME', cfName);
             dropButton.addListener('execute', this.__dropColumnFamily);
             
-            var truncateButton = new qx.ui.menu.Button('Truncate', 'icon/16/actions/edit-clear.png');
+            var truncateButton = new helenos.ui.menu.RoleAwareButton('Truncate', 'icon/16/actions/edit-clear.png', helenos.model.Roles.ADMIN);
             truncateButton.setUserData('KSNAME', ksName);
             truncateButton.setUserData('CFNAME', cfName);
             truncateButton.addListener('execute', this.__truncateColumnFamily);

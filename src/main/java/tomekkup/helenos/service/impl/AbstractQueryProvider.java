@@ -1,11 +1,9 @@
 package tomekkup.helenos.service.impl;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import me.prettyprint.hector.api.beans.HColumn;
-import tomekkup.helenos.service.QueryProvider;
 import tomekkup.helenos.types.Column;
 
 /**
@@ -17,7 +15,7 @@ import tomekkup.helenos.types.Column;
  * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
  * *******************************************************
  */
-public abstract class AbstractQueryProvider extends AbstractProvider implements QueryProvider {
+public abstract class AbstractQueryProvider extends AbstractProvider {
 
     protected <N,V> List<Column<N,V>> toJsonColumns(List<HColumn<N,V>> columns) {
         List<Column<N,V>> retColumns = new ArrayList<Column<N,V>>(1);

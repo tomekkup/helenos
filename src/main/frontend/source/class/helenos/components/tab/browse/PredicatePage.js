@@ -34,6 +34,8 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         __rangeFromToCP : null,
         __reversedCB : null,
         __colsLimitTF : null,
+        __firstKeyID : null,
+        __lastKeyID : null,
         
         _tree : null,
         
@@ -45,11 +47,11 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             return 'icon/16/apps/office-spreadsheet.png';
         },
         
-        
         _performSearch  : function(e) {
             var keyFrom = this.__keyFromTF.getValue();
             var keyTo = this.__keyToTF.getValue();
             var sName = (this.__sNameTF == null ? null : this.__sNameTF.getValue());
+            var consistencyLevel = this._consistencyLevelSB.getSelection()[0].getLabel();
             
             var nameStart, nameEnd, reversed, columnNames;
             if (this.__columnsByRBG.getSelection()[0].getLabel() == 'range') {
@@ -60,19 +62,56 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
                 columnNames = this.__columnNamesTF.getValue().split(',');
             }
 
+            var result = null;
             if (this.__keyMode == 'predicate') {
-                return helenos.util.RpcActionsProvider.queryPredicate(this._cfDef, keyFrom, keyTo, columnNames, nameStart, nameEnd, sName, reversed);
+                result = helenos.util.RpcActionsProvider.queryPredicate(this._cfDef, consistencyLevel, keyFrom, keyTo, columnNames, nameStart, nameEnd, sName, reversed);
             } else  {
-                return helenos.util.RpcActionsProvider.queryKeyRange(this._cfDef, keyFrom, keyTo, columnNames, nameStart, nameEnd, sName, reversed);
+                result =helenos.util.RpcActionsProvider.queryKeyRange(this._cfDef, consistencyLevel, keyFrom, keyTo, columnNames, nameStart, nameEnd, sName, reversed);
             }
+            
+            this.__firstKeyID = result[0].key;
+            this.__lastKeyID = result[result.length-1].key;
+            return result;
+        },
+        
+        _getResultsPane : function() {
+            var pane = this.base(arguments);
+            pane.add(this.__getButtonsBar());
+            return pane;
+        },
+        
+        __getButtonsBar : function() {
+            var buttonsBar = new qx.ui.toolbar.ToolBar();
+            var prevButton = new qx.ui.toolbar.Button('Previous', 'helenos/previous_page.png');
+            prevButton.addListener('execute', this.__onPrevRange);
+            
+            var nextButton = new qx.ui.toolbar.Button('Next', 'helenos/next_page.png');
+            nextButton.addListener('execute', this.__onNextRange);
+            
+            buttonsBar.add(prevButton);
+            buttonsBar.add(nextButton);
+            return buttonsBar;
+        },
+        
+        __onPrevRange : function(e) {
+            // gdy lista wynikow jeszcze pusta to nie uzywaj przewijania wogole zrob szare
+            this.__keyFromTF.setValue(this.ff);
+            this._performValidation();
+        },
+        
+        __onNextRange : function(e) {
+            // gdy lista wynikow jeszcze pusta to nie uzywaj przewijania wogole zrob szare
+            this.__keyFromTF.setValue(this.__lastKeyID);
+            this._performValidation();
         },
         
         _getCriteriaPane : function() {
             var widgets = new Array();
             widgets.push(this.__getKeysGB());
             widgets.push(this.__getColumnsGB());
+            widgets.push(this.__getConsistencyLevelGB());
             
-            var container = new qx.ui.container.Composite(new qx.ui.layout.VBox(7).set({alignX : 'left'}));
+            var container = new qx.ui.container.Composite(new qx.ui.layout.VBox(5).set({alignX : 'left'}));
             container.setAppearance('criteria-pane');
             
             for (var i = 0; i < widgets.length; i++) {
@@ -86,6 +125,13 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             return pane;
         },
 
+        __getConsistencyLevelGB : function() {
+            this._initConsistencyLevelSB();
+            
+            var consLevelGB = new helenos.ui.GroupBoxV(this.tr('consistency.level'));
+            consLevelGB.add(this._consistencyLevelSB);
+            return consLevelGB;
+        },
 
         __getColumnsGB : function() {
             var columnsGB = new helenos.ui.GroupBoxV('Columns');

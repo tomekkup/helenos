@@ -20,8 +20,6 @@ Helenos is a web based GUI Cassandra client that helps you to explore data and m
 
 [![CF properties] (https://raw.github.com/tomekkup/helenos/gh-pages/gallery/helenos1_small.png)](https://raw.github.com/tomekkup/helenos/gh-pages/gallery/helenos1.png)  [![CQL] (https://raw.github.com/tomekkup/helenos/gh-pages/gallery/helenos2_small.png)](https://raw.github.com/tomekkup/helenos/gh-pages/gallery/helenos2.png)  [![Browse] (https://raw.github.com/tomekkup/helenos/gh-pages/gallery/helenos3_small.png)](https://raw.github.com/tomekkup/helenos/gh-pages/gallery/helenos3.png)
 
-https://raw.github.com/tomekkup/helenos/gh-pages/gallery/helenos1_small.png
-
 Click here for [preview on Youtube](http://www.youtube.com/watch?v=gOWHN6bCybQ&hd=1&autoplay=1)
 
 ## Twitter

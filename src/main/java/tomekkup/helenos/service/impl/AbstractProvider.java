@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.util.Assert;
 import tomekkup.helenos.cassandra.model.AllConsistencyLevelPolicy;
+import tomekkup.helenos.types.qx.query.Query;
 
 /**
  * ********************************************************
@@ -39,15 +40,15 @@ public abstract class AbstractProvider {
         return serializer;
     }
 
-    protected Keyspace getKeyspace(String keyspaceName) {
+    protected Keyspace getKeyspace(String keyspaceName, String consistencyLevel) {
         Assert.notNull(cluster, "connection not ready yet");
-        return HFactory.createKeyspace(keyspaceName, cluster, consistencyLevelPolicy);
+        return HFactory.createKeyspace(keyspaceName, cluster, this.resolveCLP(consistencyLevel));
     }
     
-    protected Keyspace getKeyspace(String keyspaceName, String consistencyLevelStr) {
+    protected Keyspace getKeyspace(Query query) {
         Assert.notNull(cluster, "connection not ready yet");
         
-        return HFactory.createKeyspace(keyspaceName, cluster, this.resolveCLP(consistencyLevelStr));
+        return HFactory.createKeyspace(query.getKeyspace(), cluster, this.resolveCLP(query.getConsistencyLevel()));
     }
     
     private ConsistencyLevelPolicy resolveCLP(String consistencyLevelStr) {

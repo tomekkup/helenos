@@ -31,7 +31,6 @@ qx.Class.define("helenos.components.SchemaPane",
 
         this.__createButtons();
         this.__createSchemaTree();
-        
         this.add(this.__btnToolbar);
         this.add(this.__schemaTree, {
             flex : 1
@@ -49,7 +48,7 @@ qx.Class.define("helenos.components.SchemaPane",
             var refreshButton = new qx.ui.toolbar.Button("Refresh", "icon/16/actions/view-refresh.png");
             refreshButton.addListener('execute', this.refreshSchemaTree, this);
             
-            var addKeyspaceButton = new qx.ui.toolbar.Button("Add keyspace", "icon/16/actions/list-add.png");
+            var addKeyspaceButton = new helenos.ui.toolbar.RoleAwareButton("Add keyspace", "icon/16/actions/list-add.png", helenos.model.Roles.ADMIN);
             addKeyspaceButton.addListener('execute', this.__addKeyspace, this);
             
             this.__btnToolbar.add(refreshButton);
@@ -79,7 +78,7 @@ qx.Class.define("helenos.components.SchemaPane",
                     'type'  : 'SelectBox', 
                     'label' : 'Strategy class',
                     'value' : 1,
-                    'options' : helenos.util.CassandraTypes.strategyClasses,
+                    'options' : helenos.util.Constants.strategyClasses,
                     'validation' : {
                         'required' : true
                     }

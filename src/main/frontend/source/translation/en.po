@@ -16,12 +16,20 @@ msgstr ""
 msgid "error"
 msgstr "Error"
 
-#: helenos/components/menu/KeyspaceContextMenu.js:51
-#: helenos/components/menu/ColumnFamilyContextMenu.js:80
-#: helenos/components/menu/ColumnFamilyContextMenu.js:106
+#: helenos/components/menu/KeyspaceContextMenu.js:55
+#: helenos/components/menu/ColumnFamilyContextMenu.js:78
+#: helenos/components/menu/ColumnFamilyContextMenu.js:104
 msgid "loss.data.alert"
-msgstr "<h2><p>Are you sure ?!</p></h2><h4>You will lose all your data !!!</h4>"
+msgstr ""
+"<h2><p>Are you sure ?!</p></h2><h4>You will lose all your data !!!</h4>"
 
-#: helenos/components/tab/ConnectionsEditorPage.js:97
+#: helenos/components/tab/AccountsEditorPage.js:184
+#: helenos/components/tab/ConnectionsEditorPage.js:192
+#: helenos/components/tab/ConnectionsEditorPage.js:216
 msgid "are.you.sure"
 msgstr "<h3>Are you sure ?</h3>"
+
+#: helenos/components/tab/browse/CqlPage.js:36
+#: helenos/components/tab/browse/PredicatePage.js:94
+msgid "consistency.level"
+msgstr "Consistency level"

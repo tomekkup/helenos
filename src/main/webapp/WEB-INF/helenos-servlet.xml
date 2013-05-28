@@ -5,15 +5,14 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-
-    <bean name="/Schema.json" class="com.googlecode.jsonrpc4j.spring.JsonServiceExporter">
-        <property name="service" ref="schemaProvider"/>
-        <property name="serviceInterface" value="tomekkup.helenos.service.SchemaProvider"/>
-    </bean>
-    
+        
     <bean name="/Credentials.json" class="com.googlecode.jsonrpc4j.spring.JsonServiceExporter">
         <property name="service" ref="credentialsProvider"/>
         <property name="serviceInterface" value="tomekkup.helenos.service.CredentialsProvider"/>
+    </bean>
+    
+    <bean name="/export.csv" class="tomekkup.helenos.web.DataExportController">
+        
     </bean>
     
     <bean name="/query/Standard.json" class="com.googlecode.jsonrpc4j.spring.JsonServiceExporter">
@@ -24,6 +23,16 @@
     <bean name="/query/Super.json" class="com.googlecode.jsonrpc4j.spring.JsonServiceExporter">
         <property name="service" ref="superQueryProvider"/>
         <property name="serviceInterface" value="tomekkup.helenos.service.SuperQueryProvider"/>
+    </bean>
+    
+    <bean name="/admin/Schema.json" class="com.googlecode.jsonrpc4j.spring.JsonServiceExporter">
+        <property name="service" ref="schemaAdminProvider"/>
+        <property name="serviceInterface" value="tomekkup.helenos.service.SchemaAdminProvider"/>
+    </bean>
+    
+    <bean name="/SchemaInfo.json" class="com.googlecode.jsonrpc4j.spring.JsonServiceExporter">
+        <property name="service" ref="schemaProvider"/>
+        <property name="serviceInterface" value="tomekkup.helenos.service.SchemaProvider"/>
     </bean>
     
     <bean name="/admin/Account.json" class="com.googlecode.jsonrpc4j.spring.JsonServiceExporter">

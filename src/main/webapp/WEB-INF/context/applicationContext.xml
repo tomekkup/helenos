@@ -8,11 +8,20 @@
     <context:annotation-config />
     <context:component-scan base-package="tomekkup.helenos" />
     
-    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+    <bean id="pspcServletEnv" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
         <property name="environment">
             <bean class="org.springframework.web.context.support.StandardServletEnvironment"/>
         </property>
     </bean>
+    
+    <bean id="pspcPropsFile" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+    p:ignoreResourceNotFound="true" p:ignoreUnresolvablePlaceholders="true">
+        <property name="locations">
+         <list>
+            <value>WEB-INF/default.properties</value>
+         </list>
+       </property>
+     </bean>
         
     <bean class="tomekkup.helenos.context.PostConfiguringClusterListener" />
     

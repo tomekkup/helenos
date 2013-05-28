@@ -6,18 +6,13 @@ License:
 Authors:
   Tomek Kuprowski (tomekkuprowski at gmail dot com)
  ************************************************************************ */
-qx.Class.define("helenos.ui.HeaderButton",
+qx.Class.define("helenos.ui.RoleAwareButton",
 {
     extend : qx.ui.form.Button,
 
-    construct : function(icon, toolTipText, role)
+    construct : function(label, icon, role)
     {
-        this.base(arguments, null, icon);
-        this.set({
-            padding : 2, toolTipText : toolTipText
-        });
-        if (role != undefined) {
-            this.setEnabled(helenos.util.CredentialsProvider.hasRole(role));
-        }
+        this.base(arguments, label, icon);
+        this.setEnabled(helenos.util.CredentialsProvider.hasRole(role));
     }
 });

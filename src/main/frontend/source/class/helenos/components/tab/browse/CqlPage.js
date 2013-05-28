@@ -27,7 +27,8 @@ qx.Class.define("helenos.components.tab.browse.CqlPage",
         
         _performSearch  : function(e) {
             var queryStr = this._queryArea.getValue();
-            return helenos.util.RpcActionsProvider.queryCql(this._cfDef, queryStr);
+            var consistencyLevel = this._consistencyLevelSB.getSelection()[0].getLabel();
+            return helenos.util.RpcActionsProvider.queryCql(this._cfDef, consistencyLevel, queryStr);
         },
         
         _getCriteriaPane : function() {
@@ -38,20 +39,28 @@ qx.Class.define("helenos.components.tab.browse.CqlPage",
                 height : 120,
                 appearance : 'cql-textarea'
             });
-            
+                        
             var queryGB = new helenos.ui.GroupBoxV('Query');
             queryGB.add(this._queryArea, {
                 flex : 1
             });
             
-            var buttonPane = new qx.ui.container.Composite(new qx.ui.layout.HBox(5, 'left'));
-            buttonPane.add(this._getSearchButton());
+            var buttonPane = new qx.ui.container.Composite(new qx.ui.layout.HBox(4));
+            
+            var leftPane = new qx.ui.container.Composite(new qx.ui.layout.HBox());
+            leftPane.add(this._getSearchButton());
+            var rightPane = new qx.ui.container.Composite(new qx.ui.layout.HBox(5, 'right').set({alignY : 'center'}));
+            this._initConsistencyLevelSB();
+            rightPane.add(new helenos.ui.BoldLabel(this.tr('consistency.level') + ':'));
+            rightPane.add(this._consistencyLevelSB);
+            
+            buttonPane.add(leftPane, {width: '50%'});
+            buttonPane.add(rightPane, {width: '50%'});
+            //buttonPane.add(this._getSearchButton());
             
             var container = new qx.ui.container.Composite(new qx.ui.layout.VBox(3, 'top'));
             container.setAppearance('criteria-pane');
-            container.add(queryGB, {
-                flex : 1
-            });
+            container.add(queryGB, {flex : 1});
             container.add(buttonPane);
             
             return container;

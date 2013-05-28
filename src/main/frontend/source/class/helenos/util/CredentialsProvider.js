@@ -14,7 +14,10 @@ qx.Class.define('helenos.util.CredentialsProvider', {
         
         registerLoggedUser : function(username, credentials) {
             this.loggedUser = username;
-            this.credentials = credentials;
+            this.credentials = new qx.data.Array();
+            for (var i = 0; i < credentials.length; i++) {
+                this.credentials.push(credentials[i].authority);
+            }
         },
         
         getCredentials : function() {
@@ -23,6 +26,10 @@ qx.Class.define('helenos.util.CredentialsProvider', {
         
         getLoggedUser : function() {
             return this.loggedUser;
+        },
+        
+        hasRole : function(role) {
+            return this.credentials.contains(role);
         }
     }
 });

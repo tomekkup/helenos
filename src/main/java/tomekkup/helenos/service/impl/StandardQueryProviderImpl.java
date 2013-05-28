@@ -1,25 +1,18 @@
 package tomekkup.helenos.service.impl;
 
 import com.googlecode.jsonrpc4j.JsonRpcParam;
-import java.io.Serializable;
 import tomekkup.helenos.Converter;
 import tomekkup.helenos.service.ClusterConfigAware;
 import tomekkup.helenos.service.StandardQueryProvider;
-import tomekkup.helenos.types.Column;
 import tomekkup.helenos.types.Slice;
-import tomekkup.helenos.types.qx.query.SingleColumnQuery;
 import java.util.ArrayList;
 import java.util.List;
 import me.prettyprint.cassandra.model.CqlQuery;
 import me.prettyprint.cassandra.model.CqlRows;
-import me.prettyprint.cassandra.serializers.ObjectSerializer;
-import me.prettyprint.cassandra.serializers.StringSerializer;
 import me.prettyprint.hector.api.beans.ColumnSlice;
-import me.prettyprint.hector.api.beans.HColumn;
 import me.prettyprint.hector.api.beans.OrderedRows;
 import me.prettyprint.hector.api.beans.Row;
 import me.prettyprint.hector.api.factory.HFactory;
-import me.prettyprint.hector.api.query.ColumnQuery;
 import me.prettyprint.hector.api.query.QueryResult;
 import me.prettyprint.hector.api.query.RangeSlicesQuery;
 import me.prettyprint.hector.api.query.SliceQuery;
@@ -40,7 +33,7 @@ public class StandardQueryProviderImpl extends AbstractQueryProvider implements 
     
     @Override
     public <K, N, V> List<Slice<K,N,V>> cql(@JsonRpcParam("query") tomekkup.helenos.types.qx.query.CqlQuery<K,N,V> query) {
-        CqlQuery<K,N,V> cqlQuery = new CqlQuery<K, N, V>(getKeyspace(query.getKeyspace()), getSerializer(query.getKeyClass()), getSerializer(query.getNameClass()), getSerializer(query.getValueClass()));
+        CqlQuery<K,N,V> cqlQuery = new CqlQuery<K, N, V>(getKeyspace(query), getSerializer(query.getKeyClass()), getSerializer(query.getNameClass()), getSerializer(query.getValueClass()));
         cqlQuery.setQuery(query.getQuery());
         QueryResult<CqlRows<K, N, V>> qr = cqlQuery.execute();
         
@@ -58,7 +51,7 @@ public class StandardQueryProviderImpl extends AbstractQueryProvider implements 
     @Override
     public <K, N, V> List<Slice<K,N,V>> predicate(tomekkup.helenos.types.qx.query.RangeQuery<K,N,V> query) {
         K key = Converter.toValue(query.getKeyFrom(), query.getKeyClass());
-        SliceQuery<K, N, V> cq = HFactory.createSliceQuery(getKeyspace(query.getKeyspace()), getSerializer(query.getKeyClass()), getSerializer(query.getNameClass()), getSerializer(query.getValueClass()));
+        SliceQuery<K, N, V> cq = HFactory.createSliceQuery(getKeyspace(query), getSerializer(query.getKeyClass()), getSerializer(query.getNameClass()), getSerializer(query.getValueClass()));
         cq.setColumnFamily(query.getColumnFamily());
         cq.setKey(key);
         if (CollectionUtils.isEmpty(query.getColumnNames())) {
@@ -79,7 +72,7 @@ public class StandardQueryProviderImpl extends AbstractQueryProvider implements 
     
     @Override
     public <K, N, V> List<Slice<K,N,V>> keyRange(tomekkup.helenos.types.qx.query.RangeQuery<K,N,V> query) {
-        RangeSlicesQuery<K, N, V> cq = HFactory.createRangeSlicesQuery(getKeyspace(query.getKeyspace()), getSerializer(query.getKeyClass()), getSerializer(query.getNameClass()), getSerializer(query.getValueClass()));
+        RangeSlicesQuery<K, N, V> cq = HFactory.createRangeSlicesQuery(getKeyspace(query), getSerializer(query.getKeyClass()), getSerializer(query.getNameClass()), getSerializer(query.getValueClass()));
         cq.setColumnFamily(query.getColumnFamily());
         cq.setKeys(Converter.toValue(query.getKeyFrom(), query.getKeyClass()), Converter.toValue(query.getKeyTo(), query.getKeyClass()));
         

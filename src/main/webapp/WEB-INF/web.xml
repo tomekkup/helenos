@@ -92,6 +92,11 @@
     </servlet-mapping>
     
     <servlet-mapping>
+        <servlet-name>helenos</servlet-name>
+        <url-pattern>*.csv</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
         <servlet-name>default</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>

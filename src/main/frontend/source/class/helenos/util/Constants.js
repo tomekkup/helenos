@@ -6,7 +6,7 @@ License:
 Authors:
   Tomek Kuprowski (tomekkuprowski at gmail dot com)
  ************************************************************************ */
-qx.Class.define('helenos.util.CassandraTypes', {
+qx.Class.define('helenos.util.Constants', {
         
     statics : {
         
@@ -108,6 +108,9 @@ qx.Class.define('helenos.util.CassandraTypes', {
             'label' : "TimeUUIDType", 
             'value' : "TimeUUIDType"
         }
-        ]
+        ],
+        
+        consistencyLevels : ['ALL','ONE','TWO','THREE','QUORUM','LOCAL_QUORUM','EACH_QUORUM']
+        //,consistencyLevelsIcons : ['ca','c1','c2','c3','cq','clq','ceq']
     }
 });

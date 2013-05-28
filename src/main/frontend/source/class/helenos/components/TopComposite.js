@@ -16,7 +16,6 @@ qx.Class.define("helenos.components.TopComposite",
         this.set({
             layout : new qx.ui.layout.VBox()
         });
-
         this.add(this.__getHeader());
         this.add(this.__getMainContainer(), {
             flex : 1

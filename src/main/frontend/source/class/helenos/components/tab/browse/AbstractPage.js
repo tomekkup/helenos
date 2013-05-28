@@ -16,6 +16,7 @@ qx.Class.define("helenos.components.tab.browse.AbstractPage",
     
     construct : function(ksName, cfName)
     {
+        //this.__initSearchButtonMenu();
         this.base(arguments);
         this._cfDef = helenos.util.RpcActionsProvider.describeColumnFamily(ksName, cfName);
         
@@ -34,6 +35,8 @@ qx.Class.define("helenos.components.tab.browse.AbstractPage",
         _cfDef : null,
         _manager : null,
         _resultsTree : null,
+        _consistencyLevelSB : null,
+        _searchButtonMenu : null,
         
         _getSplitPaneOrientation : function() {
             throw new Error('_getSplitPaneOrientation is abstract');
@@ -41,6 +44,24 @@ qx.Class.define("helenos.components.tab.browse.AbstractPage",
         
         _buildCriteriaComponent : function() {
             throw new Error('_buildCriteriaComponent is abstract');
+        },
+        
+        /*__initSearchButtonMenu : function() {
+            this._searchButtonMenu = new qx.ui.menu.Menu();
+            for (var i=0; i < helenos.util.Constants.consistencyLevels.length; i++ ) {
+                var item = helenos.util.Constants.consistencyLevels[i];
+                this._searchButtonMenu.add(new qx.ui.menu.Button(item, 'helenos/ca.png'));
+            }
+        },*/
+        
+        _initConsistencyLevelSB : function() {
+            this._consistencyLevelSB = new qx.ui.form.SelectBox();
+            
+            for (var i=0; i < helenos.util.Constants.consistencyLevels.length; i++ ) {
+                var item = helenos.util.Constants.consistencyLevels[i];
+                //var icon = 'helenos/' + helenos.util.Constants.consistencyLevelsIcons[i] + '.png';
+                this._consistencyLevelSB.add(new qx.ui.form.ListItem(item,null,item));
+            }
         },
         
         _getIconPath : function() {

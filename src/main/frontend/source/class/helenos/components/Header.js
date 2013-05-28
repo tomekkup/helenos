@@ -37,10 +37,10 @@ qx.Class.define("helenos.components.Header",
             box.add(new helenos.ui.BoldLabel('User: ' + helenos.util.CredentialsProvider.getLoggedUser()));
             box.add(new qx.ui.core.Spacer(10));
             
-            var editClusterConfigButton = new helenos.ui.HeaderButton('helenos/connections.png', 'Manage connections');
+            var editClusterConfigButton = new helenos.ui.HeaderButton('helenos/connections.png', 'Manage connections', helenos.model.Roles.ADMIN);
             editClusterConfigButton.addListener('execute', this.__onEditCC);
             
-            var editAccountsButton = new helenos.ui.HeaderButton('helenos/users.png', 'Manage accounts');
+            var editAccountsButton = new helenos.ui.HeaderButton('helenos/users.png', 'Manage accounts', helenos.model.Roles.ADMIN);
             editAccountsButton.addListener('execute', this.__onEditAccounts);
             
             var logoutButton = new helenos.ui.HeaderButton('helenos/logout.png', 'Logout');

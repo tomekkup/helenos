@@ -1,10 +1,8 @@
 package tomekkup.helenos.service;
 
+import java.util.List;
 import tomekkup.helenos.types.JsonColumnFamilyDefinition;
 import tomekkup.helenos.types.JsonKeyspaceDefinition;
-import tomekkup.helenos.types.qx.QxJsonColumnFamilyDefinition;
-import tomekkup.helenos.types.qx.QxJsonKeyspaceDefinition;
-import java.util.List;
 
 /**
  * ********************************************************
@@ -19,19 +17,9 @@ public interface SchemaProvider {
 
     String describeClusterName();
 
-    void dropKeyspace(String keyspaceName);
-
-    void truncateColumnFamily(String keyspaceName, String columnFamily);
-
-    void dropColumnFamily(String keyspaceName, String columnFamily);
-
     List<JsonKeyspaceDefinition> describeKeyspaces();
 
     JsonKeyspaceDefinition describeKeyspace(String keyspaceName);
 
     JsonColumnFamilyDefinition describeColumnFamily(String keyspaceName, String columnFamilyName);
-
-    void createColumnFamily(QxJsonColumnFamilyDefinition qxDef);
-
-    void createKeyspace(QxJsonKeyspaceDefinition qxDef);
 }
