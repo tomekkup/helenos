@@ -15,4 +15,14 @@ Any value defined here will override the pom.xml file value but is only applicab
 -->
         <netbeans.compile.on.save>all</netbeans.compile.on.save>
     </properties>
+    <spring-data xmlns="http://www.netbeans.org/ns/spring-data/1">
+        <config-files>
+            <config-file>src/main/webapp/WEB-INF/context/applicationContext-hector.xml</config-file>
+            <config-file>src/main/webapp/WEB-INF/context/applicationContext-jdbc.xml</config-file>
+            <config-file>src/main/webapp/WEB-INF/context/applicationContext-security.xml</config-file>
+            <config-file>src/main/webapp/WEB-INF/context/applicationContext.xml</config-file>
+            <config-file>src/main/webapp/WEB-INF/helenos-servlet.xml</config-file>
+        </config-files>
+        <config-file-groups/>
+    </spring-data>
 </project-shared-configuration>
