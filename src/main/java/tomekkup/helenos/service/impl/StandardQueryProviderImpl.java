@@ -1,10 +1,6 @@
 package tomekkup.helenos.service.impl;
 
 import com.googlecode.jsonrpc4j.JsonRpcParam;
-import tomekkup.helenos.Converter;
-import tomekkup.helenos.service.ClusterConfigAware;
-import tomekkup.helenos.service.StandardQueryProvider;
-import tomekkup.helenos.types.Slice;
 import java.util.ArrayList;
 import java.util.List;
 import me.prettyprint.cassandra.model.CqlQuery;
@@ -18,6 +14,10 @@ import me.prettyprint.hector.api.query.RangeSlicesQuery;
 import me.prettyprint.hector.api.query.SliceQuery;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
+import tomekkup.helenos.Converter;
+import tomekkup.helenos.service.ClusterConfigAware;
+import tomekkup.helenos.service.StandardQueryProvider;
+import tomekkup.helenos.types.Slice;
 
 /**
  * ********************************************************
@@ -55,7 +55,7 @@ public class StandardQueryProviderImpl extends AbstractQueryProvider implements 
         cq.setColumnFamily(query.getColumnFamily());
         cq.setKey(key);
         if (CollectionUtils.isEmpty(query.getColumnNames())) {
-            cq.setRange(Converter.toValue(query.getNameStart(), query.getNameClass()), Converter.toValue(query.getNameEnd(), query.getNameClass()), query.isReversed(), query.getMaxResults());
+            cq.setRange(Converter.toValue(query.getNameStart(), query.getNameClass()), Converter.toValue(query.getNameEnd(), query.getNameClass()), query.isReversed(), query.getLimit());
         } else {
             cq.setColumnNames(Converter.toValue(query.getColumnNames(),query.getNameClass()));
         }
@@ -77,7 +77,7 @@ public class StandardQueryProviderImpl extends AbstractQueryProvider implements 
         cq.setKeys(Converter.toValue(query.getKeyFrom(), query.getKeyClass()), Converter.toValue(query.getKeyTo(), query.getKeyClass()));
         
         if (CollectionUtils.isEmpty(query.getColumnNames())) {
-            cq.setRange(Converter.toValue(query.getNameStart(), query.getNameClass()), Converter.toValue(query.getNameEnd(), query.getNameClass()), query.isReversed(), query.getMaxResults());
+            cq.setRange(Converter.toValue(query.getNameStart(), query.getNameClass()), Converter.toValue(query.getNameEnd(), query.getNameClass()), query.isReversed(), query.getLimit());
         } else {
             cq.setColumnNames(Converter.toValue(query.getColumnNames(),query.getNameClass()));
         }

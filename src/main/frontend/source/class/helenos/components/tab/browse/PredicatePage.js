@@ -13,6 +13,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
     construct : function(ksName, cfName)
     {
         this.base(arguments, ksName, cfName);
+        this.__disableNextPrevBtns();
     },
 
     members :
@@ -23,19 +24,25 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         __keyFromTF : null,
         __keyToTF : null,
         __keyMode : 'predicate',
+        __keyTF : null,
         __keysLimitTF : null,
         
         __nameStartTF : null,
         __nameEndTF : null,
         __sNameTF : null,
-        
         __columnNamesTF : null,
+        
+        __keysPredicateCP : null,
+        __keysRangeCP : null,
         __rangeColNamesCP : null,
         __rangeFromToCP : null,
         __reversedCB : null,
         __colsLimitTF : null,
         __firstKeyID : null,
         __lastKeyID : null,
+        __prevPageBtn : null,
+        __nextPageBtn : null,
+        __nextPrevBtnsEnabled : false,
         
         _tree : null,
         
@@ -50,6 +57,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         _performSearch  : function(e) {
             var keyFrom = this.__keyFromTF.getValue();
             var keyTo = this.__keyToTF.getValue();
+            
             var sName = (this.__sNameTF == null ? null : this.__sNameTF.getValue());
             var consistencyLevel = this._consistencyLevelSB.getSelection()[0].getLabel();
             
@@ -64,9 +72,9 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
 
             var result = null;
             if (this.__keyMode == 'predicate') {
-                result = helenos.util.RpcActionsProvider.queryPredicate(this._cfDef, consistencyLevel, keyFrom, keyTo, columnNames, nameStart, nameEnd, sName, reversed);
+                result = helenos.util.RpcActionsProvider.queryPredicate(this._cfDef, consistencyLevel, keyFrom, columnNames, nameStart, nameEnd, sName, reversed);
             } else  {
-                result =helenos.util.RpcActionsProvider.queryKeyRange(this._cfDef, consistencyLevel, keyFrom, keyTo, columnNames, nameStart, nameEnd, sName, reversed);
+                result = helenos.util.RpcActionsProvider.queryKeyRange(this._cfDef, consistencyLevel, keyFrom, keyTo, columnNames, nameStart, nameEnd, sName, reversed);
             }
             
             this.__firstKeyID = result[0].key;
@@ -82,20 +90,20 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         
         __getButtonsBar : function() {
             var buttonsBar = new qx.ui.toolbar.ToolBar();
-            var prevButton = new qx.ui.toolbar.Button('Previous', 'helenos/previous_page.png');
-            prevButton.addListener('execute', this.__onPrevRange);
+            this.__prevPageBtn = new qx.ui.toolbar.Button('Previous', 'helenos/previous_page.png');
+            this.__prevPageBtn.addListener('execute', this.__onPrevRange);
             
-            var nextButton = new qx.ui.toolbar.Button('Next', 'helenos/next_page.png');
-            nextButton.addListener('execute', this.__onNextRange);
+            this.__nextPageBtn = new qx.ui.toolbar.Button('Next', 'helenos/next_page.png');
+            this.__nextPageBtn.addListener('execute', this.__onNextRange);
             
-            buttonsBar.add(prevButton);
-            buttonsBar.add(nextButton);
+            buttonsBar.add(this.__prevPageBtn);
+            buttonsBar.add(this.__nextPageBtn);
             return buttonsBar;
         },
         
         __onPrevRange : function(e) {
             // gdy lista wynikow jeszcze pusta to nie uzywaj przewijania wogole zrob szare
-            this.__keyFromTF.setValue(this.ff);
+            this.__keyFromTF.setValue(this.__firstKeyID);
             this._performValidation();
         },
         
@@ -123,6 +131,22 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             pane.setWidth(180);
             pane.add(container);
             return pane;
+        },
+        
+        __disableNextPrevBtns : function() {
+            if (this.__nextPrevBtnsEnabled == true) {
+                this.__prevPageBtn.setEnabled(false);
+                this.__nextPageBtn.setEnabled(false);
+                this._nextPrevBtnsEnabled = false;
+            }
+        },
+        
+        __enableNextPrevBtns : function() {
+            if (this.__nextPrevBtnsEnabled == false) {
+                this.__prevPageBtn.setEnabled(true);
+                this.__prevPageBtn.setEnabled(true);
+                this._nextPrevBtnsEnabled = true;
+            }
         },
 
         __getConsistencyLevelGB : function() {
@@ -159,22 +183,40 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             return columnsGB;
         },
         
-        __getKeysGB : function() {
-            this.__keyFromTF = new helenos.ui.TextField(this._cfDef.keyValidationClass);
-            this.__keyToTF = new helenos.ui.TextField(this._cfDef.keyValidationClass);
-            this.__keyToTF.setEnabled(false);
-            
+        __getKeysGB : function() {          
             var keysGB = new helenos.ui.GroupBoxV('Keys');
-            keysGB.add(new qx.ui.basic.Label('From:'));
-            keysGB.add(this.__keyFromTF);
-            keysGB.add(new qx.ui.basic.Label('To:'));
-            keysGB.add(this.__keyToTF);
+            keysGB.add(this.__getKeysPredicateBox());
+            keysGB.add(this.__getKeysRangeBox());
             
             keysGB.add(new qx.ui.basic.Label('Key mode:'));
             keysGB.add(this.__getKeyModeBG());
             
             return keysGB;
         },
+        
+         __getKeysPredicateBox : function(){
+           this.__keysPredicateCP = new qx.ui.container.Composite(new qx.ui.layout.VBox(5)).set({padding : 0});
+           this.__keyTF = new helenos.ui.TextField(this._cfDef.keyValidationClass);
+           this.__keysPredicateCP.add(new qx.ui.basic.Label('Key:'));
+           this.__keysPredicateCP.add(this.__keyTF);
+           
+           return this.__keysPredicateCP;
+         },
+         
+         __getKeysRangeBox : function() {
+           this.__keyFromTF = new helenos.ui.TextField(this._cfDef.keyValidationClass);
+           this.__keyToTF = new helenos.ui.TextField(this._cfDef.keyValidationClass);
+           this.__keysLimitTF = new qx.ui.form.TextField().set({filter : /[0-9]/, value : '10'});
+           
+           this.__keysRangeCP = new qx.ui.container.Composite(new qx.ui.layout.VBox(5)).set({padding : 0, visibility : 'excluded'});
+           this.__keysRangeCP.add(new qx.ui.basic.Label('From:'));
+           this.__keysRangeCP.add(this.__keyFromTF);
+           this.__keysRangeCP.add(new qx.ui.basic.Label('To:'));
+           this.__keysRangeCP.add(this.__keyToTF);
+           this.__keysRangeCP.add(new qx.ui.basic.Label('Max keys:'));
+           this.__keysRangeCP.add(this.__keysLimitTF);
+           return this.__keysRangeCP;
+         },
         
         __getRangeModeBG : function() {
             var byNameBT = new qx.ui.form.RadioButton('name');
@@ -241,8 +283,13 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         
         _onKeyModeToggled : function(e) {
             var selectedBtnLabel = e.getData()[0].getLabel();
-            this.__keyToTF.resetValue();
-            this.__keyToTF.setEnabled(selectedBtnLabel != 'predicate');
+            if (selectedBtnLabel == 'predicate') {
+                this.__keysRangeCP.setVisibility('excluded');
+                this.__keysPredicateCP.setVisibility('visible');
+            } else {
+                this.__keysRangeCP.setVisibility('visible');
+                this.__keysPredicateCP.setVisibility('excluded');
+            }
             this.__keyMode = selectedBtnLabel;
         }
     }

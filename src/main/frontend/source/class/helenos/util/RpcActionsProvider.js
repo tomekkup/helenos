@@ -175,11 +175,10 @@ qx.Class.define('helenos.util.RpcActionsProvider', {
             return query;
         },
         
-        queryPredicate : function(cfDef, consistencyLevel, keyFrom, keyTo, columnNames, nameStart, nameEnd, sName, reversed ) {
+        queryPredicate : function(cfDef, consistencyLevel, keyFrom, columnNames, nameStart, nameEnd, sName, reversed ) {
             var query = this.__prepareQuery(cfDef, consistencyLevel);
             
             query.keyFrom = keyFrom;
-            query.keyTo = keyTo;
             query.columnNames = columnNames;
             query.nameStart = nameStart;
             query.nameEnd = nameEnd;

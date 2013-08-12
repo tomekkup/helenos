@@ -1,11 +1,8 @@
 package tomekkup.helenos.service;
 
 import com.googlecode.jsonrpc4j.JsonRpcParam;
-import java.io.Serializable;
 import java.util.List;
-import tomekkup.helenos.types.Column;
 import tomekkup.helenos.types.Slice;
-import tomekkup.helenos.types.qx.query.SingleSubColumnQuery;
 import tomekkup.helenos.types.qx.query.SubRangeQuery;
 
 /**

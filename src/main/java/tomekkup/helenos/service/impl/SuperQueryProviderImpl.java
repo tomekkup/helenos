@@ -34,7 +34,7 @@ public class SuperQueryProviderImpl extends AbstractQueryProvider implements Sup
         cq.setKey(key);
         cq.setSuperColumn(Converter.toValue(query.getsName(), query.getsNameClass()));
         if (CollectionUtils.isEmpty(query.getColumnNames())) {
-            cq.setRange(Converter.toValue(query.getNameStart(), query.getNameClass()), Converter.toValue(query.getNameEnd(), query.getNameClass()), query.isReversed(), query.getMaxResults());
+            cq.setRange(Converter.toValue(query.getNameStart(), query.getNameClass()), Converter.toValue(query.getNameEnd(), query.getNameClass()), query.isReversed(), query.getLimit());
         } else {
             cq.setColumnNames(Converter.toValue(query.getColumnNames(), query.getNameClass()));
         }
@@ -57,7 +57,7 @@ public class SuperQueryProviderImpl extends AbstractQueryProvider implements Sup
         cq.setKeys(Converter.toValue(query.getKeyFrom(), query.getKeyClass()), Converter.toValue(query.getKeyTo(), query.getKeyClass()));
         cq.setSuperColumn(Converter.toValue(query.getsName(), query.getsNameClass()));
         if (CollectionUtils.isEmpty(query.getColumnNames())) {
-            cq.setRange(Converter.toValue(query.getNameStart(), query.getNameClass()), Converter.toValue(query.getNameEnd(), query.getNameClass()), query.isReversed(), query.getMaxResults());
+            cq.setRange(Converter.toValue(query.getNameStart(), query.getNameClass()), Converter.toValue(query.getNameEnd(), query.getNameClass()), query.isReversed(), query.getLimit());
         } else {
             cq.setColumnNames(Converter.toValue(query.getColumnNames(), query.getNameClass()));
         }

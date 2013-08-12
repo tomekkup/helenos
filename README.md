@@ -6,7 +6,7 @@ Helenos is a web based GUI Cassandra client that helps you to explore data and m
 
 ## Current version
 
-1.3
+1.4
 
 ## Download
 
@@ -29,6 +29,7 @@ You can follow me on Twitter to keep up with new releases [Tweeter](https://twit
 ## Features
 
 * Authentication
+* User ADMIN & SIMPLE roles
 * Listing keyspaces and column families
 * Viewing properties of above
 * Add / remove / truncate column family
@@ -36,6 +37,8 @@ You can follow me on Twitter to keep up with new releases [Tweeter](https://twit
 * Data browsing via:
     * keyRange
     * predicate
+* Results pagination
+* Custom serializers
 * CQL support
 
 ## Installation
@@ -67,6 +70,8 @@ and unpack to directory src/main/frontend/contribs and change destination folder
 * Manually setting serializers
 * Persisting default filter criteria to reuse at anytime
 * JMX monitor
+* human readable clock in results page
+* schema modifications
 
 ## FAQ
 

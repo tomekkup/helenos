@@ -11,8 +11,8 @@ package tomekkup.helenos.types.qx.query;
  */
 public abstract class AbstractRangeQuery<K,N,V> extends AbstractQuery<K,N,V> {
     
-    private static final int DEFAULT_MAX_RESULTS = 20;
-    protected int maxResults = DEFAULT_MAX_RESULTS;
+    private static final int DEFAULT_LIMIT = 10;
+    protected int limit = DEFAULT_LIMIT;
 
     public AbstractRangeQuery() {
     }
@@ -21,15 +21,15 @@ public abstract class AbstractRangeQuery<K,N,V> extends AbstractQuery<K,N,V> {
         super(keyClass, nameClass, keyspace, columnFamily);
     }
     
-    public AbstractRangeQuery(int maxResults) {
-        setMaxResults(maxResults);
+    public AbstractRangeQuery(int limit) {
+        setLimit(limit);
     }
 
-    public void setMaxResults(int maxResults) {
-        this.maxResults = maxResults;
+    public void setLimit(int limit) {
+        this.limit = limit;
     }
 
-    public int getMaxResults() {
-        return maxResults;
+    public int getLimit() {
+        return this.limit;
     }
 }
