@@ -1,0 +1,8 @@
+Sorry - my private notes in Polish ;)
+-------------------------------------
+W trybie predicate szukam po kolumnach i pokazuje te buttony, ktore maja przeszukiwac po zakresie kolumn.
+Natomiast w trybie range szukam po kluczach, ale buttony powinny byc nieaktywne gdy columnmode tez jest range. wtedy szukam po kluczach.
+
+dodaj klawisz clean, ktory wyczysci pola formularza Reseterem
+
+gdy lista wynikow mniejsza niz oczekiwana to nie aktywuj buttonow next/prev

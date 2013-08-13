@@ -31,6 +31,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         __nameEndTF : null,
         __sNameTF : null,
         __columnNamesTF : null,
+        __colMode : 'range',
         
         __keysPredicateCP : null,
         __keysRangeCP : null,
@@ -91,9 +92,11 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         __getButtonsBar : function() {
             var buttonsBar = new qx.ui.toolbar.ToolBar();
             this.__prevPageBtn = new qx.ui.toolbar.Button('Previous', 'helenos/previous_page.png');
+            this.__prevPageBtn.setEnabled(false);
             this.__prevPageBtn.addListener('execute', this.__onPrevRange);
             
             this.__nextPageBtn = new qx.ui.toolbar.Button('Next', 'helenos/next_page.png');
+            this.__nextPageBtn.setEnabled(false);
             this.__nextPageBtn.addListener('execute', this.__onNextRange);
             
             buttonsBar.add(this.__prevPageBtn);
@@ -102,15 +105,29 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         },
         
         __onPrevRange : function(e) {
-            // gdy lista wynikow jeszcze pusta to nie uzywaj przewijania wogole zrob szare
-            this.__keyFromTF.setValue(this.__firstKeyID);
-            this._performValidation();
+            if (this.__validateNextPrevMode()) {
+                this.__keyFromTF.setValue(this.__firstKeyID);
+                this._performValidation();
+            }
         },
         
         __onNextRange : function(e) {
-            // gdy lista wynikow jeszcze pusta to nie uzywaj przewijania wogole zrob szare
-            this.__keyFromTF.setValue(this.__lastKeyID);
-            this._performValidation();
+            if (this.__validateNextPrevMode()) {
+                this.__keyFromTF.setValue(this.__lastKeyID);
+                this._performValidation();
+            }
+        },
+        
+        __validateNextPrevMode : function() {
+          if (this._colMode == 'range' && this._keyMode != 'predicate') {
+              (new dialog.Alert({
+                "message" : 'You can not paginate with key mode and column mode set to \'range\'',
+                'image' : 'icon/48/status/dialog-error.png'
+            })).set({width : 350}).show();
+              return false;
+          } else {
+              return true;
+          }
         },
         
         _getCriteriaPane : function() {
@@ -271,8 +288,8 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         },
         
         _onRangeModeToggled : function(e) {
-            var selectedBtnLabel = e.getData()[0].getLabel();
-            if (selectedBtnLabel == 'name') {
+            this._colMode = e.getData()[0].getLabel();
+            if (this._colMode == 'name') {
                 this.__rangeFromToCP.setVisibility('excluded');
                 this.__rangeColNamesCP.setVisibility('visible');
             } else {
@@ -282,15 +299,14 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         },
         
         _onKeyModeToggled : function(e) {
-            var selectedBtnLabel = e.getData()[0].getLabel();
-            if (selectedBtnLabel == 'predicate') {
+            this.__keyMode = e.getData()[0].getLabel();
+            if (this.__keyMode == 'predicate') {
                 this.__keysRangeCP.setVisibility('excluded');
                 this.__keysPredicateCP.setVisibility('visible');
             } else {
                 this.__keysRangeCP.setVisibility('visible');
                 this.__keysPredicateCP.setVisibility('excluded');
             }
-            this.__keyMode = selectedBtnLabel;
         }
     }
 });
