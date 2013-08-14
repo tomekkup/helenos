@@ -27,6 +27,7 @@ qx.Class.define("helenos.components.tab.browse.AbstractPage",
         });
         
         this._manager = new qx.ui.form.validation.Manager();
+        this._resetter = new qx.ui.form.Resetter();
         this.__buildMainPane();
     },
  
@@ -34,6 +35,7 @@ qx.Class.define("helenos.components.tab.browse.AbstractPage",
         
         _cfDef : null,
         _manager : null,
+        _resetter : null,
         _resultsTree : null,
         _consistencyLevelSB : null,
         _searchButtonMenu : null,
@@ -53,6 +55,10 @@ qx.Class.define("helenos.components.tab.browse.AbstractPage",
                 this._searchButtonMenu.add(new qx.ui.menu.Button(item, 'helenos/ca.png'));
             }
         },*/
+        
+        _addToResetter : function(widget) {
+            this._resetter.add(widget);
+        },
         
         _initConsistencyLevelSB : function() {
             this._consistencyLevelSB = new qx.ui.form.SelectBox();
