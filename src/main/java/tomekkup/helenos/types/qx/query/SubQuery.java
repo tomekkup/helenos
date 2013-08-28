@@ -9,8 +9,13 @@ package tomekkup.helenos.types.qx.query;
  * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
  * *******************************************************
  */
-public interface Query<K,N,V> {
-    
-    String getConsistencyLevel();
-    String getKeyspace();
+public interface SubQuery<SN> {
+ 
+    Class<SN> getsNameClass();
+
+    void setsNameClass(Class<SN> sNameClass);
+
+    SN getsName();
+
+    void setsName(String sName);
 }

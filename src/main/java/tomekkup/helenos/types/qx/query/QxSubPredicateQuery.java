@@ -1,6 +1,6 @@
 package tomekkup.helenos.types.qx.query;
 
-import java.util.List;
+import tomekkup.helenos.Converter;
 
 /**
  * ********************************************************
@@ -11,37 +11,32 @@ import java.util.List;
  * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
  * *******************************************************
  */
-public class SubRangeQuery<K,SN,N,V> extends RangeQuery<K,N,V> {
+public class QxSubPredicateQuery<K, SN, N, V> extends QxPredicateQuery<K, N, V> implements SubQuery<SN> {
 
     private Class<SN> sNameClass;
     private String sName;
-    
 
-    public SubRangeQuery() {
+    public QxSubPredicateQuery() {
         super();
     }
 
-    public SubRangeQuery(Class<K> keyClass, Class<SN> sNameClass, Class<N> nameClass, String keyspace, String columnFamily, String keyFrom, String keyTo, List<String> columnNames, String sName, String nameStart, String nameEnd) {
-        super(keyClass, nameClass, keyspace, columnFamily, keyFrom, keyTo, columnNames, nameStart, nameEnd);
-        setsNameClass(sNameClass);
-        setsName(sName);;
-    }
-
+    @Override
     public Class<SN> getsNameClass() {
         return sNameClass;
     }
 
+    @Override
     public void setsNameClass(Class<SN> sNameClass) {
         this.sNameClass = sNameClass;
     }
 
-    public String getsName() {
-        return sName;
+    @Override
+    public SN getsName() {
+        return Converter.toValue(sName, sNameClass);
     }
 
+    @Override
     public void setsName(String sName) {
         this.sName = sName;
     }
-
-    
 }

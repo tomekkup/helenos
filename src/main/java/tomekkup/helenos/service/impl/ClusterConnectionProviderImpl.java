@@ -43,7 +43,7 @@ public class ClusterConnectionProviderImpl extends AbstractProvider implements C
     public List<ClusterConfiguration> loadAll() {
         return clusterConfigDao.loadAll();
     }
-    
+
     @Override
     public long getConnectionsCount() {
         return clusterConfigDao.getConnectionsCount();
@@ -53,7 +53,7 @@ public class ClusterConnectionProviderImpl extends AbstractProvider implements C
     public void store(ClusterConfiguration configuration) {
         clusterConfigDao.store(configuration);
     }
-    
+
     @Override
     public ClusterConfiguration getConnectionByAlias(String alias) {
         return clusterConfigDao.get(alias);

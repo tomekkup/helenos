@@ -1,9 +1,5 @@
 package tomekkup.helenos.service.impl;
 
-import tomekkup.helenos.Converter;
-import tomekkup.helenos.service.ClusterConfigAware;
-import tomekkup.helenos.service.SuperQueryProvider;
-import tomekkup.helenos.types.Slice;
 import java.util.ArrayList;
 import java.util.List;
 import me.prettyprint.hector.api.beans.ColumnSlice;
@@ -11,8 +7,12 @@ import me.prettyprint.hector.api.beans.OrderedRows;
 import me.prettyprint.hector.api.beans.Row;
 import me.prettyprint.hector.api.factory.HFactory;
 import me.prettyprint.hector.api.query.*;
+import org.apache.commons.lang.ArrayUtils;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
+import tomekkup.helenos.service.ClusterConfigAware;
+import tomekkup.helenos.service.SuperQueryProvider;
+import tomekkup.helenos.types.Slice;
+import tomekkup.helenos.types.qx.query.QxSubPredicateQuery;
 
 /**
  * ********************************************************
@@ -27,39 +27,41 @@ import org.springframework.util.CollectionUtils;
 public class SuperQueryProviderImpl extends AbstractQueryProvider implements SuperQueryProvider, ClusterConfigAware {
 
     @Override
-    public <K, SN, N, V> List<Slice<K, N, V>> predicate(tomekkup.helenos.types.qx.query.SubRangeQuery<K, SN, N, V> query) {
-        K key = Converter.toValue(query.getKeyFrom(), query.getKeyClass());
+    public <K, SN, N, V> List<Slice<K, N, V>> predicate(QxSubPredicateQuery<K, SN, N, V> query) {
+        
         SubSliceQuery<K, SN, N, V> cq = HFactory.createSubSliceQuery(getKeyspace(query), getSerializer(query.getKeyClass()), getSerializer(query.getsNameClass()), getSerializer(query.getNameClass()), getSerializer(query.getValueClass()));
         cq.setColumnFamily(query.getColumnFamily());
-        cq.setKey(key);
-        cq.setSuperColumn(Converter.toValue(query.getsName(), query.getsNameClass()));
-        if (CollectionUtils.isEmpty(query.getColumnNames())) {
-            cq.setRange(Converter.toValue(query.getNameStart(), query.getNameClass()), Converter.toValue(query.getNameEnd(), query.getNameClass()), query.isReversed(), query.getLimit());
+        cq.setKey(query.getKey());
+        cq.setSuperColumn(query.getsName());
+        
+        if (ArrayUtils.isEmpty(query.getColumnNames())) {
+            cq.setRange(query.getNameStart(), query.getNameEnd(), query.isReversed(), query.getLimit());
         } else {
-            cq.setColumnNames(Converter.toValue(query.getColumnNames(), query.getNameClass()));
+            cq.setColumnNames(query.getColumnNames());
         }
 
         QueryResult<ColumnSlice<N, V>> qr = cq.execute();
 
         List<Slice<K, N, V>> ret = new ArrayList<Slice<K, N, V>>(1);
         if (qr != null) {
-            ret.add(new Slice(key, toJsonColumns(qr.get().getColumns())));
+            ret.add(new Slice(query.getKey(), toJsonColumns(qr.get().getColumns())));
         }
 
         return ret;
     }
 
     @Override
-    public <K, SN, N, V> List<Slice<K, N, V>> keyRange(tomekkup.helenos.types.qx.query.SubRangeQuery<K, SN, N,V> query) {
+    public <K, SN, N, V> List<Slice<K, N, V>> keyRange(tomekkup.helenos.types.qx.query.QxSubRangeQuery<K, SN, N,V> query) {
         RangeSubSlicesQuery<K, SN, N, V> cq = HFactory.createRangeSubSlicesQuery(getKeyspace(query), getSerializer(query.getKeyClass()), getSerializer(query.getsNameClass()), getSerializer(query.getNameClass()), getSerializer(query.getValueClass()));
         cq.setColumnFamily(query.getColumnFamily());
 
-        cq.setKeys(Converter.toValue(query.getKeyFrom(), query.getKeyClass()), Converter.toValue(query.getKeyTo(), query.getKeyClass()));
-        cq.setSuperColumn(Converter.toValue(query.getsName(), query.getsNameClass()));
-        if (CollectionUtils.isEmpty(query.getColumnNames())) {
-            cq.setRange(Converter.toValue(query.getNameStart(), query.getNameClass()), Converter.toValue(query.getNameEnd(), query.getNameClass()), query.isReversed(), query.getLimit());
+        cq.setKeys(query.getKeyFrom(), query.getKeyTo());
+        cq.setSuperColumn(query.getsName());
+        
+        if (ArrayUtils.isEmpty(query.getColumnNames())) {
+            cq.setRange(query.getNameStart(), query.getNameEnd(), query.isReversed(), query.getLimit());
         } else {
-            cq.setColumnNames(Converter.toValue(query.getColumnNames(), query.getNameClass()));
+            cq.setColumnNames(query.getColumnNames());
         }
 
         QueryResult<OrderedRows<K, N, V>> qr = cq.execute();

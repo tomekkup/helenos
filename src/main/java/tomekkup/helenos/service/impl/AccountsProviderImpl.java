@@ -41,33 +41,33 @@ public class AccountsProviderImpl implements AccountsProvider {
     public long getAccountsCount() {
         return accountDao.getAccountsCount();
     }
-    
+
     @Override
     public void delete(String username) {
         accountDao.delete(username);
     }
-    
+
     @Override
     public void store(QxAccount account) {
         accountDao.store(account);
     }
-    
+
     @Override
     public void saveNewPassword(QxPasswordChangeRequest pcr) throws IllegalStateException {
         accountDao.saveNewPassword(pcr);
     }
-    
+
     @Override
     public void createAccount(QxAccount account) throws IllegalStateException {
         try {
             loadUserByUsername(account.getUsername());
-        } catch(UsernameNotFoundException e) {
+        } catch (UsernameNotFoundException e) {
             accountDao.createAccount(account);
             return;
         }
         throw new IllegalStateException("account with this name already exists");
     }
-    
+
     @Override
     public QxAccount loadUserByUsername(String username) {
         return (QxAccount) accountDao.loadUserByUsername(username);

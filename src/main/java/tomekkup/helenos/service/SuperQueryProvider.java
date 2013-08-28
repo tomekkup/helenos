@@ -3,7 +3,8 @@ package tomekkup.helenos.service;
 import com.googlecode.jsonrpc4j.JsonRpcParam;
 import java.util.List;
 import tomekkup.helenos.types.Slice;
-import tomekkup.helenos.types.qx.query.SubRangeQuery;
+import tomekkup.helenos.types.qx.query.QxSubPredicateQuery;
+import tomekkup.helenos.types.qx.query.QxSubRangeQuery;
 
 /**
  * ********************************************************
@@ -16,7 +17,7 @@ import tomekkup.helenos.types.qx.query.SubRangeQuery;
  */
 public interface SuperQueryProvider {
 
-    <K, SN, N, V> List<Slice<K, N, V>> predicate(@JsonRpcParam("query") SubRangeQuery<K,SN,N,V> query);
+    <K, SN, N, V> List<Slice<K, N, V>> predicate(@JsonRpcParam("query") QxSubPredicateQuery<K,SN,N,V> query);
 
-    <K, SN, N, V> List<Slice<K, N, V>> keyRange(tomekkup.helenos.types.qx.query.SubRangeQuery<K,SN,N,V> query);
+    <K, SN, N, V> List<Slice<K, N, V>> keyRange(@JsonRpcParam("query") QxSubRangeQuery<K,SN,N,V> query);
 }

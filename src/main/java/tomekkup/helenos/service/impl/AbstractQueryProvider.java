@@ -17,10 +17,10 @@ import tomekkup.helenos.types.Column;
  */
 public abstract class AbstractQueryProvider extends AbstractProvider {
 
-    protected <N,V> List<Column<N,V>> toJsonColumns(List<HColumn<N,V>> columns) {
-        List<Column<N,V>> retColumns = new ArrayList<Column<N,V>>(1);
-        Iterator<HColumn<N,V>> iterator = columns.iterator();
-        while(iterator.hasNext()) {
+    protected <N, V> List<Column<N, V>> toJsonColumns(List<HColumn<N, V>> columns) {
+        List<Column<N, V>> retColumns = new ArrayList<Column<N, V>>(1);
+        Iterator<HColumn<N, V>> iterator = columns.iterator();
+        while (iterator.hasNext()) {
             retColumns.add(mapper.map(iterator.next(), Column.class));
         }
         return retColumns;

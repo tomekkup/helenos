@@ -28,6 +28,7 @@ qx.Class.define("helenos.components.tab.browse.AbstractPage",
         
         this._manager = new qx.ui.form.validation.Manager();
         this._resetter = new qx.ui.form.Resetter();
+        this._disabler = new helenos.ui.form.Disabler();
         this.__buildMainPane();
     },
  
@@ -36,6 +37,7 @@ qx.Class.define("helenos.components.tab.browse.AbstractPage",
         _cfDef : null,
         _manager : null,
         _resetter : null,
+        _disabler : null,
         _resultsTree : null,
         _consistencyLevelSB : null,
         _searchButtonMenu : null,
@@ -58,6 +60,10 @@ qx.Class.define("helenos.components.tab.browse.AbstractPage",
         
         _addToResetter : function(widget) {
             this._resetter.add(widget);
+        },
+        
+        _addToDisabler : function(widget) {
+            this._disabler.add(widget);
         },
         
         _initConsistencyLevelSB : function() {

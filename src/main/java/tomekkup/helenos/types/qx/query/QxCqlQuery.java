@@ -9,15 +9,15 @@ package tomekkup.helenos.types.qx.query;
  * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
  * *******************************************************
  */
-public class CqlQuery<K,N,V> extends AbstractQuery<K,N,V> {
+public class QxCqlQuery<K,N,V> extends AbstractQuery<K,N,V> {
 
     private String query;
 
-    public CqlQuery() {
+    public QxCqlQuery() {
         super();
     }
 
-    public CqlQuery(Class<K> keyClass, Class<N> nameClass, String keyspace, String columnFamily, String query) {
+    public QxCqlQuery(Class<K> keyClass, Class<N> nameClass, String keyspace, String columnFamily, String query) {
         super(keyClass, nameClass, keyspace, columnFamily);
         this.query = query;
     }
