@@ -12,8 +12,8 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
  
     construct : function(ksName, cfName)
     {
-        this._keyMode = this.self(arguments).PREDICATE;
-        this._colMode = this.self(arguments).RANGE;
+        this.__keyMode = this.self(arguments).PREDICATE;
+        this.__colMode = this.self(arguments).RANGE;
         this.base(arguments, ksName, cfName);
         
         this.__disableNextPrevBtns();
@@ -31,17 +31,17 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         __keyModeRBG : null,
         __columnsByRBG : null,
         
-        __keyFromTF : null,
-        __keyToTF : null,
         __keyMode : null,
         __keyTF : null,
-        __keysLimitTF : null,
+        __keyFromTF : null,
+        __keyToTF : null,
+        __rowCountTF : null,
         
+        __colMode : null,
         __nameStartTF : null,
         __nameEndTF : null,
         __sNameTF : null,
         __columnNamesTF : null,
-        __colMode : null,
         
         __keysPredicateCP : null,
         __keysRangeCP : null,
@@ -56,7 +56,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         __nextPageBtn : null,
         __nextPrevBtnsEnabled : false,
         
-        _tree : null,
+        __queryObj : null,
         
         _getSplitPaneOrientation : function() {
             return 'horizontal';
@@ -67,30 +67,51 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         },
         
         _performSearch  : function(e) {
-            var sName = (this.__sNameTF == null ? null : this.__sNameTF.getValue());
+            alert('1');
             var consistencyLevel = this._consistencyLevelSB.getSelection()[0].getLabel();
-            
-            var nameStart, nameEnd, reversed, columnNames;
-            if (this.__columnsByRBG.getSelection()[0].getLabel() == this.self(arguments).RANGE) {
-                nameStart = this.__nameStartTF.getValue();
-                nameEnd = this.__nameEndTF.getValue();
-                reversed = this.__reversedCB.getValue();
+            if (this.__isSuperColumnMode()) {
+                if (this.__keyMode == this.self(arguments).RANGE) {
+                    this.__queryObj = new helenos.model.SubRangeQuery(this._cfDef, consistencyLevel);
+                } else {
+                    this.__queryObj = new helenos.model.SubPredicateQuery(this._cfDef, consistencyLevel);
+                }
+                this.__queryObj.setSName(this.__sNameTF.getValue());
             } else {
-                columnNames = this.__columnNamesTF.getValue().split(',');
+                alert('1.2');
+                if (this.__keyMode == this.self(arguments).RANGE) {
+                    alert('1.3');
+                    this.__queryObj = new helenos.model.RangeQuery(this._cfDef, consistencyLevel);
+                } else {
+                    alert('1.3.2');
+                    this.__queryObj = new helenos.model.PredicateQuery(this._cfDef, consistencyLevel);
+                }
             }
-
+            alert('2');
+            if (this.__keyMode == this.self(arguments).RANGE) {
+                this.__queryObj.setKeyFrom(this.__keyFromTF.getValue());
+                this.__queryObj.setKeyTo(this.__keyToTF.getValue());
+                this.__queryObj.setRowCount(this.__rowCountTF.getValue());
+            } else {
+                this.__queryObj.setKey(this.__keyTF.getValue());
+            }
+            
+            if (this.__colMode == this.self(arguments).RANGE) {
+                this.__queryObj.setNameStart(this.__nameStartTF.getValue());
+                this.__queryObj.setNameEnd(this.__nameEndTF.getValue());
+                this.__queryObj.setReversed(this.__reversedCB.getValue());
+            } else {
+                this.__queryObj.setColumnNames(this.__columnNamesTF.getValue().split(','));
+            }
+            
+            alert(this.__queryObj);
             var result = null;
             if (this.__keyMode == this.self(arguments).PREDICATE) {
-                var key = this._keyTF.getValue();
-                result = helenos.util.RpcActionsProvider.queryPredicate(this._cfDef, consistencyLevel, key, columnNames, nameStart, nameEnd, sName, reversed);
+                result = helenos.util.RpcActionsProvider.queryPredicate(this._cfDef, this.__queryObj);
             } else  {
-                var keyFrom = this.__keyFromTF.getValue();
-                var keyTo = this.__keyToTF.getValue();
-                result = helenos.util.RpcActionsProvider.queryKeyRange(this._cfDef, consistencyLevel, keyFrom, keyTo, columnNames, nameStart, nameEnd, sName, reversed);
+                result = helenos.util.RpcActionsProvider.queryKeyRange(this._cfDef, this.__queryObj);
             }
             
             this._collectPaginationData(result);
-            
             return result;
         },
         
@@ -99,7 +120,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
                 this.__firstID = result[0].key;
                 this.__lastID = result[result.length-1].key;
             } else  {
-                if (this.__colMode == this.self(arguments).RANGE) {}
+                if (this.__colMode == this.self(arguments).RANGE) {
                     var columnsRange = result[0].columns;
                     this.__firstID = columnsRange[0].name;
                     this.__lastID = columnsRange[columnsRange.length-1].name;
@@ -132,7 +153,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             if (this.__validateNextPrevMode()) {
                 // jesli key mode jest keyrange to wstawiaj w key
                 // a jesli nie to wstawiaj w columnach oczywiscie
-                this.__keyFromTF.setValue(this.__firstKeyID);
+                this.__keyFromTF.setValue(this.__firstID);
                 this._performValidation();
             }
         },
@@ -141,13 +162,13 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             if (this.__validateNextPrevMode()) {
                 // jesli key mode jest keyrange to wstawiaj w key
                 // a jesli nie to wstawiaj w columnach oczywiscie
-                this.__keyFromTF.setValue(this.__lastKeyID);
+                this.__keyFromTF.setValue(this.__lastID);
                 this._performValidation();
             }
         },
         
         __validateNextPrevMode : function() {
-          if (this._colMode == this.self(arguments).RANGE && this._keyMode == this.self(arguments).KEY_RANGE) {
+          if (this.__colMode == this.self(arguments).RANGE && this.__keyMode == this.self(arguments).KEY_RANGE) {
               (new dialog.Alert({
                 "message" : 'You can not paginate with key mode and column mode set to \'range\'',
                 'image' : 'icon/48/status/dialog-error.png'
@@ -181,7 +202,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         
         __getResetButton : function() {
             var button = new qx.ui.form.Button('Reset', 'icon/16/actions/edit-clear.png');
-            button.addListener("execute", this.__resetSearchForm, this);
+            button.addListener('execute', this.__resetSearchForm, this);
             return button;
         },
         
@@ -214,11 +235,15 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             consLevelGB.add(this._consistencyLevelSB);
             return consLevelGB;
         },
+        
+        __isSuperColumnMode : function() {
+            return this._cfDef.columnType == 'Super';
+        },
 
         __getColumnsGB : function() {
             var columnsGB = new helenos.ui.GroupBoxV('Columns');
             
-            if (this._cfDef.columnType == 'Super') {
+            if (this.__isSuperColumnMode() == true) {
                 this.__nameStartTF = new helenos.ui.TextField(this._cfDef.subComparatorType.className);
                 this.__nameEndTF = new helenos.ui.TextField(this._cfDef.subComparatorType.className);
             } else {
@@ -270,13 +295,13 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
          __getKeysRangeBox : function() {
            this.__keyFromTF = new helenos.ui.TextField(this._cfDef.keyValidationClass);
            this.__keyToTF = new helenos.ui.TextField(this._cfDef.keyValidationClass);
-           this.__keysLimitTF = new qx.ui.form.TextField().set({filter : /[0-9]/, value : '10'});
+           this.__rowCountTF = new qx.ui.form.TextField().set({filter : /[0-9]/, value : '10'});
            this._addToResetter(this.__keyFromTF);
            this._addToDisabler(this.__keyFromTF);
            this._addToResetter(this.__keyToTF);
            this._addToDisabler(this.__keyToTF);
-           this._addToResetter(this.__keysLimitTF);
-           this._addToDisabler(this.__keysLimitTF);
+           this._addToResetter(this.__rowCountTF);
+           this._addToDisabler(this.__rowCountTF);
            
            this.__keysRangeCP = new qx.ui.container.Composite(new qx.ui.layout.VBox(5)).set({padding : 0, visibility : 'excluded'});
            this.__keysRangeCP.add(new qx.ui.basic.Label('From:'));
@@ -284,7 +309,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
            this.__keysRangeCP.add(new qx.ui.basic.Label('To:'));
            this.__keysRangeCP.add(this.__keyToTF);
            this.__keysRangeCP.add(new qx.ui.basic.Label('Max keys:'));
-           this.__keysRangeCP.add(this.__keysLimitTF);
+           this.__keysRangeCP.add(this.__rowCountTF);
            return this.__keysRangeCP;
          },
         
@@ -298,7 +323,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             this.__columnsByRBG.add(byNameBT);
             this.__columnsByRBG.add(byRangeBT);
             this.__columnsByRBG.setSelection([byRangeBT]);
-            this.__columnsByRBG.addListener("changeSelection", this._onRangeModeToggled, this);
+            this.__columnsByRBG.addListener('changeSelection', this.__onRangeModeToggled, this);
             return this.__columnsByRBG;
         },
         
@@ -312,7 +337,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             this.__keyModeRBG.add(predicateBT);
             this.__keyModeRBG.add(keyRangeBT);
             this.__keyModeRBG.setSelection([predicateBT]);
-            this.__keyModeRBG.addListener("changeSelection", this._onKeyModeToggled, this);
+            this.__keyModeRBG.addListener('changeSelection', this.__onKeyModeToggled, this);
             return this.__keyModeRBG;
         },
         
@@ -350,9 +375,9 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             return this.__rangeColNamesCP;
         },
         
-        _onRangeModeToggled : function(e) {
-            this._colMode = e.getData()[0].getLabel();
-            if (this._colMode == this.self(arguments).NAME) {
+        __onRangeModeToggled : function(e) {
+            this.__colMode = e.getData()[0].getLabel();
+            if (this.__colMode == this.self(arguments).NAME) {
                 this.__rangeFromToCP.setVisibility('excluded');
                 this.__rangeColNamesCP.setVisibility('visible');
             } else {
@@ -361,7 +386,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             }
         },
         
-        _onKeyModeToggled : function(e) {
+        __onKeyModeToggled : function(e) {
             this.__keyMode = e.getData()[0].getLabel();
             if (this.__keyMode == this.self(arguments).PREDICATE) {
                 this.__keysRangeCP.setVisibility('excluded');
@@ -372,4 +397,4 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             }
         }
     }
-});
+})
