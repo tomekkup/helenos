@@ -42,10 +42,12 @@ qx.Theme.define("helenos.theme.Appearance",
         },
         
         'cql-textarea' : {
+            include : 'textfield',
             style : function(states) {
                 return {
                     textColor : '#265515',
-                    font : 'cql'
+                    font : 'cql',
+                    backgroundColor : 'background'
                 }
             }
         },

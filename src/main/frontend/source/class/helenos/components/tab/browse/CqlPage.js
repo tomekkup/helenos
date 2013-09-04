@@ -38,13 +38,15 @@ qx.Class.define("helenos.components.tab.browse.CqlPage",
         },
         
         _getCriteriaPane : function() {
-            this._queryArea = new qx.ui.form.TextArea('SELECT * FROM ' + this._cfDef.name);
+            this._queryArea = new qx.ui.form.TextArea('SELECT * FROM ' + this._cfDef.name + ' LIMIT 100;');
             this._queryArea.set({
                 padding : 4,
                 wrap : true,
                 height : 120,
-                appearance : 'cql-textarea'
+                appearance : 'cql-textarea',
+                required : true
             });
+            this._manager.add(this._queryArea);
                         
             var queryGB = new helenos.ui.GroupBoxV('Query');
             queryGB.add(this._queryArea, {

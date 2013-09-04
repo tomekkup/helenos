@@ -142,7 +142,6 @@ qx.Class.define("helenos.components.SchemaPane",
                         contextMenu: new helenos.components.menu.ColumnFamilyContextMenu(ks.name, cf.name, cf.columnType)
                     });
                     cfItem.setIcon(cf.columnType == 'Super' ? 'helenos/supercf.png' : 'helenos/standardcf.png');
-                    cfItem.setToolTip(this.__createColumnFamilyToolTip(cf));
                     ksItem.add(cfItem);
                 }
             }
