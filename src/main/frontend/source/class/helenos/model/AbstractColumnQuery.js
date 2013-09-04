@@ -10,15 +10,16 @@ qx.Class.define('helenos.model.AbstractColumnQuery', {
     extend : helenos.model.AbstractQuery,
     type : 'abstract',
     
-    construct : function(cfDef, consistencyLevel)
+    construct : function()
     {
-        this.base(arguments, cfDef, consistencyLevel);
+        this.base(arguments);
     },
 
     properties :
     {
         columnNames : {
-            check : 'Array'
+            check : 'Array',
+            nullable : true
         },
         
         nameStart : {},

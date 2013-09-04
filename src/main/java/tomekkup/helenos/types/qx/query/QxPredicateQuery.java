@@ -12,7 +12,7 @@ import tomekkup.helenos.Converter;
  * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
  * *******************************************************
  */
-public abstract class QxPredicateQuery<K,N,V> extends AbstractColumnQuery<K,N,V> {
+public class QxPredicateQuery<K,N,V> extends AbstractColumnQuery<K,N,V> {
     
     private String key;
     

@@ -67,26 +67,27 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         },
         
         _performSearch  : function(e) {
-            alert('1');
+            //alert('1');
             var consistencyLevel = this._consistencyLevelSB.getSelection()[0].getLabel();
             if (this.__isSuperColumnMode()) {
                 if (this.__keyMode == this.self(arguments).RANGE) {
-                    this.__queryObj = new helenos.model.SubRangeQuery(this._cfDef, consistencyLevel);
+                    this.__queryObj = new helenos.model.SubRangeQuery();
                 } else {
-                    this.__queryObj = new helenos.model.SubPredicateQuery(this._cfDef, consistencyLevel);
+                    this.__queryObj = new helenos.model.SubPredicateQuery();
                 }
                 this.__queryObj.setSName(this.__sNameTF.getValue());
             } else {
-                alert('1.2');
+                //alert('1.2');
                 if (this.__keyMode == this.self(arguments).RANGE) {
-                    alert('1.3');
-                    this.__queryObj = new helenos.model.RangeQuery(this._cfDef, consistencyLevel);
+                    //alert('1.3');
+                    this.__queryObj = new helenos.model.RangeQuery();
                 } else {
-                    alert('1.3.2');
-                    this.__queryObj = new helenos.model.PredicateQuery(this._cfDef, consistencyLevel);
+                    //alert('1.3.2');
+                    this.__queryObj = new helenos.model.PredicateQuery();
                 }
             }
-            alert('2');
+            this.__queryObj.prepareQuery(this._cfDef, consistencyLevel);
+            //alert('2');
             if (this.__keyMode == this.self(arguments).RANGE) {
                 this.__queryObj.setKeyFrom(this.__keyFromTF.getValue());
                 this.__queryObj.setKeyTo(this.__keyToTF.getValue());
@@ -103,12 +104,13 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
                 this.__queryObj.setColumnNames(this.__columnNamesTF.getValue().split(','));
             }
             
-            alert(this.__queryObj);
+            //alert(this.__queryObj);
+            var jsonQuery = qx.util.Serializer.toNativeObject(this.__queryObj, null, null);
             var result = null;
             if (this.__keyMode == this.self(arguments).PREDICATE) {
-                result = helenos.util.RpcActionsProvider.queryPredicate(this._cfDef, this.__queryObj);
+                result = helenos.util.RpcActionsProvider.queryPredicate(this._cfDef, jsonQuery);
             } else  {
-                result = helenos.util.RpcActionsProvider.queryKeyRange(this._cfDef, this.__queryObj);
+                result = helenos.util.RpcActionsProvider.queryKeyRange(this._cfDef, jsonQuery);
             }
             
             this._collectPaginationData(result);

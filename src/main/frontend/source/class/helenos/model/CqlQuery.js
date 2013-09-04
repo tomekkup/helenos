@@ -9,9 +9,9 @@ Authors:
 qx.Class.define('helenos.model.CqlQuery', {
     extend : helenos.model.AbstractQuery,
     
-    construct : function(cfDef, consistencyLevel)
+    construct : function()
     {
-        this.base(arguments, cfDef, consistencyLevel);
+        this.base(arguments);
     },
 
     properties :

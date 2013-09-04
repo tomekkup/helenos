@@ -9,11 +9,11 @@ Authors:
 qx.Class.define('helenos.model.RangeQuery', {
     extend : helenos.model.AbstractColumnQuery,
     
-    construct : function(cfDef, consistencyLevel)
+    construct : function()
     {
-        this.base(arguments, cfDef, consistencyLevel);
+        this.base(arguments);
     },
-
+    
     properties :
     {
         keyFrom : { },

@@ -10,8 +10,12 @@ qx.Class.define('helenos.model.SubPredicateQuery', {
     extend : helenos.model.PredicateQuery,
     include : [helenos.model.MSubQuery],
     
-    construct : function(cfDef, consistencyLevel)
+    construct : function()
     {
+        this.base(arguments);
+    },
+    
+    prepareQuery : function(cfDef, consistencyLevel) {
         this.base(arguments, cfDef, consistencyLevel);
         this.setSNameClass(this._findParamClass(cfDef.subComparatorType.className));
     }

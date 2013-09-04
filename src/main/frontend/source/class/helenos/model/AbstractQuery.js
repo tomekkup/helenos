@@ -10,10 +10,9 @@ qx.Class.define('helenos.model.AbstractQuery', {
     extend : qx.core.Object,
     type : 'abstract',
     
-    construct : function(cfDef, consistencyLevel)
+    construct : function()
     {
         this.base(arguments);
-        this.__prepareQuery(cfDef, consistencyLevel);
     },
 
     properties :
@@ -26,32 +25,37 @@ qx.Class.define('helenos.model.AbstractQuery', {
         
         keyspace : {
             check : 'String',
-            nullable : false
+            nullable : false,
+            init : 'undefined'
         },
         
         columnFamily : {
             check : 'String',
-            nullable : false
+            nullable : false,
+            init : 'undefined'
         },
         
         keyClass : {
             check : 'String',
-            nullable : false
+            nullable : false,
+            init : 'undefined'
         },
         
         nameClass : {
             check : 'String',
-            nullable : false
+            nullable : false,
+            init : 'undefined'
         },
         
         valueClass : {
             check : 'String',
-            nullable : false
+            nullable : false,
+            init : 'undefined'
         }
     },
     
     members : {
-        __prepareQuery : function(cfDef, consistencyLevel) {
+        prepareQuery : function(cfDef, consistencyLevel) {
             this.setKeyClass(this._findParamClass(cfDef.keyValidationClass));
             if (cfDef.columnType == 'Standard') {
                 this.setNameClass(this._findParamClass(cfDef.comparatorType.className));

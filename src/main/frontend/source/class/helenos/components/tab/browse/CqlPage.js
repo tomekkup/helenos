@@ -26,9 +26,15 @@ qx.Class.define("helenos.components.tab.browse.CqlPage",
         },
         
         _performSearch  : function(e) {
-            var queryStr = this._queryArea.getValue();
             var consistencyLevel = this._consistencyLevelSB.getSelection()[0].getLabel();
-            return helenos.util.RpcActionsProvider.queryCql(this._cfDef, consistencyLevel, queryStr);
+            
+            this.__queryObj = new helenos.model.CqlQuery();
+            this.__queryObj.prepareQuery(this._cfDef, consistencyLevel);
+            this.__queryObj.setQuery(this._queryArea.getValue());
+            
+            var jsonQuery = qx.util.Serializer.toNativeObject(this.__queryObj, null, null);
+            
+            return helenos.util.RpcActionsProvider.queryCql(jsonQuery);
         },
         
         _getCriteriaPane : function() {
