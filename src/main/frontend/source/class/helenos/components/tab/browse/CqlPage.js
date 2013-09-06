@@ -28,11 +28,11 @@ qx.Class.define("helenos.components.tab.browse.CqlPage",
         _performSearch  : function(e) {
             var consistencyLevel = this._consistencyLevelSB.getSelection()[0].getLabel();
             
-            this.__queryObj = new helenos.model.CqlQuery();
-            this.__queryObj.prepareQuery(this._cfDef, consistencyLevel);
-            this.__queryObj.setQuery(this._queryArea.getValue());
+            this._queryObj = new helenos.model.CqlQuery();
+            this._queryObj.prepareQuery(this._cfDef, consistencyLevel);
+            this._queryObj.setQuery(this._queryArea.getValue());
             
-            var jsonQuery = qx.util.Serializer.toNativeObject(this.__queryObj, null, null);
+            var jsonQuery = qx.util.Serializer.toNativeObject(this._queryObj, null, null);
             
             return helenos.util.RpcActionsProvider.queryCql(jsonQuery);
         },

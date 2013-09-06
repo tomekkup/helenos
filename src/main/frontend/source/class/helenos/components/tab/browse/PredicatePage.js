@@ -16,7 +16,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         this.__colMode = this.self(arguments).RANGE;
         this.base(arguments, ksName, cfName);
         
-        this.__disableNextPrevBtns();
+        this.__disableNextBtn();
     },
     
     statics : {
@@ -52,11 +52,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         // for pagination
         __firstID : null,
         __lastID : null,
-        __prevPageBtn : null,
         __nextPageBtn : null,
-        __nextPrevBtnsEnabled : false,
-        
-        __queryObj : null,
         
         _getSplitPaneOrientation : function() {
             return 'horizontal';
@@ -67,45 +63,40 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         },
         
         _performSearch  : function(e) {
-            //alert('1');
             var consistencyLevel = this._consistencyLevelSB.getSelection()[0].getLabel();
             if (this.__isSuperColumnMode()) {
-                if (this.__keyMode == this.self(arguments).RANGE) {
-                    this.__queryObj = new helenos.model.SubRangeQuery();
+                if (this.__keyMode == this.self(arguments).KEY_RANGE) {
+                    this._queryObj = new helenos.model.SubRangeQuery();
                 } else {
-                    this.__queryObj = new helenos.model.SubPredicateQuery();
+                    this._queryObj = new helenos.model.SubPredicateQuery();
                 }
-                this.__queryObj.setSName(this.__sNameTF.getValue());
+                this._queryObj.setSName(this.__sNameTF.getValue());
             } else {
-                //alert('1.2');
-                if (this.__keyMode == this.self(arguments).RANGE) {
-                    //alert('1.3');
-                    this.__queryObj = new helenos.model.RangeQuery();
+                if (this.__keyMode == this.self(arguments).KEY_RANGE) {
+                    this._queryObj = new helenos.model.RangeQuery();
                 } else {
-                    //alert('1.3.2');
-                    this.__queryObj = new helenos.model.PredicateQuery();
+                    this._queryObj = new helenos.model.PredicateQuery();
                 }
             }
-            this.__queryObj.prepareQuery(this._cfDef, consistencyLevel);
-            //alert('2');
-            if (this.__keyMode == this.self(arguments).RANGE) {
-                this.__queryObj.setKeyFrom(this.__keyFromTF.getValue());
-                this.__queryObj.setKeyTo(this.__keyToTF.getValue());
-                this.__queryObj.setRowCount(this.__rowCountTF.getValue());
+            this._queryObj.prepareQuery(this._cfDef, consistencyLevel);
+            if (this.__keyMode == this.self(arguments).KEY_RANGE) {
+                this._queryObj.setKeyFrom(this.__keyFromTF.getValue());
+                this._queryObj.setKeyTo(this.__keyToTF.getValue());
+                this._queryObj.setRowCount(this.__rowCountTF.getValue());
             } else {
-                this.__queryObj.setKey(this.__keyTF.getValue());
+                this._queryObj.setKey(this.__keyTF.getValue());
             }
             
             if (this.__colMode == this.self(arguments).RANGE) {
-                this.__queryObj.setNameStart(this.__nameStartTF.getValue());
-                this.__queryObj.setNameEnd(this.__nameEndTF.getValue());
-                this.__queryObj.setReversed(this.__reversedCB.getValue());
+                this._queryObj.setNameStart(this.__nameStartTF.getValue());
+                this._queryObj.setNameEnd(this.__nameEndTF.getValue());
+                this._queryObj.setReversed(this.__reversedCB.getValue());
+                this._queryObj.setLimit(this.__colsLimitTF.getValue());
             } else {
-                this.__queryObj.setColumnNames(this.__columnNamesTF.getValue().split(','));
+                this._queryObj.setColumnNames(this.__columnNamesTF.getValue().split(','));
             }
             
-            //alert(this.__queryObj);
-            var jsonQuery = qx.util.Serializer.toNativeObject(this.__queryObj, null, null);
+            var jsonQuery = qx.util.Serializer.toNativeObject(this._queryObj, null, null);
             var result = null;
             if (this.__keyMode == this.self(arguments).PREDICATE) {
                 result = helenos.util.RpcActionsProvider.queryPredicate(this._cfDef, jsonQuery);
@@ -121,11 +112,23 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             if (this.__keyMode == this.self(arguments).KEY_RANGE) {
                 this.__firstID = result[0].key;
                 this.__lastID = result[result.length-1].key;
+                if (result.length < this._queryObj.getRowCount()) {
+                    //alert('xxxxxxx');
+                    this.__disableNextBtn();
+                } else {
+                    this.__enableNextBtn();
+                }
             } else  {
                 if (this.__colMode == this.self(arguments).RANGE) {
                     var columnsRange = result[0].columns;
                     this.__firstID = columnsRange[0].name;
                     this.__lastID = columnsRange[columnsRange.length-1].name;
+                    if (columnsRange.length < this._queryObj.getLimit()) {
+                        //alert(columnsRange.length + ' ' + this._queryObj.getLimit());
+                        this.__disableNextBtn();
+                    } else {
+                        this.__enableNextBtn();
+                    }
                 }
             }
         },
@@ -138,38 +141,29 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         
         __getButtonsBar : function() {
             var buttonsBar = new qx.ui.toolbar.ToolBar();
-            this.__prevPageBtn = new qx.ui.toolbar.Button('Previous', 'helenos/previous_page.png');
-            this.__prevPageBtn.setEnabled(false);
-            this.__prevPageBtn.addListener('execute', this.__onPrevRange);
+            this.__nextPageBtn = new qx.ui.toolbar.Button('Next page', 'helenos/next_page.png');
+            this.__nextPageBtn.addListener('execute', this.__onNextRange, this);
             
-            this.__nextPageBtn = new qx.ui.toolbar.Button('Next', 'helenos/next_page.png');
-            this.__nextPageBtn.setEnabled(false);
-            this.__nextPageBtn.addListener('execute', this.__onNextRange);
-            
-            buttonsBar.add(this.__prevPageBtn);
             buttonsBar.add(this.__nextPageBtn);
             return buttonsBar;
         },
         
-        __onPrevRange : function(e) {
-            if (this.__validateNextPrevMode()) {
-                // jesli key mode jest keyrange to wstawiaj w key
-                // a jesli nie to wstawiaj w columnach oczywiscie
-                this.__keyFromTF.setValue(this.__firstID);
-                this._performValidation();
-            }
-        },
-        
         __onNextRange : function(e) {
-            if (this.__validateNextPrevMode()) {
-                // jesli key mode jest keyrange to wstawiaj w key
-                // a jesli nie to wstawiaj w columnach oczywiscie
-                this.__keyFromTF.setValue(this.__lastID);
-                this._performValidation();
+            if (!this.__validateNextMode()) {
+                return;
             }
+            if (this.__keyMode == this.self(arguments).KEY_RANGE) {
+                this.__keyFromTF.setValue(this.__lastID);
+            } else {
+                // paginate with columns
+                this.__nameStartTF.setValue(this.__lastID);
+                this.__nameEndTF.setValue(null);
+            }
+            
+            this._performValidation();
         },
         
-        __validateNextPrevMode : function() {
+        __validateNextMode : function() {
           if (this.__colMode == this.self(arguments).RANGE && this.__keyMode == this.self(arguments).KEY_RANGE) {
               (new dialog.Alert({
                 "message" : 'You can not paginate with key mode and column mode set to \'range\'',
@@ -211,23 +205,21 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         __resetSearchForm : function(e) {
             this._resetter.reset();
             this._disabler.enable();
-            this._disableNextPrevBtns();
+            this._disableNextBtn();
         },
         
-        __disableNextPrevBtns : function() {
-            if (this.__nextPrevBtnsEnabled == true) {
-                this.__prevPageBtn.setEnabled(false);
+        __disableNextBtn : function() {
+            //if (this.__nextPrevBtnsEnabled == true) {
                 this.__nextPageBtn.setEnabled(false);
-                this._nextPrevBtnsEnabled = false;
-            }
+            //    this._nextPrevBtnsEnabled = false;
+            //}
         },
         
-        __enableNextPrevBtns : function() {
-            if (this.__nextPrevBtnsEnabled == false) {
-                this.__prevPageBtn.setEnabled(true);
-                this.__prevPageBtn.setEnabled(true);
-                this._nextPrevBtnsEnabled = true;
-            }
+        __enableNextBtn : function() {
+            //if (this.__nextPrevBtnsEnabled == false) {
+                this.__nextPageBtn.setEnabled(true);
+            //    this._nextPrevBtnsEnabled = true;
+            //}
         },
 
         __getConsistencyLevelGB : function() {

@@ -41,6 +41,7 @@ qx.Class.define("helenos.components.tab.browse.AbstractPage",
         _resultsTree : null,
         _consistencyLevelSB : null,
         _searchButtonMenu : null,
+        _queryObj : null,
         
         _getSplitPaneOrientation : function() {
             throw new Error('_getSplitPaneOrientation is abstract');

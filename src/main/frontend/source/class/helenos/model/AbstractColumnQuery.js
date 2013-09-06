@@ -22,9 +22,13 @@ qx.Class.define('helenos.model.AbstractColumnQuery', {
             nullable : true
         },
         
-        nameStart : {},
+        nameStart : {
+            nullable : true
+        },
         
-        nameEnd : {},
+        nameEnd : {
+            nullable : true
+        },
         
         limit : {
             init : 10,
