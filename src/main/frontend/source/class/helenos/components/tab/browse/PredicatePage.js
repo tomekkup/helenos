@@ -279,6 +279,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
            this.__keysPredicateCP = new qx.ui.container.Composite(new qx.ui.layout.VBox(5)).set({padding : 0});
            this.__keyTF = new helenos.ui.TextField(this._cfDef.keyValidationClass);
            this._addToResetter(this.__keyTF);
+           this._addToValidator(this.__keyTF);
            this._addToDisabler(this.__keyTF);
            this.__keysPredicateCP.add(new qx.ui.basic.Label('Key:'));
            this.__keysPredicateCP.add(this.__keyTF);

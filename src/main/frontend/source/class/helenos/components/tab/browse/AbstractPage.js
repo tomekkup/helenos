@@ -26,7 +26,7 @@ qx.Class.define("helenos.components.tab.browse.AbstractPage",
             icon : this._getIconPath()
         });
         
-        this._manager = new qx.ui.form.validation.Manager();
+        this._validator = new helenos.ui.form.validation.Manager();
         this._resetter = new qx.ui.form.Resetter();
         this._disabler = new helenos.ui.form.Disabler();
         this.__buildMainPane();
@@ -35,7 +35,7 @@ qx.Class.define("helenos.components.tab.browse.AbstractPage",
     members : {
         
         _cfDef : null,
-        _manager : null,
+        _validator : null,
         _resetter : null,
         _disabler : null,
         _resultsTree : null,
@@ -66,6 +66,11 @@ qx.Class.define("helenos.components.tab.browse.AbstractPage",
         _addToDisabler : function(widget) {
             this._disabler.add(widget);
         },
+        
+        _addToValidator : function(widget) {
+            this._validator.add(widget);
+        },
+        
         
         _initConsistencyLevelSB : function() {
             this._consistencyLevelSB = new qx.ui.form.SelectBox();
@@ -114,8 +119,8 @@ qx.Class.define("helenos.components.tab.browse.AbstractPage",
         },
         
         _performValidation : function(e) {
-            this._manager.validate();
-            if (this._manager.isValid()) {
+            this._validator.validate();
+            if (this._validator.isValid()) {
                 var data = this._performSearch();
                 this._resultsTree.setData(data);
             }
