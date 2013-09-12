@@ -135,11 +135,11 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         
         _getResultsPane : function() {
             var pane = this.base(arguments);
-            pane.add(this.__getButtonsBar());
+            pane.add(this.__buildButtonsBar());
             return pane;
         },
         
-        __getButtonsBar : function() {
+        __buildButtonsBar : function() {
             var buttonsBar = new qx.ui.toolbar.ToolBar();
             this.__nextPageBtn = new qx.ui.toolbar.Button('Next page', 'helenos/next_page.png');
             this.__nextPageBtn.addListener('execute', this.__onNextRange, this);
@@ -177,9 +177,9 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         
         _getCriteriaPane : function() {
             var widgets = new Array();
-            widgets.push(this.__getKeysGB());
-            widgets.push(this.__getColumnsGB());
-            widgets.push(this.__getConsistencyLevelGB());
+            widgets.push(this.__buildKeysGB());
+            widgets.push(this.__buildColumnsGB());
+            widgets.push(this.__buildConsistencyLevelGB());
             
             var container = new qx.ui.container.Composite(new qx.ui.layout.VBox(5).set({alignX : 'left'}));
             container.setAppearance('criteria-pane');
@@ -188,7 +188,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
                 container.add(widgets[i]);
             }
             container.add(this._getSearchButton());
-            container.add(this.__getResetButton());
+            container.add(this.__buildResetButton());
             
             var pane = new qx.ui.container.Scroll();
             pane.setWidth(180);
@@ -196,7 +196,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             return pane;
         },
         
-        __getResetButton : function() {
+        __buildResetButton : function() {
             var button = new qx.ui.form.Button('Reset', 'icon/16/actions/edit-clear.png');
             button.addListener('execute', this.__resetSearchForm, this);
             return button;
@@ -222,7 +222,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             //}
         },
 
-        __getConsistencyLevelGB : function() {
+        __buildConsistencyLevelGB : function() {
             this._initConsistencyLevelSB();
             
             var consLevelGB = new helenos.ui.GroupBoxV(this.tr('consistency.level'));
@@ -234,7 +234,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             return this._cfDef.columnType == 'Super';
         },
 
-        __getColumnsGB : function() {
+        __buildColumnsGB : function() {
             var columnsGB = new helenos.ui.GroupBoxV('Columns');
             
             if (this.__isSuperColumnMode() == true) {
@@ -249,8 +249,8 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             this._addToResetter(this.__nameEndTF);
             this._addToDisabler(this.__nameEndTF);
             
-            columnsGB.add(this.__getRangeFromToBox());
-            columnsGB.add(this.__getRangeColNamesBox());
+            columnsGB.add(this.__buildRangeFromToBox());
+            columnsGB.add(this.__buildRangeColNamesBox());
             
             if (this._cfDef.columnType == 'Super') {
                 this.__sNameTF = new helenos.ui.TextField(this._cfDef.comparatorType.className);
@@ -259,35 +259,37 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             }
             
             columnsGB.add(new qx.ui.basic.Label('Columns mode:'));
-            columnsGB.add(this.__getRangeModeBG());
+            columnsGB.add(this.__buildRangeModeBG());
             
             return columnsGB;
         },
         
-        __getKeysGB : function() {          
+        __buildKeysGB : function() {          
             var keysGB = new helenos.ui.GroupBoxV('Keys');
-            keysGB.add(this.__getKeysPredicateBox());
-            keysGB.add(this.__getKeysRangeBox());
+            keysGB.add(this.__buildKeysPredicateBox());
+            keysGB.add(this.__buildKeysRangeBox());
             
             keysGB.add(new qx.ui.basic.Label('Key mode:'));
-            keysGB.add(this.__getKeyModeBG());
+            keysGB.add(this.__buildKeyModeBG());
             
             return keysGB;
         },
         
-         __getKeysPredicateBox : function(){
+         __buildKeysPredicateBox : function(){
            this.__keysPredicateCP = new qx.ui.container.Composite(new qx.ui.layout.VBox(5)).set({padding : 0});
-           this.__keyTF = new helenos.ui.TextField(this._cfDef.keyValidationClass);
+           this.__keyTF = new helenos.ui.TextField(this._cfDef.keyValidationClass).set({required : true});
+
            this._addToResetter(this.__keyTF);
            this._addToValidator(this.__keyTF);
            this._addToDisabler(this.__keyTF);
+
            this.__keysPredicateCP.add(new qx.ui.basic.Label('Key:'));
            this.__keysPredicateCP.add(this.__keyTF);
            
            return this.__keysPredicateCP;
          },
          
-         __getKeysRangeBox : function() {
+         __buildKeysRangeBox : function() {
            this.__keyFromTF = new helenos.ui.TextField(this._cfDef.keyValidationClass);
            this.__keyToTF = new helenos.ui.TextField(this._cfDef.keyValidationClass);
            this.__rowCountTF = new qx.ui.form.TextField().set({filter : /[0-9]/, value : '10'});
@@ -308,7 +310,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
            return this.__keysRangeCP;
          },
         
-        __getRangeModeBG : function() {
+        __buildRangeModeBG : function() {
             var byNameBT = new qx.ui.form.RadioButton(this.self(arguments).NAME);
             var byRangeBT = new qx.ui.form.RadioButton(this.self(arguments).RANGE);
             
@@ -322,7 +324,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             return this.__columnsByRBG;
         },
         
-        __getKeyModeBG : function() {
+        __buildKeyModeBG : function() {
             var predicateBT = new qx.ui.form.RadioButton(this.self(arguments).PREDICATE);
             var keyRangeBT = new qx.ui.form.RadioButton(this.self(arguments).KEY_RANGE);
             
@@ -336,7 +338,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             return this.__keyModeRBG;
         },
         
-        __getRangeFromToBox : function() {
+        __buildRangeFromToBox : function() {
             this.__rangeFromToCP = new qx.ui.container.Composite(new qx.ui.layout.VBox(5)).set({padding : 0});
             
             this.__colsLimitTF = new qx.ui.form.TextField().set({filter : /[0-9]/, value : '10'});
@@ -358,12 +360,13 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             return this.__rangeFromToCP;
         },
         
-        __getRangeColNamesBox : function() {
+        __buildRangeColNamesBox : function() {
             this.__rangeColNamesCP = new qx.ui.container.Composite(new qx.ui.layout.VBox(5)).set({padding : 0, visibility : 'excluded'});
 
             this.__columnNamesTF = new qx.ui.form.TextArea().set({placeholder : 'comma separated columns list'});
             this._addToResetter(this.__columnNamesTF);
             this._addToDisabler(this.__columnNamesTF);
+            this._addToValidator(this.__columnNamesTF);
             this.__rangeColNamesCP.add(new qx.ui.basic.Label('Column names:'));
             this.__rangeColNamesCP.add(this.__columnNamesTF);
             
