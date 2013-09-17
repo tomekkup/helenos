@@ -12,10 +12,9 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
  
     construct : function(ksName, cfName)
     {
-        this.__keyMode = this.self(arguments).PREDICATE;
-        this.__colMode = this.self(arguments).RANGE;
         this.base(arguments, ksName, cfName);
-        
+        this.__applyKeyModePredicate();
+        this.__applyRowModeRange();
         this.__disableNextBtn();
     },
     
@@ -113,7 +112,6 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
                 this.__firstID = result[0].key;
                 this.__lastID = result[result.length-1].key;
                 if (result.length < this._queryObj.getRowCount()) {
-                    //alert('xxxxxxx');
                     this.__disableNextBtn();
                 } else {
                     this.__enableNextBtn();
@@ -124,7 +122,6 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
                     this.__firstID = columnsRange[0].name;
                     this.__lastID = columnsRange[columnsRange.length-1].name;
                     if (columnsRange.length < this._queryObj.getLimit()) {
-                        //alert(columnsRange.length + ' ' + this._queryObj.getLimit());
                         this.__disableNextBtn();
                     } else {
                         this.__enableNextBtn();
@@ -246,6 +243,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             }
             this._addToResetter(this.__nameStartTF);
             this._addToDisabler(this.__nameStartTF);
+            
             this._addToResetter(this.__nameEndTF);
             this._addToDisabler(this.__nameEndTF);
             
@@ -292,15 +290,16 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
          __buildKeysRangeBox : function() {
            this.__keyFromTF = new helenos.ui.TextField(this._cfDef.keyValidationClass);
            this.__keyToTF = new helenos.ui.TextField(this._cfDef.keyValidationClass);
-           this.__rowCountTF = new qx.ui.form.TextField().set({filter : /[0-9]/, value : '10'});
+           this.__rowCountTF = new qx.ui.form.TextField().set({filter : /[0-9]/, value : '10', required : true});
            this._addToResetter(this.__keyFromTF);
            this._addToDisabler(this.__keyFromTF);
            this._addToResetter(this.__keyToTF);
            this._addToDisabler(this.__keyToTF);
            this._addToResetter(this.__rowCountTF);
            this._addToDisabler(this.__rowCountTF);
+           this._addToValidator(this.__rowCountTF);
            
-           this.__keysRangeCP = new qx.ui.container.Composite(new qx.ui.layout.VBox(5)).set({padding : 0, visibility : 'excluded'});
+           this.__keysRangeCP = new qx.ui.container.Composite(new qx.ui.layout.VBox(5)).set({padding : 0});
            this.__keysRangeCP.add(new qx.ui.basic.Label('From:'));
            this.__keysRangeCP.add(this.__keyFromTF);
            this.__keysRangeCP.add(new qx.ui.basic.Label('To:'));
@@ -341,9 +340,10 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         __buildRangeFromToBox : function() {
             this.__rangeFromToCP = new qx.ui.container.Composite(new qx.ui.layout.VBox(5)).set({padding : 0});
             
-            this.__colsLimitTF = new qx.ui.form.TextField().set({filter : /[0-9]/, value : '10'});
+            this.__colsLimitTF = new qx.ui.form.TextField().set({filter : /[0-9]/, value : '10', required : true});
             this._addToResetter(this.__colsLimitTF);
             this._addToDisabler(this.__colsLimitTF);
+            this._addToValidator(this.__colsLimitTF);
             
             this.__rangeFromToCP.add(new qx.ui.basic.Label('From:'));
             this.__rangeFromToCP.add(this.__nameStartTF);
@@ -361,12 +361,13 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         },
         
         __buildRangeColNamesBox : function() {
-            this.__rangeColNamesCP = new qx.ui.container.Composite(new qx.ui.layout.VBox(5)).set({padding : 0, visibility : 'excluded'});
+            this.__rangeColNamesCP = new qx.ui.container.Composite(new qx.ui.layout.VBox(5)).set({padding : 0});
 
-            this.__columnNamesTF = new qx.ui.form.TextArea().set({placeholder : 'comma separated columns list'});
+            this.__columnNamesTF = new qx.ui.form.TextArea().set({placeholder : 'comma separated columns list', required : true});
             this._addToResetter(this.__columnNamesTF);
             this._addToDisabler(this.__columnNamesTF);
             this._addToValidator(this.__columnNamesTF);
+            
             this.__rangeColNamesCP.add(new qx.ui.basic.Label('Column names:'));
             this.__rangeColNamesCP.add(this.__columnNamesTF);
             
@@ -376,23 +377,51 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         __onRangeModeToggled : function(e) {
             this.__colMode = e.getData()[0].getLabel();
             if (this.__colMode == this.self(arguments).NAME) {
-                this.__rangeFromToCP.setVisibility('excluded');
-                this.__rangeColNamesCP.setVisibility('visible');
+                this.__applyRowModeColNames();
             } else {
-                this.__rangeFromToCP.setVisibility('visible');
-                this.__rangeColNamesCP.setVisibility('excluded');
+                this.__applyRowModeRange();
             }
         },
         
         __onKeyModeToggled : function(e) {
             this.__keyMode = e.getData()[0].getLabel();
             if (this.__keyMode == this.self(arguments).PREDICATE) {
-                this.__keysRangeCP.setVisibility('excluded');
-                this.__keysPredicateCP.setVisibility('visible');
+                this.__applyKeyModePredicate();
             } else {
-                this.__keysRangeCP.setVisibility('visible');
-                this.__keysPredicateCP.setVisibility('excluded');
+                this.__applyKeyModeKeyRange();
             }
+        },
+        
+        __applyKeyModePredicate : function() {
+            this.__keysRangeCP.exclude();
+            this.__keysPredicateCP.show();
+            
+            this._setValidateAttr(this.__keyTF, true);
+            this._setValidateAttr(this.__rowCountTF, false);
+        },
+        
+        __applyKeyModeKeyRange : function() {
+            this.__keysRangeCP.show();
+            this.__keysPredicateCP.exclude();
+            
+            this._setValidateAttr(this.__keyTF, false);
+            this._setValidateAttr(this.__rowCountTF, true);
+        },
+        
+        __applyRowModeColNames : function() {
+            this.__rangeFromToCP.exclude();
+            this.__rangeColNamesCP.show();
+            
+            this._setValidateAttr(this.__columnNamesTF, true);
+            this._setValidateAttr(this.__colsLimitTF, false);
+        },
+        
+        __applyRowModeRange : function() {
+            this.__rangeFromToCP.show();
+            this.__rangeColNamesCP.exclude();
+            
+            this._setValidateAttr(this.__columnNamesTF, false);
+            this._setValidateAttr(this.__colsLimitTF, true);
         }
     }
-})
+});

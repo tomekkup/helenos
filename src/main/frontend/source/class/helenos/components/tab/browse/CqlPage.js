@@ -46,6 +46,7 @@ qx.Class.define("helenos.components.tab.browse.CqlPage",
                 appearance : 'cql-textarea',
                 required : true
             });
+            this._setValidateAttr(this._queryArea, true);
             this._addToValidator(this._queryArea);
                         
             var queryGB = new helenos.ui.GroupBoxV('Query');

@@ -82,6 +82,10 @@ qx.Class.define("helenos.components.tab.browse.AbstractPage",
             }
         },
         
+        _setValidateAttr : function(widget, val) {
+            widget.setUserData('__VALIDATE__', val);
+        },
+        
         _getIconPath : function() {
             throw new Error('_getIconPath is abstract');
         },

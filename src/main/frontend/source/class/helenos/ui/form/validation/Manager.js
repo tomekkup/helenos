@@ -18,12 +18,10 @@ qx.Class.define("helenos.ui.form.validation.Manager",
   members :
   {
     __validateRequired : function(formItem) {
-        this.debug(formItem);
-        if (!formItem.isVisible()) {
-            this.debug('not visible');
+        var needsValidation = formItem.getUserData('__VALIDATE__');
+        if (needsValidation === null || needsValidation === false) {
             return true;
         } else {
-            this.debug('visible');
             return this.base(arguments, formItem);
         }
     }
