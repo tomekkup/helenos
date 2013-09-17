@@ -25,13 +25,17 @@ qx.Class.define("helenos.ui.treevirtual.ResultsTree",
             width:"1*", 
             minWidth:200
         });
-        resizeBehavior.setWidth(2, 140);
-        resizeBehavior.setWidth(3, 60);
+        resizeBehavior.setWidth(2, 195);
+        resizeBehavior.setWidth(3, 50);
         
         this.setContextMenuHandler(0, this.contextMenuHandler);
         this.setContextMenuHandler(1, this.contextMenuHandler);
         this.setContextMenuHandler(2, this.contextMenuHandler);
         this.setContextMenuHandler(3, this.contextMenuHandler);
+        
+        var dateRenderer = new qx.ui.table.cellrenderer.Date();
+        dateRenderer.setDateFormat(qx.util.format.DateFormat.getDateTimeInstance());
+        this.getTableColumnModel().setDataCellRenderer(2, dateRenderer);
     },
     
     members : {
@@ -52,7 +56,7 @@ qx.Class.define("helenos.ui.treevirtual.ResultsTree",
                     if (col.name != 'KEY') {
                         var leaf = dataModel.addLeaf(branch, col.name, 'helenos/isctf.png');
                         dataModel.setColumnData(leaf, 1, col.value);
-                        dataModel.setColumnData(leaf, 2, col.clock);
+                        dataModel.setColumnData(leaf, 2, new Date(col.clock));
                         dataModel.setColumnData(leaf, 3, col.ttl);
                     }
                 }

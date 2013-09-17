@@ -17,6 +17,13 @@ qx.Theme.define("helenos.theme.Font",
             size : 14,
             family : [ "Courier New" ],
             bold : true
+        },
+        
+        "clockFont" :
+        {
+            size : 9,
+            family : [ "Courier New" ],
+            bold : true
         }
     }
 });
