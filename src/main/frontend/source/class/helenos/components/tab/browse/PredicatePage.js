@@ -14,7 +14,7 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
     {
         this.base(arguments, ksName, cfName);
         this.__applyKeyModePredicate();
-        this.__applyRowModeRange();
+        this.__applyColModeRange();
         this.__disableNextBtn();
     },
     
@@ -126,6 +126,8 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
                     } else {
                         this.__enableNextBtn();
                     }
+                } else {
+                    this.__disableNextBtn();
                 }
             }
         },
@@ -375,17 +377,15 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         },
         
         __onRangeModeToggled : function(e) {
-            this.__colMode = e.getData()[0].getLabel();
-            if (this.__colMode == this.self(arguments).NAME) {
-                this.__applyRowModeColNames();
+            if (e.getData()[0].getLabel() == this.self(arguments).NAME) {
+                this.__applyColModeColNames();
             } else {
-                this.__applyRowModeRange();
+                this.__applyColModeRange();
             }
         },
         
         __onKeyModeToggled : function(e) {
-            this.__keyMode = e.getData()[0].getLabel();
-            if (this.__keyMode == this.self(arguments).PREDICATE) {
+            if (e.getData()[0].getLabel() == this.self(arguments).PREDICATE) {
                 this.__applyKeyModePredicate();
             } else {
                 this.__applyKeyModeKeyRange();
@@ -393,6 +393,8 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         },
         
         __applyKeyModePredicate : function() {
+            this.__keyMode = this.self(arguments).PREDICATE;
+            
             this.__keysRangeCP.exclude();
             this.__keysPredicateCP.show();
             
@@ -401,6 +403,8 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
         },
         
         __applyKeyModeKeyRange : function() {
+            this.__keyMode = this.self(arguments).KEY_RANGE;
+            
             this.__keysRangeCP.show();
             this.__keysPredicateCP.exclude();
             
@@ -408,7 +412,9 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             this._setValidateAttr(this.__rowCountTF, true);
         },
         
-        __applyRowModeColNames : function() {
+        __applyColModeColNames : function() {
+            this.__colMode = this.self(arguments).NAME;
+            
             this.__rangeFromToCP.exclude();
             this.__rangeColNamesCP.show();
             
@@ -416,7 +422,9 @@ qx.Class.define("helenos.components.tab.browse.PredicatePage",
             this._setValidateAttr(this.__colsLimitTF, false);
         },
         
-        __applyRowModeRange : function() {
+        __applyColModeRange : function() {
+            this.__colMode = this.self(arguments).RANGE;
+ 
             this.__rangeFromToCP.show();
             this.__rangeColNamesCP.exclude();
             
