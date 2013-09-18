@@ -161,6 +161,7 @@
                         </goals>
                         <configuration>
                             <outputDirectory>${webappDirectory}/WEB-INF/lib</outputDirectory>
+                            <excludeArtifactIds>servlet-api</excludeArtifactIds>
                         </configuration>
                     </execution>
                 </executions>

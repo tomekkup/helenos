@@ -23,12 +23,12 @@
     </appender>
     
     <logger name="tomekkup.helenos.security.web.authentication">
-        <priority value="DEBUG" />
+        <level value="DEBUG" />
         <appender-ref ref="securityAppender" />
     </logger>
     
     <root>
-        <priority value="WARN" />
+        <level value="WARN"/>
         <appender-ref ref="console" />
         <appender-ref ref="defaultAppender" />
     </root>
