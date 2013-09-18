@@ -1,33 +1,13 @@
 # Helenos
 
-## About
+## Introduction
 
-Helenos is a web based GUI Cassandra client that helps you to explore data and manage your database schema.
+Helenos is a free web based environment that simplifies a data exploring & schema managament with Apache Cassandra database.
 
-## Current version
+## Features list
 
-1.4-RC2
-
-## Download
-
-Packages are available to download via [Sourceforge.net](https://sourceforge.net/projects/helenos-gui/files/) as WAR files and Apache Tomcat bundles.
-
-## Changelog
-
-See [here](https://github.com/tomekkup/helenos/wiki/Changelog) for all changes in current and all previous releases
-
-## Gallery
-
-[![CF properties] (https://raw.github.com/tomekkup/helenos/gh-pages/gallery/helenos1_small.png)](https://raw.github.com/tomekkup/helenos/gh-pages/gallery/helenos1.png)  [![CQL] (https://raw.github.com/tomekkup/helenos/gh-pages/gallery/helenos2_small.png)](https://raw.github.com/tomekkup/helenos/gh-pages/gallery/helenos2.png)  [![Browse] (https://raw.github.com/tomekkup/helenos/gh-pages/gallery/helenos3_small.png)](https://raw.github.com/tomekkup/helenos/gh-pages/gallery/helenos3.png)
-
-Click here for [preview on Youtube](http://www.youtube.com/watch?v=gOWHN6bCybQ&hd=1&autoplay=1)
-
-## Features
-
-* Authentication
-* User ADMIN & SIMPLE roles
-* Listing keyspaces and column families
-* Viewing properties of above
+* Exploring schema 
+* Viewing properties of keyspaces and column families
 * Add / remove / truncate column family
 * Add / Drop keyspace
 * Data browsing via:
@@ -35,6 +15,26 @@ Click here for [preview on Youtube](http://www.youtube.com/watch?v=gOWHN6bCybQ&h
     * predicate
 * Results pagination
 * CQL support
+* Authentication
+* Admin and read only roles
+
+## Current version
+
+1.4-RC2
+
+## Changelog
+
+See [here](https://github.com/tomekkup/helenos/wiki/Changelog) for all changes in current and all previous releases
+
+## Download
+
+Packages are available to download via [Sourceforge.net](https://sourceforge.net/projects/helenos-gui/files/) as WAR files and Apache Tomcat bundles.
+
+## Gallery
+
+[![CF properties] (https://raw.github.com/tomekkup/helenos/gh-pages/gallery/helenos1_small.png)](https://raw.github.com/tomekkup/helenos/gh-pages/gallery/helenos1.png)  [![CQL] (https://raw.github.com/tomekkup/helenos/gh-pages/gallery/helenos2_small.png)](https://raw.github.com/tomekkup/helenos/gh-pages/gallery/helenos2.png)  [![Browse] (https://raw.github.com/tomekkup/helenos/gh-pages/gallery/helenos3_small.png)](https://raw.github.com/tomekkup/helenos/gh-pages/gallery/helenos3.png)
+
+Click here for [preview on Youtube](http://www.youtube.com/watch?v=gOWHN6bCybQ&hd=1&autoplay=1)
 
 ## Installation
 
@@ -72,3 +72,12 @@ and unpack to directory src/main/frontend/contribs and change destination folder
 
  * I see a cluster structure in a left pane but how to do anything more !? - Use the force Luke ...I mean right mouse button
  * My Cassandra instance is not listening on localhost:9160. How to change the CassandraHost after installation ? - put your values into defaults.properties file, then restart
+
+## Author
+
+My name is Tomek Kuprowski and I'm java enthusiast, father, husband and IBMer.
+You can find me on [LinkedIn] (http://www.linkedin.com/in/tomekkuprowski) and contact via tomekkuprowski@gmail.com
+
+## Licence and disclaimer
+
+Helenos is distributed free, AS-IS, without any warranty under Creative Commons Attribution [licence] (http://creativecommons.org/licenses/by/2.0/legalcode)
