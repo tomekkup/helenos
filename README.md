@@ -2,29 +2,25 @@
 
 ## About
 
-Helenos is a web based GUI Cassandra client that helps you to explore data and manage your schema.
+Helenos is a web based GUI Cassandra client that helps you to explore data and manage your database schema.
 
 ## Current version
 
-1.4
+1.4-RC2
 
 ## Download
 
-[sourceforge](https://sourceforge.net/projects/helenos-gui/files/)
+Packages are available to download via [Sourceforge.net](https://sourceforge.net/projects/helenos-gui/files/) as WAR files and Apache Tomcat bundles.
 
 ## Changelog
 
-[here](https://github.com/tomekkup/helenos/wiki/Changelog)
+See [here](https://github.com/tomekkup/helenos/wiki/Changelog) for all changes in current and all previous releases
 
 ## Gallery
 
 [![CF properties] (https://raw.github.com/tomekkup/helenos/gh-pages/gallery/helenos1_small.png)](https://raw.github.com/tomekkup/helenos/gh-pages/gallery/helenos1.png)  [![CQL] (https://raw.github.com/tomekkup/helenos/gh-pages/gallery/helenos2_small.png)](https://raw.github.com/tomekkup/helenos/gh-pages/gallery/helenos2.png)  [![Browse] (https://raw.github.com/tomekkup/helenos/gh-pages/gallery/helenos3_small.png)](https://raw.github.com/tomekkup/helenos/gh-pages/gallery/helenos3.png)
 
 Click here for [preview on Youtube](http://www.youtube.com/watch?v=gOWHN6bCybQ&hd=1&autoplay=1)
-
-## Twitter
-
-You can follow me on Twitter to keep up with new releases [Tweeter](https://twitter.com/tomekkup)
 
 ## Features
 
@@ -38,7 +34,6 @@ You can follow me on Twitter to keep up with new releases [Tweeter](https://twit
     * keyRange
     * predicate
 * Results pagination
-* Custom serializers
 * CQL support
 
 ## Installation
@@ -66,13 +61,14 @@ and unpack to directory src/main/frontend/contribs and change destination folder
 ## Wish list
 
 * Browse with indexed columns
-* Results pagination and export to file
+* Results export to file
 * Manually setting serializers
 * Persisting default filter criteria to reuse at anytime
 * JMX monitor
-* human readable clock in results page
-* schema modifications
+* Schema editing
+* Queries log
 
 ## FAQ
 
  * I see a cluster structure in a left pane but how to do anything more !? - Use the force Luke ...I mean right mouse button
+ * My Cassandra instance is not listening on localhost:9160. How to change the CassandraHost after installation ? - put your values into defaults.properties file, then restart
