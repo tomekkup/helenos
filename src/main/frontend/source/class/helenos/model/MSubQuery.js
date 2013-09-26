@@ -13,7 +13,7 @@ qx.Mixin.define('helenos.model.MSubQuery',
             nullable : false
         },
         
-        sClassName : {
+        sNameClass : {
             nullable : false
         }
     }

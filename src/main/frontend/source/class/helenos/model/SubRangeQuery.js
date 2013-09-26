@@ -15,8 +15,10 @@ qx.Class.define('helenos.model.SubRangeQuery', {
         this.base(arguments);
     },
     
-    prepareQuery : function(cfDef, consistencyLevel) {
-        this.base(arguments, cfDef, consistencyLevel);
-        this.setSNameClass(this._findParamClass(cfDef.subComparatorType.className));
+    members : {
+        prepareQuery : function(cfDef, consistencyLevel) {
+            this.base(arguments, cfDef, consistencyLevel);
+            this.setSNameClass(this._findParamClass(cfDef.subComparatorType.className));
+        }
     }
 });
