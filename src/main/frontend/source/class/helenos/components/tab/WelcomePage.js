@@ -7,7 +7,7 @@ Authors:
   Tomek Kuprowski (tomekkuprowski at gmail dot com)
  ************************************************************************ */
 /*
-#asset(welcome.html)
+#asset(welcome/*)
 #asset(qx/icon/${qx.icontheme}/16/places/user-home.png)
  */
 qx.Class.define("helenos.components.tab.WelcomePage",
@@ -29,7 +29,7 @@ qx.Class.define("helenos.components.tab.WelcomePage",
             layout: new qx.ui.layout.VBox(3, 'top')
         });
         
-        var iframe = new qx.ui.embed.ThemedIframe('resource/welcome.html');
+        var iframe = new qx.ui.embed.ThemedIframe('resource/welcome/index.html?t=' + new Date().getTime());
         this.add(iframe, {flex : 1});
         this.add(this.__getVersionInfoBox());
     },
