@@ -1,4 +1,4 @@
-package tomekkup.helenos;
+package tomekkup.helenos.dao.model;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,6 +6,7 @@ import me.prettyprint.cassandra.service.CassandraHostConfigurator;
 import me.prettyprint.cassandra.service.ThriftCluster;
 import me.prettyprint.hector.api.Cluster;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 /**
  * ********************************************************
@@ -22,6 +23,7 @@ public class ClusterConfiguration {
     private String clusterName;
     private boolean active;
     private String alias;
+    private BasicCredentials credentials;
 
     public ClusterConfiguration() {
     }
@@ -66,7 +68,19 @@ public class ClusterConfiguration {
     }
     
     public Cluster createCluster() {
-        return new ThriftCluster(clusterName, new CassandraHostConfigurator(hosts));
+        return isCredentialsNotEmpty() ? new ThriftCluster(clusterName, new CassandraHostConfigurator(hosts), getCredentialsAsMap()) 
+                                        : new ThriftCluster(clusterName, new CassandraHostConfigurator(hosts));
+    }
+    
+    public Map<String, String> getCredentialsAsMap() {
+        Map<String, String> credentialsMap = new HashMap<String, String>(2);
+        credentialsMap.put("username", getCredentials().getUsername());
+        credentialsMap.put("password", getCredentials().getPassword());
+        return credentialsMap;
+    }
+    
+    public boolean isCredentialsNotEmpty() {
+        return StringUtils.hasText(getCredentials().getUsername()) && StringUtils.hasText(getCredentials().getPassword());
     }
 
     public Map<String, ?> toParametersMap() {
@@ -78,6 +92,19 @@ public class ClusterConfiguration {
         map.put("hosts", hosts);
         map.put("clustername", clusterName);
         map.put("active", active);
+        map.put("username", getCredentials().getUsername());
+        map.put("password", getCredentials().getPassword());
         return map;
+    }
+
+    public BasicCredentials getCredentials() {
+        if (credentials == null) {
+            credentials = new BasicCredentials();
+        }
+        return credentials;
+    }
+
+    public void setCredentials(BasicCredentials credentials) {
+        this.credentials = credentials;
     }
 }

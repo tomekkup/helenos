@@ -1,6 +1,6 @@
 package tomekkup.helenos.context;
 
-import tomekkup.helenos.ClusterConfiguration;
+import tomekkup.helenos.dao.model.ClusterConfiguration;
 import tomekkup.helenos.dao.ClusterConfigDao;
 import tomekkup.helenos.service.ClusterConfigAware;
 import java.util.Map;

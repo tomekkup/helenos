@@ -1,6 +1,6 @@
 package tomekkup.helenos.types.qx.query;
 
-import tomekkup.helenos.Converter;
+import tomekkup.helenos.utils.Converter;
 
 /**
  * ********************************************************

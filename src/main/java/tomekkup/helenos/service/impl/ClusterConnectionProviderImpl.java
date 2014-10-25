@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
-import tomekkup.helenos.ClusterConfiguration;
+import tomekkup.helenos.dao.model.ClusterConfiguration;
 import tomekkup.helenos.context.PostConfiguringClusterListener;
 import tomekkup.helenos.dao.ClusterConfigDao;
 import tomekkup.helenos.service.ClusterConfigAware;

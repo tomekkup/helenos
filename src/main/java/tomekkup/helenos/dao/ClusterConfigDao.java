@@ -12,7 +12,8 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
-import tomekkup.helenos.ClusterConfiguration;
+import tomekkup.helenos.dao.model.BasicCredentials;
+import tomekkup.helenos.dao.model.ClusterConfiguration;
 
 /**
  * ********************************************************
@@ -97,6 +98,7 @@ public class ClusterConfigDao extends AbstractDao implements InitializingBean {
             cc.setHosts(rs.getString("HOSTS"));
             cc.setClusterName(rs.getString("CLUSTERNAME"));
             cc.setActive(rs.getBoolean("ACTIVE"));
+            cc.setCredentials(new BasicCredentials(rs.getString("USERNAME"), rs.getString("PASSWORD")));
             return cc;
         }
     }

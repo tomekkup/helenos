@@ -1,6 +1,6 @@
 package tomekkup.helenos.dao;
 
-import tomekkup.helenos.ClusterConfiguration;
+import tomekkup.helenos.dao.model.ClusterConfiguration;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;

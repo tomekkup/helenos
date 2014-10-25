@@ -1,7 +1,7 @@
 package tomekkup.helenos.types.qx.query;
 
 import java.util.List;
-import tomekkup.helenos.Converter;
+import tomekkup.helenos.utils.Converter;
 
 /**
  * ********************************************************

@@ -48,7 +48,7 @@ qx.Class.define("helenos.components.tab.ConnectionsEditorPage",
             this.__connectionsTable.setContextMenuHandlers([0,1,2]);
             this.__connectionsTable.setColumnsWidth([15,45,25,15]);
             
-            var gb = new qx.ui.groupbox.GroupBox('Accounts');
+            var gb = new qx.ui.groupbox.GroupBox('Connections');
             gb.setLayout(new qx.ui.layout.VBox(5));
             
             var sp = new qx.ui.core.scroll.ScrollPane();
@@ -73,7 +73,7 @@ qx.Class.define("helenos.components.tab.ConnectionsEditorPage",
             this.__connectButton.setEnabled(false);
             
             this.__deleteButton = new qx.ui.form.Button('Delete', 'icon/16/actions/list-remove.png');
-            this.__deleteButton.addListener('execute', this.__ondeleteConnection, this);
+            this.__deleteButton.addListener('execute', this.__onDeleteConnection, this);
             this.__deleteButton.setEnabled(false);
             
             this.__editButton = new qx.ui.form.Button('Edit', 'icon/16/actions/edit-cut.png');
@@ -117,6 +117,22 @@ qx.Class.define("helenos.components.tab.ConnectionsEditorPage",
                     'validation' : {
                         'required' : true
                     }
+                },
+                'username' : {
+                    'type'  : 'TextField',
+                    'label' : '[Credentials] Username', 
+                    'value' : '',
+                    'validation' : {
+                        'required' : false
+                    }
+                },
+                'password' : {
+                    'type'  : 'PasswordField',
+                    'label' : '[Credentials] Password', 
+                    'value' : '',
+                    'validation' : {
+                        'required' : false
+                    }
                 }
             };
             var _this = this;
@@ -127,6 +143,11 @@ qx.Class.define("helenos.components.tab.ConnectionsEditorPage",
                 "callback"    : function(result) {
                     if (result != null) {
                         result['active'] = false;
+                        result['credentials'] = {};
+                        result['credentials']['username'] = result['username'];
+                        result['credentials']['password'] = result['password'];
+                        delete result['username'];
+                        delete result['password'];
                         helenos.util.RpcActionsProvider.storeConnection(result);
                         _this._reloadConnectionsTable();
                     }
@@ -135,7 +156,7 @@ qx.Class.define("helenos.components.tab.ConnectionsEditorPage",
             })).set({width : 550}).show();
         },
         
-        /** 
+        /** ,k
         * @lint ignoreUndefined(dialog)
         */
         __onEditConnection : function(e) {
@@ -158,6 +179,22 @@ qx.Class.define("helenos.components.tab.ConnectionsEditorPage",
                     'validation' : {
                         'required' : true
                     }
+                },
+                'username' : {
+                    'type'  : 'TextField',
+                    'label' : '[Credentials] Username', 
+                    'value' : cc.credentials.username,
+                    'validation' : {
+                        'required' : false
+                    }
+                },
+                'password' : {
+                    'type'  : 'PasswordField',
+                    'label' : '[Credentials] Password', 
+                    'value' : cc.credentials.password,
+                    'validation' : {
+                        'required' : false
+                    }
                 }
             };
             var _this = this;
@@ -169,6 +206,11 @@ qx.Class.define("helenos.components.tab.ConnectionsEditorPage",
                     if (result != null) {
                         result['alias'] = cc.alias;
                         result['active'] = cc.active;
+                        result['credentials'] = {};
+                        result['credentials']['username'] = result['username'];
+                        result['credentials']['password'] = result['password'];
+                        delete result['username'];
+                        delete result['password'];
                         helenos.util.RpcActionsProvider.storeConnection(result);
                         _this._reloadConnectionsTable();
                     }
@@ -180,7 +222,7 @@ qx.Class.define("helenos.components.tab.ConnectionsEditorPage",
         /** 
         * @lint ignoreUndefined(dialog)
         */
-        __ondeleteConnection : function(e) {
+        __onDeleteConnection : function(e) {
             var selectionModel = this.__connectionsTable.getSelectionModel();
             var selectedRow = selectionModel.getSelectedRanges()[0].minIndex;
             var active = this.__connectionsTable.getTableModel().getValue(3, selectedRow);

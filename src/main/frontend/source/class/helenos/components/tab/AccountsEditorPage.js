@@ -127,14 +127,21 @@ qx.Class.define("helenos.components.tab.AccountsEditorPage",
             };
             
             var _this = this;
-            dialog.Dialog.form("<h3>Add account</h3>",formData, function( result )
-            {
-                result['enabled'] = true;
-                result['authorities'] = [result['authority']];
-                result['authority'] = undefined;
-                helenos.util.RpcActionsProvider.createAccount(result);
-                _this._reloadAccountsTable();
-            }, _this);
+            (new dialog.Form({
+                "message"    : '<h3>Add account</h3>',
+                "formData"    : formData,
+                "allowCancel" : true,
+                "callback"    : function(result) {
+                    if (result != null) {
+                        result['enabled'] = true;
+                        result['authorities'] = [result['authority']];
+                        result['authority'] = undefined;
+                        helenos.util.RpcActionsProvider.createAccount(result);
+                        _this._reloadAccountsTable();
+                    }
+                },
+                "context"     : this
+            })).show();
         },
         
         /** 

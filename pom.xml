@@ -5,7 +5,7 @@
 
     <groupId>com.kuprowski</groupId>
     <artifactId>helenos</artifactId>
-    <version>1.4-RC2</version>
+    <version>1.5</version>
     <packaging>war</packaging>
     <name>helenos</name>
     <developers>
@@ -296,7 +296,7 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>${maven.plugin.tomcat7.version}</version>
                 <configuration>
-                    <port>8080</port>
+                    <port>8081</port>
                     <useTestClasspath>false</useTestClasspath>
                     <warSourceDirectory>${webappDirectory}</warSourceDirectory>
                 </configuration>

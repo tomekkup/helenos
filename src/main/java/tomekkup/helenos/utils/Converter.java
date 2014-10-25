@@ -1,4 +1,4 @@
-package tomekkup.helenos;
+package tomekkup.helenos.utils;
 
 import java.util.List;
 import java.util.UUID;
