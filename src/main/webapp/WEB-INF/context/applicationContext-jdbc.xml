@@ -8,14 +8,4 @@
         <property name="username" value="${db.user}"/>
         <property name="password" value="${db.password}"/>
     </bean>
-    
-    <bean id="queriesPropertyResource" class="org.springframework.core.io.ClassPathResource" c:path="queries.properties"/> 
-    
-    <bean id="queriesProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-        <property name="location" ref="queriesPropertyResource"/>
-    </bean>
-    
-    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate" c:dataSource-ref="dataSource"/>
-    
-
 </beans>

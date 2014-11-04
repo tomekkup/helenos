@@ -34,7 +34,7 @@ qx.Class.define("helenos.components.Header",
             boxLayout.setAlignX('right');
             var box = new qx.ui.container.Composite(boxLayout);
             
-            box.add(new helenos.ui.BoldLabel('User: ' + helenos.util.CredentialsProvider.getLoggedUser()));
+            box.add(new helenos.ui.BoldLabel('Logged in: ' + helenos.util.CredentialsProvider.getLoggedUser()));
             box.add(new qx.ui.core.Spacer(10));
             
             var editClusterConfigButton = new helenos.ui.HeaderButton('helenos/connections.png', 'Manage connections', helenos.model.Roles.ADMIN);

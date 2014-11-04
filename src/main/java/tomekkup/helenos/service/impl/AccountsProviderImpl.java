@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import tomekkup.helenos.dao.AccountDao;
+import tomekkup.helenos.dao.impl.AccountDaoImpl;
 import tomekkup.helenos.service.AccountsProvider;
 import tomekkup.helenos.dao.model.qx.QxAccount;
 import tomekkup.helenos.types.qx.QxPasswordChangeRequest;

@@ -1,7 +1,7 @@
 package tomekkup.helenos.context;
 
 import tomekkup.helenos.dao.model.ClusterConfiguration;
-import tomekkup.helenos.dao.ClusterConfigDao;
+import tomekkup.helenos.dao.impl.ClusterConfigDaoImpl;
 import tomekkup.helenos.service.ClusterConfigAware;
 import java.util.Map;
 import me.prettyprint.hector.api.Cluster;
@@ -11,6 +11,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.web.context.support.XmlWebApplicationContext;
+import tomekkup.helenos.dao.ClusterConfigDao;
 
 /**
  * ********************************************************

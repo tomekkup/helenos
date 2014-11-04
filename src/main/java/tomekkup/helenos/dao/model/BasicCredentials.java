@@ -31,7 +31,7 @@ public class BasicCredentials {
         this.password = password;
     }
 
-    @Column(name = "USERNAME", nullable = false, length = 32)
+    @Column(name = "USERNAME", nullable = true, length = 32)
     public String getUsername() {
         return username;
     }
@@ -40,7 +40,7 @@ public class BasicCredentials {
         this.username = username;
     }
 
-    @Column(name = "PASSWORD", nullable = false, length = 64)
+    @Column(name = "PASSWORD", nullable = true, length = 64)
     public String getPassword() {
         return password;
     }

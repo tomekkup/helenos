@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import tomekkup.helenos.dao.model.ClusterConfiguration;
 import tomekkup.helenos.context.PostConfiguringClusterListener;
 import tomekkup.helenos.dao.ClusterConfigDao;
+import tomekkup.helenos.dao.impl.ClusterConfigDaoImpl;
 import tomekkup.helenos.service.ClusterConfigAware;
 import tomekkup.helenos.service.ClusterConnectionProvider;
 
