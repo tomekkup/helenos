@@ -6,6 +6,9 @@
 
 package tomekkup.helenos.dao.model;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
 /**
  * ********************************************************
  * Copyright: 2012 Tomek Kuprowski
@@ -15,6 +18,7 @@ package tomekkup.helenos.dao.model;
  * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
  * *******************************************************
  */
+@Embeddable
 public class BasicCredentials {
     private String username;
     private String password;
@@ -27,6 +31,7 @@ public class BasicCredentials {
         this.password = password;
     }
 
+    @Column(name = "USERNAME", nullable = false, length = 32)
     public String getUsername() {
         return username;
     }
@@ -35,6 +40,7 @@ public class BasicCredentials {
         this.username = username;
     }
 
+    @Column(name = "PASSWORD", nullable = false, length = 64)
     public String getPassword() {
         return password;
     }

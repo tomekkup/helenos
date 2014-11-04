@@ -1,6 +1,6 @@
 package tomekkup.helenos.service;
 
-import tomekkup.helenos.types.qx.QxAccount;
+import tomekkup.helenos.dao.model.qx.QxAccount;
 import java.util.List;
 import tomekkup.helenos.types.qx.QxPasswordChangeRequest;
 

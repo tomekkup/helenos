@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+          http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+    
+    <util:set id="packagesToScan" value-type="java.lang.String">
+        <value>tomekkup.helenos.dao.model</value>
+    </util:set>
+    
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
+        p:packagesToScan-ref="packagesToScan" p:dataSource-ref="dataSource">
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+                <prop key="hibernate.max_fetch_depth">3</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.EJB3NamingStrategy</prop>
+            </props>
+        </property>
+    </bean>
+    
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate" p:sessionFactory-ref="sessionFactory"/>
+</beans>

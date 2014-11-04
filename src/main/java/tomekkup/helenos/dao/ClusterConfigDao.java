@@ -69,7 +69,7 @@ public class ClusterConfigDao extends AbstractDao implements InitializingBean {
     }
 
     private SqlParameterSource prepareParameterSource(ClusterConfiguration configuration) {
-        return new MapSqlParameterSource(configuration.toParametersMap());
+        return null;//new MapSqlParameterSource(configuration.toParametersMap());
     }
 
     public void store(ClusterConfiguration configuration) {

@@ -1,6 +1,6 @@
 package tomekkup.helenos.dao;
 
-import tomekkup.helenos.types.qx.QxAccount;
+import tomekkup.helenos.dao.model.qx.QxAccount;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;

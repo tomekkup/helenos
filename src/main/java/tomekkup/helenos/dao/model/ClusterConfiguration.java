@@ -2,6 +2,12 @@ package tomekkup.helenos.dao.model;
 
 import java.util.HashMap;
 import java.util.Map;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import me.prettyprint.cassandra.service.CassandraHostConfigurator;
 import me.prettyprint.cassandra.service.ThriftCluster;
 import me.prettyprint.hector.api.Cluster;
@@ -17,7 +23,9 @@ import org.springframework.util.StringUtils;
  * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
  * *******************************************************
  */
-public class ClusterConfiguration {
+@Entity
+@Table(name = "CLUSTERCONFIG")
+public class ClusterConfiguration extends AbstractEntity {
 
     private String hosts;
     private String clusterName;
@@ -39,10 +47,12 @@ public class ClusterConfiguration {
         this.alias = alias;
     }
 
+    @Column(name = "ALIAS", nullable = false, length=32)
     public String getAlias() {
         return alias;
     }
 
+    @Column(name = "HOSTS", nullable = false, length=32, unique=true)
     public String getHosts() {
         return hosts;
     }
@@ -51,6 +61,7 @@ public class ClusterConfiguration {
         this.hosts = hosts;
     }
 
+    @Column(name = "CLUSTERNAME", nullable = false, length=32, unique=true)
     public String getClusterName() {
         return clusterName;
     }
@@ -59,6 +70,7 @@ public class ClusterConfiguration {
         this.clusterName = clusterName;
     }
 
+    @Column(name = "ACTIVE", nullable = false)
     public boolean isActive() {
         return active;
     }
@@ -72,31 +84,20 @@ public class ClusterConfiguration {
                                         : new ThriftCluster(clusterName, new CassandraHostConfigurator(hosts));
     }
     
-    public Map<String, String> getCredentialsAsMap() {
+    @Transient
+    private Map<String, String> getCredentialsAsMap() {
         Map<String, String> credentialsMap = new HashMap<String, String>(2);
         credentialsMap.put("username", getCredentials().getUsername());
         credentialsMap.put("password", getCredentials().getPassword());
         return credentialsMap;
     }
     
+    @Transient
     public boolean isCredentialsNotEmpty() {
         return StringUtils.hasText(getCredentials().getUsername()) && StringUtils.hasText(getCredentials().getPassword());
     }
 
-    public Map<String, ?> toParametersMap() {
-        Assert.hasLength(hosts);
-        Assert.hasLength(clusterName);
-
-        Map<String, Object> map = new HashMap<String, Object>(3);
-        map.put("alias", alias);
-        map.put("hosts", hosts);
-        map.put("clustername", clusterName);
-        map.put("active", active);
-        map.put("username", getCredentials().getUsername());
-        map.put("password", getCredentials().getPassword());
-        return map;
-    }
-
+    @Embedded
     public BasicCredentials getCredentials() {
         if (credentials == null) {
             credentials = new BasicCredentials();
