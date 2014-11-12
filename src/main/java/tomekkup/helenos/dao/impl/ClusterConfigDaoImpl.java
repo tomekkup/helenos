@@ -8,6 +8,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -23,8 +24,8 @@ import tomekkup.helenos.dao.model.ClusterConfiguration;
  * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
  * *******************************************************
  */
-@Component("clusterConfigDao")
-@Transactional(propagation = Propagation.REQUIRED)
+@Repository("clusterConfigDao")
+@Transactional
 public class ClusterConfigDaoImpl extends AbstractDao implements ClusterConfigDao {
     private static final String HASTEXT_ERROR_MSG = "%s must be set in default.properties file";
     

@@ -23,23 +23,6 @@
         <param-name>log4jRefreshInterval</param-name>
         <param-value>360000</param-value>
     </context-param>
-    <context-param>
-        <param-name>db.url</param-name>
-        <param-value>jdbc:h2:~/helenos;INIT=RUNSCRIPT FROM 'classpath:dbinit.sql';DB_CLOSE_ON_EXIT=FALSE\;</param-value>
-    </context-param>
-    <context-param>
-        <param-name>db.user</param-name>
-        <param-value>helenos</param-value>
-    </context-param>
-    <context-param>
-        <param-name>db.password</param-name>
-        <param-value>helenos</param-value>
-    </context-param>
-    <context-param>
-        <param-name>db.tcpServer</param-name>
-        <param-value>-tcpAllowOthers</param-value>
-    </context-param>
-
     <listener>
         <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
     </listener>
@@ -47,11 +30,6 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
-    
-    <listener>
-        <listener-class>org.h2.server.web.DbStarter</listener-class>
-    </listener>
-    
     <!-- Uncomment this section to enable file servlet in Resin -->
     <!--
     <servlet>
@@ -71,6 +49,8 @@
      <filter-mapping>
         <filter-name>openSessionInViewFilter</filter-name>
         <url-pattern>*.json</url-pattern>
+        <url-pattern>/j_spring_security_check</url-pattern>
+        <url-pattern>/j_spring_security_logout</url-pattern>
     </filter-mapping>
     
     <filter>

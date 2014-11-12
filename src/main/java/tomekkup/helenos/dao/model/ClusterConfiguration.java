@@ -24,7 +24,6 @@ import org.springframework.util.StringUtils;
  * *******************************************************
  */
 @Entity
-@Table(name = "CLUSTERCONFIG")
 public class ClusterConfiguration extends AbstractEntity {
 
     private String hosts;

@@ -1,22 +1,26 @@
 package tomekkup.helenos.dao.impl;
 
-import tomekkup.helenos.dao.AccountDao;
-import tomekkup.helenos.dao.model.qx.QxAccount;
 import java.util.List;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.security.authentication.dao.SaltSource;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import tomekkup.helenos.dao.AccountDao;
+import tomekkup.helenos.dao.model.Authority;
+import tomekkup.helenos.dao.model.qx.QxAccount;
 import tomekkup.helenos.types.qx.QxPasswordChangeRequest;
 
 /**
@@ -28,8 +32,8 @@ import tomekkup.helenos.types.qx.QxPasswordChangeRequest;
  * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
  * *******************************************************
  */
-@Component("accountDao")
-@Transactional(propagation = Propagation.REQUIRED)
+@Repository("accountDao")
+@Transactional
 public class AccountDaoImpl extends AbstractDao implements AccountDao {
 
     public static final String ROLE_USER = "ROLE_USER";
@@ -55,23 +59,20 @@ public class AccountDaoImpl extends AbstractDao implements AccountDao {
 
         return userDetails;
     }
-    
-    @Override
-    protected void initDao() throws Exception {
-        super.initDao();
-        this.ensureDefaultCreds();
-    }
 
-    private void ensureDefaultCreds() {
-        /*Session session = openSession();
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public void ensureDefaultCreds() {
+        Session session = openSession();
         try {
             loadUserByUsername(session, ADMIN);
         } catch (UsernameNotFoundException exc) {
             String encodedPasswd = encodePasswd(ADMIN, ADMIN);
-            QxAccount user = new QxAccount(ADMIN, encodedPasswd, new SimpleGrantedAuthority(ROLE_ADMIN), true);
-            user.addAuthority(new SimpleGrantedAuthority(ROLE_USER));
+            QxAccount user = new QxAccount(ADMIN, encodedPasswd, null, true);
+            Authority authority = new Authority(user, ROLE_USER);
+            user.addAuthority(authority);
             store(session, user);
-        }*/
+            session.persist(authority);
+        }
     }
 
     private String encodePasswd(String username, String passwd) {
@@ -89,13 +90,15 @@ public class AccountDaoImpl extends AbstractDao implements AccountDao {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public void store(QxAccount user) {
         Session session = openSession();
         store(session, user);
     }
     
+    @Transactional(propagation = Propagation.REQUIRED)
     private void store(Session session, QxAccount user) {
-        session.saveOrUpdate(user);
+        session.persist(user);
     }
 
     @Override

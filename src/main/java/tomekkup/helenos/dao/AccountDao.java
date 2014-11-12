@@ -25,9 +25,9 @@ public interface AccountDao extends UserDetailsService {
 
     long getAccountsCount();
 
+    void ensureDefaultCreds();
+            
     List<QxAccount> loadAll();
-
-    UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 
     void saveNewPassword(QxPasswordChangeRequest pcr) throws IllegalStateException;
 

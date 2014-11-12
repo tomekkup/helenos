@@ -8,9 +8,11 @@ import java.util.List;
 import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,12 +20,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+import tomekkup.helenos.dao.model.Authority;
 
 @Entity
-@Table(name = "USERS")
 public class QxAccount implements UserDetails {
     
-    private Collection<SimpleGrantedAuthority> authorities = new HashSet<SimpleGrantedAuthority>();
+    private Collection<Authority> authorities = new HashSet<Authority>();
     private String username;
     private String password;
     private boolean enabled;
@@ -37,19 +39,19 @@ public class QxAccount implements UserDetails {
         setUsername(username);
     }
     
-    public QxAccount(String username, String password, SimpleGrantedAuthority authority, boolean enabled) {
+    public QxAccount(String username, String password, Authority authority, boolean enabled) {
         this(username);
         setPassword(password);
         addAuthority(authority);
         setEnabled(enabled);
     }
     
-    @Transient
+    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Collection<Authority> getAuthorities() {
         return authorities;
     }
-
+    
     @Column(name="PASSWORD", nullable = false)
     @Override
     public String getPassword() {
@@ -81,7 +83,7 @@ public class QxAccount implements UserDetails {
         return true;
     }
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     @Override
     public boolean isEnabled() {
         return enabled;
@@ -98,30 +100,12 @@ public class QxAccount implements UserDetails {
     public void setPassword(String password) {
         this.password = password;
     }
-
     
-    public void setAuthorities(Collection<SimpleGrantedAuthority> authorities) {
+    public void setAuthorities(Collection<Authority> authorities) {
         this.authorities = authorities;
     }
     
-    public Map<String, ?> toParametersMap() {
-        Assert.hasLength(username);
-        Assert.hasLength(password);
-        
-        List<String> authToStr = new ArrayList<String>(authorities.size());
-        for(SimpleGrantedAuthority sga : authorities) {
-            authToStr.add(sga.getAuthority());
-        }
-
-        Map<String, Object> map = new HashMap<String, Object>(3);
-        map.put("username", username);
-        map.put("password", password);
-        map.put("authorities", StringUtils.arrayToCommaDelimitedString(authToStr.toArray()));
-        map.put("enabled", enabled);
-        return map;
-    }
-
-    public void addAuthority(SimpleGrantedAuthority authority) {
+    public void addAuthority(Authority authority) {
         this.authorities.add(authority);
     }
 }

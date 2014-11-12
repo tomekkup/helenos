@@ -1,9 +1,11 @@
 package tomekkup.helenos.service.impl;
 
 import java.util.List;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import tomekkup.helenos.dao.AccountDao;
 import tomekkup.helenos.dao.impl.AccountDaoImpl;
 import tomekkup.helenos.service.AccountsProvider;
@@ -20,7 +22,7 @@ import tomekkup.helenos.types.qx.QxPasswordChangeRequest;
  * *******************************************************
  */
 @Component("accountsProvider")
-public class AccountsProviderImpl implements AccountsProvider {
+public class AccountsProviderImpl implements AccountsProvider, InitializingBean {
 
     @Autowired
     private AccountDao accountDao;
@@ -73,4 +75,9 @@ public class AccountsProviderImpl implements AccountsProvider {
     public QxAccount loadUserByUsername(String username) {
         return (QxAccount) accountDao.loadUserByUsername(username);
     }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        accountDao.ensureDefaultCreds();
+    }   
 }

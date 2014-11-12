@@ -35,7 +35,7 @@
     </logger>
     
     <logger name="org.hibernate">
-        <level value="INFO" />
+        <level value="DEBUG" />
         <appender-ref ref="hibernateAppender" />
     </logger>
     
