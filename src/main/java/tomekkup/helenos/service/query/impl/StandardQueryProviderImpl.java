@@ -12,6 +12,7 @@ import me.prettyprint.hector.api.query.QueryResult;
 import me.prettyprint.hector.api.query.RangeSlicesQuery;
 import me.prettyprint.hector.api.query.SliceQuery;
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 import tomekkup.helenos.service.ClusterConfigAware;
 import tomekkup.helenos.service.impl.AbstractQueryProvider;
@@ -32,6 +33,11 @@ import tomekkup.helenos.types.qx.query.QxRangeQuery;
  */
 @Component("standardQueryProvider")
 public class StandardQueryProviderImpl extends AbstractQueryProvider implements StandardQueryProvider, ClusterConfigAware {
+
+    public StandardQueryProviderImpl() {
+        super();
+        super.logger = Logger.getLogger(this.getClass());
+    }
     
     @Override
     public <K, N, V> List<Slice<K,N,V>> cql(QxCqlQuery<K,N,V> query) {
@@ -41,7 +47,7 @@ public class StandardQueryProviderImpl extends AbstractQueryProvider implements 
         QueryResult<CqlRows<K, N, V>> qr = cqlQuery.execute();
         
         List<Slice<K,N,V>> ret = new ArrayList<Slice<K,N,V>>(1);
-        if (qr != null) {
+        if (qr != null && qr.get() != null) {
             List<Row<K, N, V>> rows = qr.get().getList();
             for (Row<K, N, V> row : rows) {
                 ColumnSlice<N, V> colSlice = row.getColumnSlice();
@@ -91,7 +97,7 @@ public class StandardQueryProviderImpl extends AbstractQueryProvider implements 
         QueryResult<OrderedRows<K, N, V>> qr = cq.execute();
         
         List<Slice<K,N,V>> ret = new ArrayList<Slice<K,N,V>>(1);
-        if (qr != null) {
+        if (qr != null && qr.get() != null) {
             List<Row<K, N, V>> rows = qr.get().getList();
             for (Row<K, N, V> row : rows) {
                 ColumnSlice<N, V> colSlice = row.getColumnSlice();

@@ -74,8 +74,9 @@ qx.Class.define("helenos.Application",
             });
             
             this._loginBox.addListener('loginSuccess', function() {
-                this.getRoot().add(new helenos.components.TopComposite(), {edge : 0});
                 this._loginBox.hide();
+                this.getRoot().add(new helenos.components.TopComposite(), {edge : 0});
+                
             }, this);
             this._loginBox.addListener('loginFailure', function() {
                 qx.bom.element.Animation.animate(this._loginBox.getContainerElement().getDomElement(), this.shake, 1000);

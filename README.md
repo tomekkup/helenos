@@ -80,4 +80,4 @@ You can find me on [LinkedIn] (http://www.linkedin.com/in/tomekkuprowski) and co
 
 ### Licence and disclaimer
 
-Helenos is distributed free, AS-IS, without any warranty under Creative Commons Attribution [licence] (http://creativecommons.org/licenses/by/2.0/legalcode)
+Helenos is distributed free, AS-IS, without any warranty under GPL v2 [licence] (http://www.gnu.org/licences/gpl.html)

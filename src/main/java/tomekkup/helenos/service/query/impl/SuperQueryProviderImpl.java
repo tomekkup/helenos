@@ -10,6 +10,7 @@ import me.prettyprint.hector.api.query.QueryResult;
 import me.prettyprint.hector.api.query.RangeSubSlicesQuery;
 import me.prettyprint.hector.api.query.SubSliceQuery;
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 import tomekkup.helenos.service.ClusterConfigAware;
 import tomekkup.helenos.service.impl.AbstractQueryProvider;
@@ -29,6 +30,11 @@ import tomekkup.helenos.types.qx.query.QxSubPredicateQuery;
 @Component("superQueryProvider")
 public class SuperQueryProviderImpl extends AbstractQueryProvider implements SuperQueryProvider, ClusterConfigAware {
 
+    public SuperQueryProviderImpl() {
+        super();
+        super.logger = Logger.getLogger(this.getClass());
+    }
+    
     @Override
     public <K, SN, N, V> List<Slice<K, N, V>> predicate(QxSubPredicateQuery<K, SN, N, V> query) {
         logQueryObject(query);
@@ -71,7 +77,7 @@ public class SuperQueryProviderImpl extends AbstractQueryProvider implements Sup
         QueryResult<OrderedRows<K, N, V>> qr = cq.execute();
 
         List<Slice<K, N, V>> ret = new ArrayList<Slice<K, N, V>>(1);
-        if (qr != null) {
+        if (qr != null && qr.get() != null) {
             List<Row<K, N, V>> rows = qr.get().getList();
             for (Row<K, N, V> row : rows) {
                 ColumnSlice<N, V> colSlice = row.getColumnSlice();

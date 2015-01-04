@@ -11,28 +11,28 @@
     <appender name="defaultAppender" class="org.apache.log4j.DailyRollingFileAppender">
         <param name="file" value="${helenos.root}/WEB-INF/logs/helenos.log" />
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%p %d{HH:mm:ss,SSS} %L - %m: %n" />
+            <param name="ConversionPattern" value="%p %d{HH:mm:ss,SSS} %L - %m%n" />
         </layout>
     </appender>
     
     <appender name="securityAppender" class="org.apache.log4j.DailyRollingFileAppender">
         <param name="file" value="${helenos.root}/WEB-INF/logs/security.log" />
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%p %d{HH:mm:ss,SSS} - %F: %n" />
+            <param name="ConversionPattern" value="%p %d{HH:mm:ss,SSS} - %F: %m%n" />
         </layout>
     </appender>
     
     <appender name="queryAppender" class="org.apache.log4j.DailyRollingFileAppender">
         <param name="file" value="${helenos.root}/WEB-INF/logs/queries.log" />
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%p %d{HH:mm:ss,SSS} - %F: %n" />
+            <param name="ConversionPattern" value="%p %d{HH:mm:ss,SSS} - %L: %m%n" />
         </layout>
     </appender>
 
     <appender name="hibernateAppender" class="org.apache.log4j.DailyRollingFileAppender">
         <param name="file" value="${helenos.root}/WEB-INF/logs/hibernate.log" />
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%p %d{HH:mm:ss,SSS} %L - %m: %n" />
+            <param name="ConversionPattern" value="%p %d{HH:mm:ss,SSS} %L - %m%n" />
         </layout>
     </appender>
     

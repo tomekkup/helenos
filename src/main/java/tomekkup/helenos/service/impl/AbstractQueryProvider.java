@@ -22,7 +22,7 @@ import tomekkup.helenos.types.qx.query.Query;
  */
 public abstract class AbstractQueryProvider extends AbstractProvider {
     
-    private final Logger logger = Logger.getLogger(this.getClass());
+    protected Logger logger;
 
     protected void logQueryObject(Query<?,?,?> queryObject) {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
