@@ -12,12 +12,13 @@ import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
-import tomekkup.helenos.dao.model.ClusterConfiguration;
 import tomekkup.helenos.context.PostConfiguringClusterListener;
 import tomekkup.helenos.dao.ClusterConfigDao;
-import tomekkup.helenos.dao.impl.ClusterConfigDaoImpl;
+import tomekkup.helenos.dao.model.BasicCredentials;
+import tomekkup.helenos.dao.model.ClusterConfiguration;
 import tomekkup.helenos.service.ClusterConfigAware;
 import tomekkup.helenos.service.ClusterConnectionProvider;
+import tomekkup.helenos.types.qx.QxClusterConfiguration;
 
 /**
  * ********************************************************
@@ -47,17 +48,49 @@ public class ClusterConnectionProviderImpl extends AbstractProvider implements C
 
     @Override
     public long getConnectionsCount() {
-        return clusterConfigDao.getConnectionsCount();
+        return clusterConfigDao.getCount();
     }
 
     @Override
-    public void store(ClusterConfiguration configuration) {
-        clusterConfigDao.store(configuration);
+    public void create(QxClusterConfiguration configuration) {
+        ClusterConfiguration entity = clusterConfigDao.getByAlias(configuration.getAlias());
+        if (entity != null) {
+            throw new IllegalStateException("Connection already exists");
+        }
+        
+        entity = new ClusterConfiguration();
+        entity.setCredentials(new BasicCredentials());
+        entity.setAlias(configuration.getAlias());
+        entity.setClusterName(configuration.getClusterName());
+        entity.setHosts(configuration.getHosts());
+        if (configuration.getCredentials() != null) {
+            entity.getCredentials().setUsername(configuration.getCredentials().getUsername());
+            entity.getCredentials().setPassword(configuration.getCredentials().getPassword());
+        }
+        
+        clusterConfigDao.saveOrUpdate(entity);
+    }
+    
+    @Override
+    public void store(QxClusterConfiguration configuration) {
+        ClusterConfiguration entity = clusterConfigDao.getByAlias(configuration.getAlias());
+        if (entity == null) {
+            throw new IllegalStateException("Connection not exists");
+        }
+        
+        entity.setClusterName(configuration.getClusterName());
+        entity.setHosts(configuration.getHosts());
+        if (configuration.getCredentials() != null) {
+            entity.getCredentials().setUsername(configuration.getCredentials().getUsername());
+            entity.getCredentials().setPassword(configuration.getCredentials().getPassword());
+        }
+        
+        clusterConfigDao.saveOrUpdate(entity);
     }
 
     @Override
     public ClusterConfiguration getConnectionByAlias(String alias) {
-        return clusterConfigDao.get(alias);
+        return clusterConfigDao.getByAlias(alias);
     }
 
     @Override
@@ -66,17 +99,23 @@ public class ClusterConnectionProviderImpl extends AbstractProvider implements C
             cluster.getConnectionManager().shutdown();
             cluster = null;
         }
-        ClusterConfiguration configuration = getConnectionByAlias(alias);
+        
+        ClusterConfiguration activeConf = clusterConfigDao.getActive();
+        activeConf.setActive(false);
+        clusterConfigDao.saveOrUpdate(activeConf);
+        
+        ClusterConfiguration configuration = clusterConfigDao.getByAlias(alias);
         if (!configuration.isActive()) {
             configuration.setActive(true);
-            store(configuration);
+            clusterConfigDao.saveOrUpdate(configuration);
         }
         PostConfiguringClusterListener.propagadeConfigChanges(applicationContext, configuration.createCluster());
     }
 
     @Override
     public void delete(String alias) {
-        clusterConfigDao.delete(alias);
+        ClusterConfiguration entity = clusterConfigDao.getByAlias(alias);
+        clusterConfigDao.delete(entity);
     }
 
     @Override

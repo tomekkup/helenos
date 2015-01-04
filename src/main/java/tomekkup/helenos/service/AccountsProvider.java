@@ -1,7 +1,7 @@
 package tomekkup.helenos.service;
 
-import tomekkup.helenos.dao.model.qx.QxAccount;
 import java.util.List;
+import tomekkup.helenos.dao.model.qx.QxAccount;
 import tomekkup.helenos.types.qx.QxPasswordChangeRequest;
 
 /**
@@ -20,8 +20,6 @@ public interface AccountsProvider {
     long getAccountsCount();
     
     void delete(String username);
-    
-    void store(QxAccount account);
     
     void createAccount(QxAccount account) throws IllegalStateException;
     

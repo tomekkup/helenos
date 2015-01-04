@@ -6,8 +6,8 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,12 +26,16 @@ import tomekkup.helenos.dao.model.ClusterConfiguration;
  */
 @Repository("clusterConfigDao")
 @Transactional
-public class ClusterConfigDaoImpl extends AbstractDao implements ClusterConfigDao {
+public class ClusterConfigDaoImpl extends AbstractDao<ClusterConfiguration, Long> implements ClusterConfigDao {
     private static final String HASTEXT_ERROR_MSG = "%s must be set in default.properties file";
     
     private @Value("${default.host}") String defaultHost;
     private @Value("${default.cluster.name}") String defaultClusterName;
 
+    @Autowired
+    public ClusterConfigDaoImpl(@Value("tomekkup.helenos.dao.model.ClusterConfiguration") Class<ClusterConfiguration> clazz) {
+        super(clazz);
+    }
     @Override
     public void setDefaultClusterName(String defaultClusterName) {
         this.defaultClusterName = defaultClusterName;
@@ -43,31 +47,14 @@ public class ClusterConfigDaoImpl extends AbstractDao implements ClusterConfigDa
     }
 
     @Override
-    public ClusterConfiguration get(String alias) {
+    public ClusterConfiguration getByAlias(String alias) {
         Session session = openSession();
-        return get(session, alias);
+        return getByAlias(session, alias);
     }
     
-    private ClusterConfiguration get(Session session, String alias) {
+    @Override
+    public ClusterConfiguration getByAlias(Session session, String alias) {
         return (ClusterConfiguration) session.createCriteria(ClusterConfiguration.class).add(Restrictions.eq("alias", alias)).uniqueResult();
-    }
-    
-    @Override
-    public List<ClusterConfiguration> loadAll() {
-        return getHibernateTemplate().loadAll(ClusterConfiguration.class);
-    }
-
-    @Override
-    public long getConnectionsCount() {
-        Session session = openSession();
-        return ((Number) session.createCriteria(ClusterConfiguration.class).setProjection(Projections.rowCount()).uniqueResult()).longValue();
-    }
-    
-    @Override
-    public void delete(String alias) {
-        Session session = openSession();
-        ClusterConfiguration cc = get(session, alias);
-        session.delete(cc);
     }
     
     @Override
@@ -76,12 +63,14 @@ public class ClusterConfigDaoImpl extends AbstractDao implements ClusterConfigDa
         Assert.hasText(defaultClusterName, String.format(HASTEXT_ERROR_MSG, "default.cluster.name"));
     }
     
+    @Transactional(propagation = Propagation.REQUIRED)
     private Serializable createDefaultConfiguration(Session session) {
         ClusterConfiguration configuration = new ClusterConfiguration("default", defaultHost, defaultClusterName, true);
         return session.save(configuration);
     }
     
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public ClusterConfiguration getActive() {
         Session session = openSession();
         List<ClusterConfiguration> configuration = session.createCriteria(ClusterConfiguration.class).add(Restrictions.eq("active", true)).list();
@@ -91,9 +80,9 @@ public class ClusterConfigDaoImpl extends AbstractDao implements ClusterConfigDa
         if (CollectionUtils.isEmpty(configuration)) {
             Serializable configId = this.createDefaultConfiguration(session);
             return (ClusterConfiguration) session.load(ClusterConfiguration.class, configId);
+        } else {
+            return configuration.get(0);
         }
-
-        return null;
     }
 
      private ClusterConfiguration getActiveIfExists(Session session) {
@@ -104,19 +93,5 @@ public class ClusterConfigDaoImpl extends AbstractDao implements ClusterConfigDa
         } else {
             return null;
         }
-    }
-     
-    @Override
-    public void store(ClusterConfiguration configuration) {
-        Session session = openSession();
-        if (configuration.isActive()) {
-            // wez aktywne i zdisabluj
-            ClusterConfiguration active = getActiveIfExists(session);
-            if (active != null) {
-                active.setActive(false);
-                session.update(active);
-            }
-        }
-        session.saveOrUpdate(configuration);
     }
 }

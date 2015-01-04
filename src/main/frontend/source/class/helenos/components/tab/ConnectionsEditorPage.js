@@ -148,7 +148,7 @@ qx.Class.define("helenos.components.tab.ConnectionsEditorPage",
                         result['credentials']['password'] = result['password'];
                         delete result['username'];
                         delete result['password'];
-                        helenos.util.RpcActionsProvider.storeConnection(result);
+                        helenos.util.RpcActionsProvider.createConnection(result);
                         _this._reloadConnectionsTable();
                     }
                 },

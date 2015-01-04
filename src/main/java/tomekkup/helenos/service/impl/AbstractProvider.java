@@ -8,6 +8,7 @@ import me.prettyprint.hector.api.HConsistencyLevel;
 import me.prettyprint.hector.api.Keyspace;
 import me.prettyprint.hector.api.Serializer;
 import me.prettyprint.hector.api.factory.HFactory;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
@@ -28,8 +29,12 @@ public abstract class AbstractProvider {
 
     @Autowired
     protected Mapper mapper;
+    
     @Autowired
+    protected ObjectMapper objectMapper;
+    
     protected ConsistencyLevelPolicy consistencyLevelPolicy;
+    
     protected Cluster cluster;
     
     protected <V> Serializer<V> getSerializer(Class<V> clazz) {
@@ -91,5 +96,10 @@ public abstract class AbstractProvider {
     
     public final void setNewCluster(Cluster cluster) {
         this.cluster = cluster;
+    }
+
+    @Required
+    public void setObjectMapper(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
     }
 }

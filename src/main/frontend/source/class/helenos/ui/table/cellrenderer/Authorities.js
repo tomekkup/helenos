@@ -19,7 +19,7 @@ qx.Class.define("helenos.ui.table.cellrenderer.Authorities",
             } else {
                 var temp = "";
                 for (var i = 0; i < value.length; i++) {
-                    temp += value[i].authority + " ";
+                    temp += value[i] + " ";
                 }
                 value = temp;
             }

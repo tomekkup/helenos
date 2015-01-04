@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package tomekkup.helenos.security.web.authentication;
 
 import java.io.IOException;

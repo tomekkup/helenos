@@ -5,13 +5,11 @@ import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import me.prettyprint.cassandra.service.CassandraHostConfigurator;
 import me.prettyprint.cassandra.service.ThriftCluster;
 import me.prettyprint.hector.api.Cluster;
-import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 /**
@@ -24,7 +22,8 @@ import org.springframework.util.StringUtils;
  * *******************************************************
  */
 @Entity
-public class ClusterConfiguration extends AbstractEntity {
+@Table(name="CLUSTER_CONFIGURATION")
+public class ClusterConfiguration extends AbstractEntity<Long> {
 
     private String hosts;
     private String clusterName;
@@ -46,12 +45,12 @@ public class ClusterConfiguration extends AbstractEntity {
         this.alias = alias;
     }
 
-    @Column(name = "ALIAS", nullable = false, length=32)
+    @Column(name = "ALIAS", nullable = false, length=32, unique = true)
     public String getAlias() {
         return alias;
     }
 
-    @Column(name = "HOSTS", nullable = false, length=32, unique=true)
+    @Column(name = "HOSTS", nullable = false, length=32)
     public String getHosts() {
         return hosts;
     }
@@ -60,7 +59,7 @@ public class ClusterConfiguration extends AbstractEntity {
         this.hosts = hosts;
     }
 
-    @Column(name = "CLUSTERNAME", nullable = false, length=32, unique=true)
+    @Column(name = "CLUSTERNAME", nullable = false, length=32)
     public String getClusterName() {
         return clusterName;
     }

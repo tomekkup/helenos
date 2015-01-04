@@ -1,34 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package tomekkup.helenos.dao;
 
-import java.util.List;
+import org.hibernate.Session;
 import tomekkup.helenos.dao.model.ClusterConfiguration;
 
 /**
+ * ********************************************************
+ * Copyright: 2015 Tomek Kuprowski
  *
- * @author developer
+ * License: GPLv2: http://www.gnu.org/licences/gpl.html
+ *
+ * @author Tomek Kuprowski (tomekkuprowski at gmail dot com)
+ * *******************************************************
  */
-public interface ClusterConfigDao {
-
-    void delete(String alias);
-
-    ClusterConfiguration get(String alias);
+public interface ClusterConfigDao extends EntityDao<ClusterConfiguration, Long> {
+    
+    ClusterConfiguration getByAlias(String alias);
+    
+    ClusterConfiguration getByAlias(Session session, String alias);
 
     ClusterConfiguration getActive();
-
-    long getConnectionsCount();
-
-    List<ClusterConfiguration> loadAll();
 
     void setDefaultClusterName(String defaultClusterName);
 
     void setDefaultHost(String defaultHost);
-
-    void store(ClusterConfiguration configuration);
-    
 }

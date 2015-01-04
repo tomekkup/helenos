@@ -1,4 +1,4 @@
-package tomekkup.helenos.service.impl;
+package tomekkup.helenos.service.query.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,8 @@ import me.prettyprint.hector.api.query.SliceQuery;
 import org.apache.commons.lang.ArrayUtils;
 import org.springframework.stereotype.Component;
 import tomekkup.helenos.service.ClusterConfigAware;
-import tomekkup.helenos.service.StandardQueryProvider;
+import tomekkup.helenos.service.impl.AbstractQueryProvider;
+import tomekkup.helenos.service.query.StandardQueryProvider;
 import tomekkup.helenos.types.Slice;
 import tomekkup.helenos.types.qx.query.QxCqlQuery;
 import tomekkup.helenos.types.qx.query.QxPredicateQuery;
@@ -34,6 +35,7 @@ public class StandardQueryProviderImpl extends AbstractQueryProvider implements 
     
     @Override
     public <K, N, V> List<Slice<K,N,V>> cql(QxCqlQuery<K,N,V> query) {
+        logQueryObject(query);
         CqlQuery<K,N,V> cqlQuery = new CqlQuery<K, N, V>(getKeyspace(query), getSerializer(query.getKeyClass()), getSerializer(query.getNameClass()), getSerializer(query.getValueClass()));
         cqlQuery.setQuery(query.getQuery());
         QueryResult<CqlRows<K, N, V>> qr = cqlQuery.execute();
@@ -51,6 +53,7 @@ public class StandardQueryProviderImpl extends AbstractQueryProvider implements 
     
     @Override
     public <K, N, V> List<Slice<K,N,V>> predicate(QxPredicateQuery<K,N,V> query) {
+        logQueryObject(query);
         SliceQuery<K, N, V> cq = HFactory.createSliceQuery(getKeyspace(query), getSerializer(query.getKeyClass()), getSerializer(query.getNameClass()), getSerializer(query.getValueClass()));
         cq.setColumnFamily(query.getColumnFamily());
         cq.setKey(query.getKey());
@@ -73,6 +76,7 @@ public class StandardQueryProviderImpl extends AbstractQueryProvider implements 
     
     @Override
     public <K, N, V> List<Slice<K,N,V>> keyRange(QxRangeQuery<K,N,V> query) {
+        logQueryObject(query);
         RangeSlicesQuery<K, N, V> cq = HFactory.createRangeSlicesQuery(getKeyspace(query), getSerializer(query.getKeyClass()), getSerializer(query.getNameClass()), getSerializer(query.getValueClass()));
         cq.setColumnFamily(query.getColumnFamily());
         cq.setKeys(query.getKeyFrom(), query.getKeyTo());

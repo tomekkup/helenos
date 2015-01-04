@@ -1,4 +1,4 @@
-package tomekkup.helenos.service;
+package tomekkup.helenos.service.query;
 
 import com.googlecode.jsonrpc4j.JsonRpcParam;
 import java.util.List;

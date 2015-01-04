@@ -1,4 +1,4 @@
-package tomekkup.helenos.service.impl;
+package tomekkup.helenos.service.query.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,11 +6,14 @@ import me.prettyprint.hector.api.beans.ColumnSlice;
 import me.prettyprint.hector.api.beans.OrderedRows;
 import me.prettyprint.hector.api.beans.Row;
 import me.prettyprint.hector.api.factory.HFactory;
-import me.prettyprint.hector.api.query.*;
+import me.prettyprint.hector.api.query.QueryResult;
+import me.prettyprint.hector.api.query.RangeSubSlicesQuery;
+import me.prettyprint.hector.api.query.SubSliceQuery;
 import org.apache.commons.lang.ArrayUtils;
 import org.springframework.stereotype.Component;
 import tomekkup.helenos.service.ClusterConfigAware;
-import tomekkup.helenos.service.SuperQueryProvider;
+import tomekkup.helenos.service.impl.AbstractQueryProvider;
+import tomekkup.helenos.service.query.SuperQueryProvider;
 import tomekkup.helenos.types.Slice;
 import tomekkup.helenos.types.qx.query.QxSubPredicateQuery;
 
@@ -28,7 +31,7 @@ public class SuperQueryProviderImpl extends AbstractQueryProvider implements Sup
 
     @Override
     public <K, SN, N, V> List<Slice<K, N, V>> predicate(QxSubPredicateQuery<K, SN, N, V> query) {
-        
+        logQueryObject(query);
         SubSliceQuery<K, SN, N, V> cq = HFactory.createSubSliceQuery(getKeyspace(query), getSerializer(query.getKeyClass()), getSerializer(query.getsNameClass()), getSerializer(query.getNameClass()), getSerializer(query.getValueClass()));
         cq.setColumnFamily(query.getColumnFamily());
         cq.setKey(query.getKey());
@@ -52,6 +55,7 @@ public class SuperQueryProviderImpl extends AbstractQueryProvider implements Sup
 
     @Override
     public <K, SN, N, V> List<Slice<K, N, V>> keyRange(tomekkup.helenos.types.qx.query.QxSubRangeQuery<K, SN, N,V> query) {
+        logQueryObject(query);
         RangeSubSlicesQuery<K, SN, N, V> cq = HFactory.createRangeSubSlicesQuery(getKeyspace(query), getSerializer(query.getKeyClass()), getSerializer(query.getsNameClass()), getSerializer(query.getNameClass()), getSerializer(query.getValueClass()));
         cq.setColumnFamily(query.getColumnFamily());
 

@@ -22,6 +22,13 @@
         </layout>
     </appender>
     
+    <appender name="queryAppender" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="file" value="${helenos.root}/WEB-INF/logs/queries.log" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%p %d{HH:mm:ss,SSS} - %F: %n" />
+        </layout>
+    </appender>
+
     <appender name="hibernateAppender" class="org.apache.log4j.DailyRollingFileAppender">
         <param name="file" value="${helenos.root}/WEB-INF/logs/hibernate.log" />
         <layout class="org.apache.log4j.PatternLayout">
@@ -34,8 +41,13 @@
         <appender-ref ref="securityAppender" />
     </logger>
     
+    <logger name="tomekkup.helenos.service.query.impl">
+        <level value="INFO" />
+        <appender-ref ref="queryAppender" />
+    </logger>
+
     <logger name="org.hibernate">
-        <level value="DEBUG" />
+        <level value="WARN" />
         <appender-ref ref="hibernateAppender" />
     </logger>
     

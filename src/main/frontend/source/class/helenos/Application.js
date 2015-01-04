@@ -11,10 +11,6 @@ Authors:
 #asset(favicon.ico)
 #asset(ZeroClipboard*.*)
 ************************************************************************ */
-
-/**
- * This is the main application class of your custom application "helenos"
- */
 qx.Class.define("helenos.Application",
 {
     extend : qx.application.Standalone,
@@ -22,6 +18,20 @@ qx.Class.define("helenos.Application",
     members :
     {
         _loginBox : null,
+
+        shake : {duration: 1000, keyFrames : {
+            0 : {translate: "0px"},
+            10 : {translate: "-10px"},
+            20 : {translate: "10px"},
+            30 : {translate: "-10px"},
+            40 : {translate: "10px"},
+            50 : {translate: "-10px"},
+            60 : {translate: "10px"},
+            70 : {translate: "-10px"},
+            80 : {translate: "10px"},
+            90 : {translate: "-10px"},
+            100 : {translate: "0px"}
+        }},
         
         /** 
         * @lint ignoreUndefined(silverbluetheme)
@@ -50,11 +60,11 @@ qx.Class.define("helenos.Application",
             //this.initLoginBoxFAKE();
         },
         
-        initLoginBoxFAKE : function() {
-           this.checkCredentials('admin', '123', function(foo1, foo2){
-               qx.core.Init.getApplication().getRoot().add(new helenos.components.TopComposite(), {edge : 0});
-           }, this);
-        },
+        //initLoginBoxFAKE : function() {
+        //   this.checkCredentials('admin', '123', function(foo1, foo2){
+        //       qx.core.Init.getApplication().getRoot().add(new helenos.components.TopComposite(), {edge : 0});
+        //   }, this);
+        //},
         
         initLoginBox : function() {
             this._loginBox = new dialog.Login({
@@ -65,6 +75,7 @@ qx.Class.define("helenos.Application",
             
             this._loginBox.addListener('loginSuccess', function() {
                 this.getRoot().add(new helenos.components.TopComposite(), {edge : 0});
+                this._loginBox.hide();
             }, this);
             this._loginBox.addListener('loginFailure', function() {
                 qx.bom.element.Animation.animate(this._loginBox.getContainerElement().getDomElement(), this.shake, 1000);
@@ -81,8 +92,13 @@ qx.Class.define("helenos.Application",
             req.setParameter('j_username', username, true);
             req.setParameter('j_password', password, true);
             req.addListener("completed", function(e) {
-                helenos.util.CredentialsProvider.registerLoggedUser(username, e.getContent());
-                callback(e.getContent() == null, username);
+                var authList = e.getContent();
+                if (authList === null || authList.length === 0) {
+                    callback(true, username);
+                } else {
+                    helenos.util.CredentialsProvider.registerLoggedUser(username, authList);
+                    callback(false, username);
+                }
             }, this);
             
             req.send();

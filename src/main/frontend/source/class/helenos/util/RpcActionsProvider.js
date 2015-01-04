@@ -64,6 +64,11 @@ qx.Class.define('helenos.util.RpcActionsProvider', {
             return rpc.callSync('delete', username);
         },
         
+        createConnection : function(connection) {
+            var rpc = new helenos.util.Rpc(this._CLUSTERCONNECTION);
+            return rpc.callSync('create', connection);
+        },
+        
         storeConnection : function(connection) {
             var rpc = new helenos.util.Rpc(this._CLUSTERCONNECTION);
             return rpc.callSync('store', connection);

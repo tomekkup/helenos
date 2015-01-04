@@ -13,12 +13,12 @@
     
     <bean name="/query/Standard.json" class="com.googlecode.jsonrpc4j.spring.JsonServiceExporter">
         <property name="service" ref="standardQueryProvider"/>
-        <property name="serviceInterface" value="tomekkup.helenos.service.StandardQueryProvider"/>
+        <property name="serviceInterface" value="tomekkup.helenos.service.query.StandardQueryProvider"/>
     </bean>
     
     <bean name="/query/Super.json" class="com.googlecode.jsonrpc4j.spring.JsonServiceExporter">
         <property name="service" ref="superQueryProvider"/>
-        <property name="serviceInterface" value="tomekkup.helenos.service.SuperQueryProvider"/>
+        <property name="serviceInterface" value="tomekkup.helenos.service.query.SuperQueryProvider"/>
     </bean>
     
     <bean name="/admin/Schema.json" class="com.googlecode.jsonrpc4j.spring.JsonServiceExporter">
