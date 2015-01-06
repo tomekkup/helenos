@@ -42,7 +42,7 @@
     </logger>
     
     <logger name="tomekkup.helenos.service.query.impl">
-        <level value="INFO" />
+        <level value="ERROR" />
         <appender-ref ref="queryAppender" />
     </logger>
 

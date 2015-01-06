@@ -24,7 +24,7 @@ qx.Class.define("helenos.components.tab.WelcomePage",
     {
         this.base(arguments);
         this.set({
-            label: 'Welcome',
+            label: 'Start',
             icon: 'icon/16/places/user-home.png',
             layout: new qx.ui.layout.VBox(3, 'top')
         });

@@ -22,6 +22,8 @@ Helenos is a free web based environment that simplifies a data exploring & schem
 
 1.5
 
+> **Important:** when upgrading to version 1.5 or above please note that you'll lose all your configuration (stored in local sql db). Please read changelog...
+
 ### Changelog
 
 See [here](https://github.com/tomekkup/helenos/wiki/Changelog) for all changes in current and all previous releases
@@ -55,8 +57,8 @@ You can build manually with Maven but first install all prerequisities:
 * Qooxdoo SDK 2.1.2 [download] (http://sourceforge.net/projects/qooxdoo/)
 * Python 2.x [download] (http://www.python.org/downloads/)
 
-Next download this package: [https://github.com/cboulanger/qx-contrib-Dialog/archive/master.zip] (https://github.com/cboulanger/qx-contrib-Dialog/archive/master.zip)
-and unpack to directory src/main/frontend/contribs and change destination folder name to 'dialog'. Next apply patch file 'src/main/frontent/Dialog.js.patch'.
+Next download this archive: [https://github.com/cboulanger/qx-contrib-Dialog/archive/v1.2.zip] (https://github.com/cboulanger/qx-contrib-Dialog/archive/v1.2.zip)
+and unpack to directory src/main/frontend/contribs and change destination folder name to 'dialog'. Next apply patch file 'src/main/frontent/Login.js.patch'.
 
 ### Wish list
 
