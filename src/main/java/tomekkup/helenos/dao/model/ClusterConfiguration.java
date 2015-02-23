@@ -50,7 +50,7 @@ public class ClusterConfiguration extends AbstractEntity<Long> {
         return alias;
     }
 
-    @Column(name = "HOSTS", nullable = false, length=32)
+    @Column(name = "HOSTS", nullable = false, length=254)
     public String getHosts() {
         return hosts;
     }
